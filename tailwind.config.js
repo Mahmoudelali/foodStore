@@ -5,8 +5,13 @@ module.exports = {
 		'./app/**/*.{js,jsx,ts,tsx}',
 		'./<custom directory>/**/*.{js,jsx,ts,tsx}',
 	],
+
 	theme: {
-		extend: {},
+		extend: {
+			colors: {
+				accent: '#32CD32',
+			},
+		},
 	},
 	plugins: [],
 };
