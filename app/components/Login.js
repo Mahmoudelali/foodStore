@@ -1,6 +1,5 @@
-import { Link } from 'expo-router';
 import React from 'react';
-import { View, Text, Pressable, TextInput } from 'react-native';
+import { View, Text, Pressable } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import LabelInput from './LabelInput';
 
@@ -28,6 +27,7 @@ const Login = ({ navigation }) => {
 				{loginFields.map(
 					({ label, handler, extraComponent }, index) => (
 						<LabelInput
+							key={index}
 							inputHandler={handler}
 							labelText={label}
 							extraComponent={extraComponent}

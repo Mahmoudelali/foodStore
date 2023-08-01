@@ -31,7 +31,6 @@ export const getMonthsRange = [
 	'Nov',
 	'Dec',
 ];
-
 export const GenderLabels = [
 	{
 		id: '1',
@@ -71,5 +70,5 @@ export const formValidation = ({
 		) &&
 		terms.length === 3
 		? handler(false)
-		: console.log('pass');
+		: handler(true);
 };
