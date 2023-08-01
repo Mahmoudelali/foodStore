@@ -7,6 +7,7 @@ const LabelInput = ({
 	extraComponent,
 	inputHandler,
 	secureTextEntry,
+	validate,
 }) => {
 	return (
 		<View>
@@ -14,6 +15,7 @@ const LabelInput = ({
 				{labelText}
 			</Text>
 			<TextInput
+				onEndEditing={validate}
 				onChangeText={inputHandler}
 				keyboardType={keyboardType}
 				className="py-3 border-2 border-dashed border-gray-400 px-3 "

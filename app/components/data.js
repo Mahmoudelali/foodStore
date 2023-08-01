@@ -71,5 +71,5 @@ export const formValidation = ({
 		) &&
 		terms.length === 3
 		? handler(false)
-		: console.log('pass');
+		: handler(true);
 };
