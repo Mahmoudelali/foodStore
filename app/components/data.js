@@ -31,7 +31,6 @@ export const getMonthsRange = [
 	'Nov',
 	'Dec',
 ];
-
 export const GenderLabels = [
 	{
 		id: '1',
