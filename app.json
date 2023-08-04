@@ -1,5 +1,8 @@
 {
   "expo": {
+    "androidStatusBar": {
+      "backgroundColor": "#13d0ca"
+    },
     "scheme": "acme",
     "web": {
       "bundler": "metro"
