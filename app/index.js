@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './components/Login';
 import Nav from "./components/nav";
 import Register from './components/Register';
-
+import ProductCard from './components/productCard';
 const Stack = createNativeStackNavigator();
 
 export default function Page() {
