@@ -5,10 +5,10 @@ import {
 	getMonthsRange,
 	GenderLabels,
 	checkBoxLabels,
-	formValidation,
+	emailRegex,
 } from './data';
-import React, { useEffect, useState } from 'react';
-import { Text, View, Pressable, StyleSheet } from 'react-native';
+import React, { useState } from 'react';
+import { Text, View, Pressable, StyleSheet, Alert } from 'react-native';
 import { ScrollView, TextInput } from 'react-native-gesture-handler';
 import LabelInput from './LabelInput';
 import { SelectList } from 'react-native-dropdown-select-list';
@@ -16,16 +16,31 @@ import CheckBox from 'react-native-check-box';
 import { RadioButton } from 'react-native-radio-buttons-group';
 import { KeyboardAvoidingView } from 'react-native';
 import { Platform } from 'react-native';
+import PasswordInput from './PasswordInput';
 const Register = ({ navigation }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [passVisible, setPassVisible] = useState(false);
 	const [fname, setFname] = useState('');
 	const [lname, setLname] = useState('');
 	const [selected, setSelected] = useState('');
 	const [userGender, setUserGender] = useState(null);
 	const [terms, setTerms] = useState([]);
-	const [submitDisabled, setSubmitDisabled] = useState(true);
+	const [loading, setLoading] = useState(false);
+	const [errors, setErrors] = useState([]);
+	// const [submitDisabled, setSubmitDisabled] = useState(true);
+	console.log(terms);
+	const validateForm = () => {
+		return !email.match(emailRegex) ||
+			!password.match(/^(?=.*\d).{6,}$/) ||
+			password === '' ||
+			fname.length < 2 ||
+			lname.length < 2 ||
+			!terms.includes(
+				'Please accept terms of service in order to continue',
+			)
+			? true
+			: false;
+	};
 	const registerFields = [
 		{
 			label: 'Email Address:',
@@ -43,27 +58,44 @@ const Register = ({ navigation }) => {
 			keyboardType: 'default',
 		},
 	];
-
-	useEffect(() => {
-		validate();
-	}, [terms]);
-
-	const validate = () => {
-		formValidation({
-			email,
-			password,
-			fname,
-			lname,
-			terms,
-			handler: setSubmitDisabled,
-		});
+	const selectListTimeProps = {
+		dropdownStyles: styles.dropdownStyles,
+		boxStyles: styles.boxStyles,
+		maxHeight: 150,
+		setSelected: (val) => setSelected(val),
+		save: 'value',
+		search: false,
+		label: 'year',
 	};
+	const genderRadiosProps = {
+		onPress: setUserGender,
+		containerStyle: {
+			zIndex: '100',
+			marginRight: 15,
+		},
+		color: '#32CD32',
+		size: 20,
+		labelStyle: { color: 'gray' },
+	};
+	const genderCheckBoxProps = {
+		checkedCheckBoxColor: '#32CD32',
+		rightTextStyle: { letterSpacing: 1, fontSize: 13 },
+		style: { marginBottom: 30 },
+	};
+	const errorLabels = {
+		emptyField: 'This field is required',
+		inValidemail: 'Please enter a valid email address',
+		wrongCredentials:
+			'Please make sure that your email or password is correct',
+		termsOfService: 'Please accept terms of service in order to continue',
+	};
+
 	return (
-		<ScrollView className="px-2 " keyboardDismissMode="on-drag">
-			<KeyboardAvoidingView
-				behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-				style={styles.container}
-			>
+		<KeyboardAvoidingView
+			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+			style={styles.container}
+		>
+			<ScrollView className="px-2 " keyboardDismissMode="on-drag">
 				<View className="bg-white px-2 py-8">
 					<Text className=" uppercase  mt-2 text-xl text-center font-bold tracking-widest">
 						sign up using your email address
@@ -73,7 +105,7 @@ const Register = ({ navigation }) => {
 							return (
 								<LabelInput
 									key={index}
-									validate={validate}
+									errLabel={'Hi'}
 									keyboardType={keyboardType}
 									labelText={label}
 									inputHandler={handler}
@@ -81,40 +113,14 @@ const Register = ({ navigation }) => {
 							);
 						},
 					)}
-					<View>
-						<Text className="uppercase font-bold text-xs text-gray-600 my-3">
-							Password:
-						</Text>
-						<View className="relative">
-							<TextInput
-								onEndEditing={validate}
-								onChangeText={setPassword}
-								keyboardType="default"
-								secureTextEntry={passVisible && true}
-								className="py-3 border-2 border-dashed border-gray-400 px-3"
-							/>
-							<Pressable
-								style={{
-									display:
-										password.length > 0
-											? 'absolute'
-											: 'none',
-								}}
-								className={`absolute right-3 top-3 `}
-								onPress={() => {
-									setPassVisible(!passVisible);
-								}}
-							>
-								<Text className="uppercase text-sm font-semibold text-gray-500">
-									{!passVisible ? 'Hide' : 'Show'}
-								</Text>
-							</Pressable>
-							<Text className="font-bold text-xs text-gray-600 my-3">
-								Must be 6 or more characters and contaian at
-								least one number
-							</Text>
-						</View>
-					</View>
+					<PasswordInput
+						hint={
+							'Must be 6 or more characters and contaian at least one number'
+						}
+						// validate={validate}
+						password={password}
+						setPassword={setPassword}
+					/>
 				</View>
 				<View className="px-4 py-7 relative -z-50 ">
 					<Text className="uppercase font-bold text-xs text-gray-500 mb-2">
@@ -123,9 +129,6 @@ const Register = ({ navigation }) => {
 					<View className="pt-2 pb-1 relative flex flex-row  z-50">
 						{timing.map((time, index) => (
 							<SelectList
-								dropdownStyles={styles.dropdownStyles}
-								boxStyles={styles.boxStyles}
-								maxHeight={150}
 								key={index}
 								placeholder={
 									time === 'days'
@@ -134,7 +137,6 @@ const Register = ({ navigation }) => {
 										? 'MM'
 										: 'YYYY'
 								}
-								setSelected={(val) => setSelected(val)}
 								data={
 									time == 'years'
 										? getYearsRange
@@ -142,9 +144,7 @@ const Register = ({ navigation }) => {
 										? getDaysRange
 										: getMonthsRange
 								}
-								save="value"
-								search={false}
-								label="year"
+								{...selectListTimeProps}
 							/>
 						))}
 					</View>
@@ -159,24 +159,17 @@ const Register = ({ navigation }) => {
 						<View className="flex flex-row">
 							{GenderLabels.map((gen) => (
 								<RadioButton
+									{...genderRadiosProps}
+									selected={userGender == gen.id && true}
 									key={gen.id}
-									onPress={setUserGender}
-									size={20}
 									value={gen.value}
 									label={gen.label}
-									labelStyle={{ color: 'gray' }}
 									borderColor={
 										userGender === gen.id
 											? '#32CD32'
 											: 'gray'
 									}
 									id={gen.id}
-									containerStyle={{
-										zIndex: '100',
-										marginRight: 15,
-									}}
-									color="#32CD32"
-									selected={userGender == gen.id && true}
 								/>
 							))}
 						</View>
@@ -188,12 +181,10 @@ const Register = ({ navigation }) => {
 					</Text>
 					{checkBoxLabels.map(({ label, id }) => (
 						<CheckBox
-							style={{ marginBottom: 30 }}
+							{...genderCheckBoxProps}
 							key={id}
-							isChecked={terms.includes(label) && true}
+							isChecked={terms.includes(label)}
 							rightText={label}
-							checkedCheckBoxColor="#32CD32"
-							rightTextStyle={{ letterSpacing: 1, fontSize: 13 }}
 							onClick={() => {
 								!terms.includes(label)
 									? setTerms([...terms, label])
@@ -202,22 +193,21 @@ const Register = ({ navigation }) => {
 												return term !== label;
 											}),
 									  );
-								validate();
 							}}
 						/>
 					))}
 					<View className="py-4 px-2">
 						<Pressable
 							style={
-								submitDisabled
-									? styles.submitDisabled
-									: styles.submitEnabled
+								validateForm
+									? styles.submitEnabled
+									: styles.submitDisabled
 							}
 							className="bg-accent mb-1"
-							disabled={submitDisabled && true}
+							onPress={validateForm}
 						>
 							<Text className="uppercase text-center p-3 text-white font-bold text-lg">
-								JOIN COUPWAY
+								{!loading ? 'JOIN COUPWAY' : 'Loading..'}
 							</Text>
 						</Pressable>
 						<Text className="text-gray-500">
@@ -233,8 +223,8 @@ const Register = ({ navigation }) => {
 						</Text>
 					</View>
 				</View>
-			</KeyboardAvoidingView>
-		</ScrollView>
+			</ScrollView>
+		</KeyboardAvoidingView>
 	);
 };
 
@@ -264,11 +254,11 @@ const styles = StyleSheet.create({
 	boxStyles: {
 		position: 'relative',
 		borderBlockColor: 'gray',
-
 		marginRight: 15,
 		borderRadius: 0,
 		borderStyle: 'dashed',
 		borderWidth: 2,
 		maxHeight: 50,
 	},
+	
 });
