@@ -43,7 +43,6 @@ export const GenderLabels = [
 		value: 'male',
 	},
 ];
-
 export const checkBoxLabels = [
 	{
 		label: 'Sign me up for exclusively COUPWAY discounts by email and text',
@@ -54,21 +53,5 @@ export const checkBoxLabels = [
 ];
 export const timing = ['days', 'months', 'years'];
 
-export const formValidation = ({
-	fname,
-	lname,
-	password,
-	email,
-	terms,
-	handler,
-}) => {
-	return fname.length >= 2 &&
-		lname.length >= 2 &&
-		password.length > 8 &&
-		email.match(
-			/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-		) &&
-		terms.length === 3
-		? handler(false)
-		: handler(true);
-};
+export const emailRegex =
+	/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
