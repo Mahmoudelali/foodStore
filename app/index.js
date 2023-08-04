@@ -13,6 +13,10 @@ import {
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './components/Login';
 import Register from './components/Register';
+
+import ProductCard from './components/productCard';
+
+
 import SearchInput from "./components/searchInput";
 import Notification from "./screens/notification.js";
 import Fav from "./screens/fav.js";
@@ -35,6 +39,7 @@ backgroundColor: "#13d0ca",
     backgroundColor: "#13d0ca",
   },
 };
+
 const Stack = createNativeStackNavigator();
 function Nav(){
 	return (
@@ -174,12 +179,14 @@ export default function Page() {
 	const token=true;
 	const initialRouteName = token ? "Nav" : "Login";
 	return (
-		<>
 
+		<>
 		<Stack.Navigator initialRouteName={initialRouteName}>
 			<Stack.Screen name="Nav" component={Nav} options={{headerShown:false}}/>
+
 			<Stack.Screen name="Login" component={Login} />
 			<Stack.Screen name="Register" component={Register} />
+			<Stack.Screen name="ProductCard" component={ProductCard} />
 		</Stack.Navigator>
 	</>
 	);

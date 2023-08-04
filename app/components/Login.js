@@ -6,6 +6,8 @@ import LabelInput from './LabelInput';
 const Login = ({ navigation }) => {
 	const [email, setEmail] = React.useState('');
 	const [password, setPassword] = React.useState('');
+	const [loading, setLoading] = useState(false);
+
 	const loginFields = [
 		{
 			label: 'Email Address:',
