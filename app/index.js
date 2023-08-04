@@ -1,7 +1,6 @@
-import { View } from "react-native";
+import { View,TextInput, Text } from "react-native";
 import Home from "./screens/home";
 import Search from "./screens/search.js";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import {
   AntDesign,
@@ -11,13 +10,21 @@ import {
   Fontisto,
   SimpleLineIcons,
 } from "@expo/vector-icons";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import Login from './components/Login';
+import Register from './components/Register';
+import SearchInput from "./components/searchInput";
 import Notification from "./screens/notification.js";
 import Fav from "./screens/fav.js";
 import Profile from "./screens/profile.js";
+import { StatusBar } from "expo-status-bar";
 const Tab = createBottomTabNavigator();
 const screenOptions = {
   tabBarShowLabel: false,
-  headerShown: false,
+  headerShown: true,
+  headerStyle:{
+backgroundColor: "#13d0ca",
+  },
   tabBarStyle: {
     position: "absolute",
     bottom: 0,
@@ -28,26 +35,23 @@ const screenOptions = {
     backgroundColor: "#13d0ca",
   },
 };
-
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from './components/Login';
-import Register from './components/Register';
-
 const Stack = createNativeStackNavigator();
-
 function Nav(){
 	return (
-	
+		<>
 		  <Tab.Navigator screenOptions={screenOptions}>
 			<Tab.Screen
 			  name="Home"
 			  component={Home}
 			  options={{
+				headerTitleAlign: "center",
+							
 				tabBarIcon: ({ focused }) => {
 				  return (
 					<View
-					  style={{ alignItems: "center", justifyContent: "center" }}
+					  className=" items-center justify-start"
 					>
+					
 					  {focused ? (
 						<Fontisto name="home" size={24} color={"#e2fafb"} />
 					  ) : (
@@ -56,7 +60,14 @@ function Nav(){
 					</View>
 				  );
 				},
+				headerTitle: () => (
+				
+					<SearchInput/>
+					
+				  )
+				  
 			  }}
+			 
 			/>
 			<Tab.Screen
 			  name="Search"
@@ -65,8 +76,9 @@ function Nav(){
 				tabBarIcon: ({ focused }) => {
 				  return (
 					<View
-					  style={{ alignItems: "center", justifyContent: "center" }}
+					className="items-center justify-center"
 					>
+						<StatusBar backgroundColor="black"/>
 					  {focused ? (
 						<Feather name="search" size={24} color={"#e2fafb"} />
 					  ) : (
@@ -84,7 +96,7 @@ function Nav(){
 				tabBarIcon: ({ focused }) => {
 				  return (
 					<View
-					  style={{ alignItems: "center", justifyContent: "center" }}
+					className="items-center justify-center"
 					>
 					  {focused ? (
 						<Ionicons
@@ -111,7 +123,7 @@ function Nav(){
 				tabBarIcon: ({ focused }) => {
 				  return (
 					<View
-					  style={{ alignItems: "center", justifyContent: "center" }}
+					className="items-center justify-center"
 					>
 					  {focused ? (
 						<MaterialIcons
@@ -138,7 +150,7 @@ function Nav(){
 				tabBarIcon: ({ focused }) => {
 				  return (
 					<View
-					  style={{ alignItems: "center", justifyContent: "center" }}
+					className="items-center justify-center"
 					>
 					  {focused ? (
 						<Ionicons name="person" size={24} color={"#e2fafb"} />
@@ -155,7 +167,7 @@ function Nav(){
 			  }}
 			/>
 		  </Tab.Navigator>
-
+		  </>
 	  );
 }
 export default function Page() {
@@ -163,12 +175,12 @@ export default function Page() {
 	const initialRouteName = token ? "Nav" : "Login";
 	return (
 		<>
-		
+
 		<Stack.Navigator initialRouteName={initialRouteName}>
 			<Stack.Screen name="Nav" component={Nav} options={{headerShown:false}}/>
 			<Stack.Screen name="Login" component={Login} />
 			<Stack.Screen name="Register" component={Register} />
 		</Stack.Navigator>
-		</>
+	</>
 	);
 }
