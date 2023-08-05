@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Pressable } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
-import LabelInput from './LabelInput';
+import LabelInput from '../components/LabelInput';
 
 const Login = ({ navigation }) => {
 	const [email, setEmail] = React.useState('');
