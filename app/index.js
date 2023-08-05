@@ -1,3 +1,4 @@
+
 import { View, TextInput, Text } from 'react-native';
 import Home from './screens/home';
 import Search from './screens/search.js';
@@ -10,10 +11,11 @@ import {
 	Fontisto,
 	SimpleLineIcons,
 } from '@expo/vector-icons';
+
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './components/Login';
+import Nav from "./components/nav";
 import Register from './components/Register';
-
 import ProductCard from './components/productCard';
 
 import SearchInput from './components/searchInput';
@@ -178,6 +180,7 @@ function Nav() {
 		</>
 	);
 }
+
 export default function Page() {
 	const token = true;
 	const initialRouteName = token ? 'Nav' : 'Login';
