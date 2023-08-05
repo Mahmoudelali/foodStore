@@ -1,28 +1,14 @@
 import { View, TextInput, Text } from 'react-native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Home from './screens/home';
 import Search from './screens/search.js';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import {
-	AntDesign,
-	MaterialIcons,
-	Feather,
-	Ionicons,
-	Fontisto,
-	SimpleLineIcons,
-} from '@expo/vector-icons';
-
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from './components/Login';
+import Login from './screens/Login';
 import Nav from './components/nav';
 import Register from './components/Register';
-import ProductCard from './components/productCard';
-
-import SearchInput from './components/searchInput';
-import Notification from './screens/notification.js';
-import Fav from './screens/fav.js';
-import Profile from './screens/profile.js';
-import { StatusBar } from 'expo-status-bar';
 import ProductScreen from './screens/ProductScreen';
+import Notifications from './screens/WishList';
+
 const Tab = createBottomTabNavigator();
 const screenOptions = {
 	tabBarShowLabel: false,
@@ -48,15 +34,16 @@ export default function Page() {
 	const initialRouteName = token ? 'Nav' : 'Login';
 	return (
 		<>
-			<Stack.Navigator initialRouteName={'ProductScreen'}>
+			<Stack.Navigator initialRouteName={'Nav'}>
+				<Stack.Screen name="Login" component={Login} />
+				<Stack.Screen name="Register" component={Register} />
+				<Stack.Screen name="ProductScreen" component={ProductScreen} />
+				<Stack.Screen name="WishList" component={Notifications} />
 				<Stack.Screen
 					name="Nav"
 					component={Nav}
 					options={{ headerShown: false }}
 				/>
-				<Stack.Screen name="Login" component={Login} />
-				<Stack.Screen name="Register" component={Register} />
-				<Stack.Screen name="ProductScreen" component={ProductScreen} />
 			</Stack.Navigator>
 		</>
 	);
