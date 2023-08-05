@@ -55,3 +55,54 @@ export const timing = ['days', 'months', 'years'];
 
 export const emailRegex =
 	/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+export const calculateRemainingTime = (targetDate) => {
+	// Convert the target date to a Unix timestamp (in milliseconds)
+	const targetTimestamp = new Date(targetDate).getTime();
+
+	// Get the current timestamp (in milliseconds)
+	const currentTimestamp = Date.now();
+
+	// Calculate the remaining time in milliseconds
+	const remainingTime = targetTimestamp - currentTimestamp;
+
+	// Handle cases where the target date is in the past
+	if (remainingTime <= 0) {
+		return 'The target date has already passed!';
+	}
+
+	// Convert remaining time to days, hours, minutes, and seconds
+	const days = Math.floor(remainingTime / (1000 * 60 * 60 * 24));
+	const hours = Math.floor(
+		(remainingTime % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+	);
+	const minutes = Math.floor(
+		(remainingTime % (1000 * 60 * 60)) / (1000 * 60),
+	);
+	const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+
+	return [
+		{
+			label: 'D',
+			value: days,
+		},
+		{
+			label: 'H',
+			value: hours,
+		},
+		{
+			value: minutes,
+			label: 'M',
+		},
+
+		{
+			value: seconds,
+			label: 'S',
+		},
+	];
+};
+
+// Example usage:
+const targetDate = new Date('2023-12-31T23:59:59');
+const remainingTime = calculateRemainingTime(targetDate);
+console.log(remainingTime);
