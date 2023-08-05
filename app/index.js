@@ -1,4 +1,3 @@
-
 import { View, TextInput, Text } from 'react-native';
 import Home from './screens/home';
 import Search from './screens/search.js';
@@ -14,7 +13,7 @@ import {
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './components/Login';
-import Nav from "./components/nav";
+import Nav from './components/nav';
 import Register from './components/Register';
 import ProductCard from './components/productCard';
 
@@ -43,143 +42,6 @@ const screenOptions = {
 };
 
 const Stack = createNativeStackNavigator();
-function Nav() {
-	return (
-		<>
-			<Tab.Navigator screenOptions={screenOptions}>
-				<Tab.Screen
-					name="Home"
-					component={Home}
-					options={{
-						headerTitleAlign: 'center',
-
-						tabBarIcon: ({ focused }) => {
-							return (
-								<View className=" items-center justify-start">
-									{focused ? (
-										<Fontisto
-											name="home"
-											size={24}
-											color={'#e2fafb'}
-										/>
-									) : (
-										<SimpleLineIcons
-											name="home"
-											size={24}
-											color={'#e2fafb'}
-										/>
-									)}
-								</View>
-							);
-						},
-						headerTitle: () => <SearchInput />,
-					}}
-				/>
-				<Tab.Screen
-					name="Search"
-					component={Search}
-					options={{
-						tabBarIcon: ({ focused }) => {
-							return (
-								<View className="items-center justify-center">
-									<StatusBar backgroundColor="black" />
-									{focused ? (
-										<Feather
-											name="search"
-											size={24}
-											color={'#e2fafb'}
-										/>
-									) : (
-										<AntDesign
-											name="search1"
-											size={24}
-											color={'#e2fafb'}
-										/>
-									)}
-								</View>
-							);
-						},
-					}}
-				/>
-				<Tab.Screen
-					name="Notification"
-					component={Notification}
-					options={{
-						tabBarIcon: ({ focused }) => {
-							return (
-								<View className="items-center justify-center">
-									{focused ? (
-										<Ionicons
-											name="ios-notifications-sharp"
-											size={24}
-											color={'#e2fafb'}
-										/>
-									) : (
-										<Ionicons
-											name="ios-notifications-outline"
-											size={24}
-											color={'#e2fafb'}
-										/>
-									)}
-								</View>
-							);
-						},
-					}}
-				/>
-				<Tab.Screen
-					name="Fav"
-					component={Fav}
-					options={{
-						tabBarIcon: ({ focused }) => {
-							return (
-								<View className="items-center justify-center">
-									{focused ? (
-										<MaterialIcons
-											name="favorite"
-											size={24}
-											color={'#e2fafb'}
-										/>
-									) : (
-										<MaterialIcons
-											name="favorite-border"
-											size={24}
-											color={'#e2fafb'}
-										/>
-									)}
-								</View>
-							);
-						},
-					}}
-				/>
-				<Tab.Screen
-					name="Profile"
-					component={Profile}
-					options={{
-						tabBarIcon: ({ focused }) => {
-							return (
-								<View className="items-center justify-center">
-									{focused ? (
-										<Ionicons
-											name="person"
-											size={24}
-											color={'#e2fafb'}
-										/>
-									) : (
-										<Ionicons
-											name="person-outline"
-											size={24}
-											color={'#e2fafb'}
-										/>
-									)}
-								</View>
-							);
-						},
-					}}
-				/>
-			</Tab.Navigator>
-		</>
-	);
-}
 
 export default function Page() {
 	const token = true;
