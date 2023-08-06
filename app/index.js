@@ -10,6 +10,7 @@ import ProductScreen from './screens/ProductScreen';
 import Notifications from './screens/WishList';
 import AddressBookCard from './components/AddressBookCard';
 import AddressBookEdit from './components/AddressBook_edit';
+import ChangePassword from './screens/ChangePassword';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -36,12 +37,16 @@ export default function Page() {
 	const initialRouteName = token ? 'Nav' : 'Login';
 	return (
 		<>
-			<Stack.Navigator initialRouteName={'AddressBook'}>
+			<Stack.Navigator initialRouteName={'ChangePassword'}>
 				<Stack.Screen name="Login" component={Login} />
 				<Stack.Screen name="AddressBook" component={AddressBookCard} />
 				<Stack.Screen name="Register" component={Register} />
 				<Stack.Screen name="ProductScreen" component={ProductScreen} />
 				<Stack.Screen name="WishList" component={Notifications} />
+				<Stack.Screen
+					name="ChangePassword"
+					component={ChangePassword}
+				/>
 				<Stack.Screen
 					options={{ headerShown: true, title: 'edit address' }}
 					name="AddressBookEdit"

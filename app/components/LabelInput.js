@@ -14,7 +14,7 @@ const LabelInput = ({
 	return (
 		<View>
 			<Text className="uppercase font-bold text-xs text-gray-600 mt-3 mb-1">
-				{state.length > 0 && labelText}
+				{state && state.length > 0 && labelText}
 			</Text>
 			<TextInput
 				style={
