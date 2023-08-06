@@ -11,16 +11,17 @@ export default Button = ({ label, onPress, buttonStyle, textStyle }) => {
 
 const styles = StyleSheet.create({
 	button: {
-		backgroundColor: '#007BFF', // Default button color, change it as needed
-		paddingVertical: 12,
-		paddingHorizontal: 24,
-		borderRadius: 8,
+		backgroundColor: '#13d0ca',
+		padding: 12,
 		alignItems: 'center',
 		justifyContent: 'center',
+		marginTop: 10,
 	},
 	text: {
-		color: '#FFFFFF', // Default text color, change it as needed
-		fontSize: 16,
+		color: '#FFFFFF',
+		fontSize: 18,
 		fontWeight: 'bold',
+		textTransform: 'uppercase',
+		letterSpacing: 1,
 	},
 });
