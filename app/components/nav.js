@@ -6,7 +6,7 @@ import WishList from '../screens/WishList.js';
 import Profile from '../screens/profile.js';
 import Home from '../screens/home';
 import Search from '../screens/search.js';
-
+import { Platform } from 'react-native';
 const Tab = createBottomTabNavigator();
 export default function Nav() {
 	return (
@@ -46,7 +46,7 @@ export default function Nav() {
 					tabBarInactiveTintColor: '#fff',
 					tabBarStyle: {
 						position: 'absolute',
-					
+                        bottom: Platform.OS === 'ios' ? -25 : 0,
 						left: 0,
 						width: '100%',
 						backgroundColor: '#13d0ca',
