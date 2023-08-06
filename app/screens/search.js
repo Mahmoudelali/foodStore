@@ -6,7 +6,7 @@ export default function Search(){
     return(
         <View>
           
-            <Text>Home</Text>
+            <Text>Search</Text>
         </View>
     )
 }
