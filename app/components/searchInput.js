@@ -1,6 +1,7 @@
 import { TextInput, View, StyleSheet } from 'react-native';
 import { EvilIcons } from '@expo/vector-icons';
 import { Feather } from '@expo/vector-icons';
+
 const SearchInput = () => {
 	return (
 		<View>
@@ -14,7 +15,7 @@ const SearchInput = () => {
 					/>
 					<TextInput
 						placeholder="Search Coupway.."
-						className="color-gray p-4 relative pl-7"
+						className="color-gray leading-4 p-2 relative pl-7"
 					/>
 				</View>
 
