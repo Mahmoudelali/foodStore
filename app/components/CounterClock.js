@@ -25,7 +25,7 @@ const CountdownClock = ({ targetDate }) => {
 						{' '}
 						{value}
 					</Text>
-					<Text className="text-center text-xs text-gray-500">
+					<Text className="text-center text-xs text-accent-100">
 						{label}
 					</Text>
 				</View>

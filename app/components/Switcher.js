@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
 		alignItems: 'flex-start',
 	},
 	enabledBGColor: {
-		backgroundColor: '#32CD32',
+		backgroundColor: '#13d0ca',
 	},
 	disabledBGColor: {
 		backgroundColor: '#bbb',

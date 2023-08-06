@@ -25,7 +25,7 @@ const ProductDetailSection = ({
 			</View>
 			<View className="pl-5">
 				<View className="flex flex-row justify-between pr-3 items-center">
-					<Text className="font-semibold tracking-wide text-accent mb-4 text-md">
+					<Text className="font-semibold tracking-wide text-accent-100 mb-4 text-md">
 						{title ? title : 'title ? '}
 					</Text>
 					{viewExpanded ? (
