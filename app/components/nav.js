@@ -43,10 +43,10 @@ export default function Nav() {
 						backgroundColor: '#13d0ca',
 					},
 					tabBarActiveTintColor: '#fff',
-					tabBarInactiveTintColor: 'gray',
+					tabBarInactiveTintColor: '#fff',
 					tabBarStyle: {
 						position: 'absolute',
-						bottom: -25,
+					
 						left: 0,
 						width: '100%',
 						backgroundColor: '#13d0ca',
