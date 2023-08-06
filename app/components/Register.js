@@ -203,7 +203,7 @@ const Register = ({ navigation }) => {
 									? styles.submitEnabled
 									: styles.submitDisabled
 							}
-							className="bg-accent mb-1"
+							className="bg-accent-100 mb-1"
 							onPress={validateForm}
 						>
 							<Text className="uppercase text-center p-3 text-white font-bold text-lg">

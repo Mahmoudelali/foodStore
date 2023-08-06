@@ -37,7 +37,7 @@ const ProductStats = ({
 				<Text className="text-center text-gray-400 text-xs  ">
 					Price
 				</Text>
-				<Text className="text-center text-sm text-accent">
+				<Text className="text-center text-sm text-accent-100">
 					{price ? price : '$80'}
 				</Text>
 			</View>

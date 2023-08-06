@@ -52,7 +52,7 @@ const ProductCard = ({
 								</Text>
 								<Text>
 									<Text className="line-through">100$</Text> -
-									<Text className="text-accent"> 80$</Text>
+									<Text className="text-accent-100"> 80$</Text>
 								</Text>
 							</View>
 							{productScreen && (
@@ -69,7 +69,7 @@ const ProductCard = ({
 									20% discount on sea food dishes
 								</Text>
 								<Text>
-									<Text className="text-md  text-accent uppercase ">
+									<Text className="text-md  text-accent-100 uppercase ">
 										RestoLocation
 									</Text>
 									<Text className="text-xs text-gray-500 ">

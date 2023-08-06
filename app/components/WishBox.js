@@ -5,7 +5,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 
 const iconStyles = {
 	size: 26,
-	color: '#32CD32',
+	color: '#13d0ca',
 };
 
 const WishBox = ({ restoName, offer, initialPrice, dealPrice, navigation }) => {
@@ -31,7 +31,7 @@ const WishBox = ({ restoName, offer, initialPrice, dealPrice, navigation }) => {
 						20% discount on sea food dishes
 					</Text>
 					<Text>
-						<Text className="text-md  text-accent uppercase font-semibold ">
+						<Text className="text-md  text-accent-100 uppercase font-semibold ">
 							RestoName
 						</Text>
 						<Text className="text-xs text-gray-500 ">
@@ -45,10 +45,10 @@ const WishBox = ({ restoName, offer, initialPrice, dealPrice, navigation }) => {
 						<Text className="text-xs uppercase">Deal Price</Text>
 						<Text>
 							<Text className="line-through">100$</Text> -
-							<Text className="text-accent"> 80$</Text>
+							<Text className="text-accent-100"> 80$</Text>
 						</Text>
 					</View>
-					<Pressable className="bg-accent py-2 px-4">
+					<Pressable className="bg-accent-100 py-2 px-4">
 						<Text className="uppercase  text-white font-semibold tracking-wider">
 							buy
 						</Text>
