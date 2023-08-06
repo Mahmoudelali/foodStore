@@ -117,7 +117,6 @@ const Register = ({ navigation }) => {
 						hint={
 							'Must be 6 or more characters and contaian at least one number'
 						}
-						// validate={validate}
 						password={password}
 						setPassword={setPassword}
 					/>
@@ -260,5 +259,4 @@ const styles = StyleSheet.create({
 		borderWidth: 2,
 		maxHeight: 50,
 	},
-	
 });
