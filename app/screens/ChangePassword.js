@@ -41,8 +41,20 @@ const ChangePassword = () => {
 			</View>
 			<Button
 				label="save Password"
-				onPress={() => Alert.alert('clicked')}
-				buttonStyle={{ marginTop: 20 }}
+				onPress={() => {
+					if (!newPassword.match(/^(?=.*[0-9]).{6,}$/)) {
+						Alert.alert('must contain at leasst 1 number password');
+					} else {
+						Alert.alert('password changed');
+					}
+				}}
+				buttonStyle={{
+					marginTop: 20,
+					backgroundColor:
+						oldPassword.length < 6 || oldPassword.length < 6
+							? 'lightgray'
+							: '#13d0ca',
+				}}
 			/>
 		</ScrollView>
 	);
