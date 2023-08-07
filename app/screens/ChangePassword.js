@@ -6,7 +6,7 @@ import Button from '../components/Button';
 import { Alert } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
-const ChangePassword = () => {
+const ChangePassword = ({ navigation }) => {
 	const [oldPassword, setOldPassword] = useState('');
 	const [newPassword, setNewPassword] = useState('');
 	const labelInputProps = [
@@ -43,7 +43,7 @@ const ChangePassword = () => {
 				label="save Password"
 				onPress={() => {
 					if (!newPassword.match(/^(?=.*[0-9]).{6,}$/)) {
-						Alert.alert('must contain at leasst 1 number password');
+						Alert.alert('password must contain at least 1 number');
 					} else {
 						Alert.alert('password changed');
 					}
@@ -51,9 +51,7 @@ const ChangePassword = () => {
 				buttonStyle={{
 					marginTop: 20,
 					backgroundColor:
-						oldPassword.length < 6 || oldPassword.length < 6
-							? 'lightgray'
-							: '#13d0ca',
+						newPassword.length < 6 || oldPassword.length < 6 ? 'lightgray' : '#13d0ca',
 				}}
 			/>
 		</ScrollView>

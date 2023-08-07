@@ -20,10 +20,7 @@ const LabelInput = ({
 			</Text>
 			<TextInput
 				style={
-					(borderStyle === 'underline' && [
-						styles.underLine,
-						styles.underLineFocused,
-					],
+					(borderStyle === 'underline' && [styles.underLine, styles.underLineFocused],
 					borderStyle == 'underline' &&
 						focused && [styles.underLine, styles.underLineFocused])
 				}
@@ -38,14 +35,10 @@ const LabelInput = ({
 				onBlur={() => setFocused(false)}
 				secureTextEntry={secureTextEntry ? true : false}
 				placeholder={placeholder && placeholder}
-				placeholderTextColor={
-					borderStyle === 'underline' ? '#0a0a0a' : 'gray'
-				}
+				placeholderTextColor={borderStyle === 'underline' ? '#0a0a0a' : 'gray'}
 			/>
 			{extraComponent && extraComponent}
-			{errLabel && (
-				<Text className="text-red-800 text-xs">{errLabel}</Text>
-			)}
+			{errLabel && <Text className="text-red-800 text-xs">{errLabel}</Text>}
 		</View>
 	);
 };
@@ -55,11 +48,13 @@ const styles = StyleSheet.create({
 		borderStyle: 'solid',
 		borderBottomWidth: 1,
 		borderBottomColor: 'black',
+	},
+	paddingLeftZero: {
 		paddingLeft: 0,
 	},
 	underLineFocused: {
 		borderStyle: 'solid',
-		borderBottomWidth: 1,
+		borderBottomWidth: 2,
 		borderBottomColor: '#13d0ca',
 	},
 });
