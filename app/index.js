@@ -15,6 +15,7 @@ import MyCoupon from './screens/myCoupon';
 import PurchasedDeals from './screens/purchasedDeals';
 import UsedDeals from './screens/usedDeals';
 import ReservedDeals from './screens/reservedDeals';
+import Contact from './screens/contactus';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -63,6 +64,7 @@ export default function Page() {
 					<Stack.Screen options={{ headerShown: true, title: 'PURCHASED DEALS'}} name="PurchasedDeals" component={PurchasedDeals}/>
 					<Stack.Screen options={{ headerShown: true, title: 'USED DEALS'}} name="UsedDeals" component={UsedDeals}/>
 					<Stack.Screen options={{ headerShown: true, title: 'RESERVED DEALS'}} name="ReservedDeals" component={ReservedDeals}/>
+					<Stack.Screen options={{ headerShown: true, title: 'CONTACT US'}} name="ContactUs" component={Contact}/>
 
 
 				<Stack.Screen
