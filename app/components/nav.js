@@ -63,7 +63,7 @@ export default function Nav() {
 				/>
 				<Tab.Screen name="Notifications" component={Notifications} />
 				<Tab.Screen name="WishList" component={WishList} />
-				<Tab.Screen name="Profile" component={Profile} />
+				<Tab.Screen name="Profile" component={Profile} options={{ headerShown: false}}/>
 			</Tab.Navigator>
 		</>
 	);
