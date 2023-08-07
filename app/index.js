@@ -11,6 +11,7 @@ import Notifications from './screens/WishList';
 import AddressBookCard from './components/AddressBookCard';
 import AddressBookEdit from './components/AddressBook_edit';
 import ChangePassword from './screens/ChangePassword';
+import MyCoupon from './screens/myCoupon';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -37,8 +38,8 @@ export default function Page() {
 	const initialRouteName = token ? 'Nav' : 'Login';
 	return (
 		<>
-			<Stack.Navigator initialRouteName={'ChangePassword'}>
-				<Stack.Screen name="Login" component={Login} />
+			<Stack.Navigator initialRouteName={'Nav'}>
+				{/* <Stack.Screen name="Login" component={Login} />
 				<Stack.Screen name="AddressBook" component={AddressBookCard} />
 				<Stack.Screen name="Register" component={Register} />
 				<Stack.Screen name="ProductScreen" component={ProductScreen} />
@@ -51,7 +52,12 @@ export default function Page() {
 					options={{ headerShown: true, title: 'edit address' }}
 					name="AddressBookEdit"
 					component={AddressBookEdit}
-				/>
+				/> */}
+				<Stack.Screen 	options={{ headerShown: true, title: 'MY COUPON' ,headerTintColor:"white",headerStyle: {
+            backgroundColor: '#13d0ca',
+          },}}
+					name="MyCoupon"
+					component={MyCoupon}/>
 				<Stack.Screen
 					name="Nav"
 					component={Nav}
