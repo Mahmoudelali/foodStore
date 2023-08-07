@@ -12,11 +12,15 @@ import AddressBookCard from './components/AddressBookCard';
 import AddressBookEdit from './components/AddressBook_edit';
 import ChangePassword from './screens/ChangePassword';
 import MyCoupon from './screens/myCoupon';
+import PurchasedDeals from './screens/purchasedDeals';
+import UsedDeals from './screens/usedDeals';
+import ReservedDeals from './screens/reservedDeals';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
 	tabBarShowLabel: false,
 	headerShown: true,
+	headerTintColor:"white",
 	headerStyle: {
 		backgroundColor: '#13d0ca',
 	},
@@ -38,7 +42,7 @@ export default function Page() {
 	const initialRouteName = token ? 'Nav' : 'Login';
 	return (
 		<>
-			<Stack.Navigator initialRouteName={'Nav'}>
+			<Stack.Navigator initialRouteName={'Nav'} screenOptions={screenOptions}>
 				{/* <Stack.Screen name="Login" component={Login} />
 				<Stack.Screen name="AddressBook" component={AddressBookCard} />
 				<Stack.Screen name="Register" component={Register} />
@@ -53,11 +57,14 @@ export default function Page() {
 					name="AddressBookEdit"
 					component={AddressBookEdit}
 				/> */}
-				<Stack.Screen 	options={{ headerShown: true, title: 'MY COUPON' ,headerTintColor:"white",headerStyle: {
-            backgroundColor: '#13d0ca',
-          },}}
+				<Stack.Screen 	options={{ headerShown: true, title: 'MY COUPON' }}
 					name="MyCoupon"
 					component={MyCoupon}/>
+					<Stack.Screen options={{ headerShown: true, title: 'PURCHASED DEALS'}} name="PurchasedDeals" component={PurchasedDeals}/>
+					<Stack.Screen options={{ headerShown: true, title: 'USED DEALS'}} name="UsedDeals" component={UsedDeals}/>
+					<Stack.Screen options={{ headerShown: true, title: 'RESERVED DEALS'}} name="ReservedDeals" component={ReservedDeals}/>
+
+
 				<Stack.Screen
 					name="Nav"
 					component={Nav}
