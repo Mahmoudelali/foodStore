@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import WelcomePage from './screens/Welcome';
 import Home from './screens/home';
 import Search from './screens/search.js';
 import Login from './screens/Login';
@@ -44,7 +44,8 @@ export default function Page() {
 	const initialRouteName = token ? 'Nav' : 'Login';
 	return (
 		<>
-			<Stack.Navigator initialRouteName={initialRouteName} screenOptions={screenOptions}>
+			<Stack.Navigator initialRouteName={'Welcome'} screenOptions={screenOptions}>
+				<Stack.Screen name="Welcome" component={WelcomePage} />
 				<Stack.Screen name="Login" component={Login} />
 				<Stack.Screen name="Register" component={Register} />
 				<Stack.Screen name="Home" component={Home} />
