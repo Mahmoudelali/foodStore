@@ -46,9 +46,9 @@ export default function Page() {
 	return (
 		<>
 
-			<Stack.Navigator initialRouteName={'Nav'} screenOptions={screenOptions}>
-				{/* <Stack.Screen name="Login" component={Login} />
-				<Stack.Screen name="AddressBook" component={AddressBookCard} />
+			<Stack.Navigator initialRouteName={'ContactUs'} screenOptions={screenOptions}>
+				<Stack.Screen name="Login" component={Login} />
+			
 
 				<Stack.Screen name="Register" component={Register} />
 				<Stack.Screen name="Home" component={Home} />
@@ -57,13 +57,12 @@ export default function Page() {
 				<Stack.Screen name="ProductScreen" component={ProductScreen} />
 				<Stack.Screen name="WishList" component={Notifications} />
 				<Stack.Screen name="ChangePassword" component={ChangePassword} />
-				<Stack.Screen name="Nav" component={Nav} options={{ headerShown: false }} />
 				<Stack.Screen
 					options={{ headerShown: true, title: 'edit address' }}
 					name="AddressBookEdit"
 					component={AddressBookEdit}
 
-				/> */}
+				/>
 				<Stack.Screen 	options={{ headerShown: true, title: 'MY COUPON' }}
 					name="MyCoupon"
 					component={MyCoupon}/>

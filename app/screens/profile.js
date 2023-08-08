@@ -11,7 +11,7 @@ const optionIconStyles = {
  
 };
 const Option = ({ optionName, icon,navigation,navigateName }) => (
-  <Pressable onPress={() =>  navigation.navigate(navigateName)}>
+  <Pressable onPress={() =>  navigation.navigate("MyCoupon")}>
     <View className="flex flex-row py-3 pl-10">
       <View className="basis-[15%] ">{icon}</View>
 
