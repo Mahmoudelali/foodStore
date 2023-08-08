@@ -29,7 +29,7 @@ function WelcomePage({ navigation }) {
 						</Pressable>
 					</View>
 					<View className="w-1/2 h-40  px-[15%] flex justify-center bg-accent-100 ">
-						<Pressable onPress={() => navigation.navigate('Home')}>
+						<Pressable onPress={() => navigation.navigate('Nav')}>
 							<Ionicons
 								name="chevron-forward-outline"
 								size="40"

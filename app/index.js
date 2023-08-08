@@ -44,7 +44,10 @@ export default function Page() {
 	const initialRouteName = token ? 'Nav' : 'Login';
 	return (
 		<>
-			<Stack.Navigator initialRouteName={'Welcome'} screenOptions={screenOptions}>
+			<Stack.Navigator
+				initialRouteName={'Welcome'}
+				screenOptions={screenOptions}
+			>
 				<Stack.Screen name="Welcome" component={WelcomePage} />
 				<Stack.Screen name="Login" component={Login} />
 				<Stack.Screen name="Register" component={Register} />
@@ -53,7 +56,10 @@ export default function Page() {
 				<Stack.Screen name="AddressBook" component={AddressBookCard} />
 				<Stack.Screen name="ProductScreen" component={ProductScreen} />
 				<Stack.Screen name="WishList" component={Notifications} />
-				<Stack.Screen name="ChangePassword" component={ChangePassword} />
+				<Stack.Screen
+					name="ChangePassword"
+					component={ChangePassword}
+				/>
 				<Stack.Screen
 					options={{ headerShown: true, title: 'edit address' }}
 					name="AddressBookEdit"
@@ -84,7 +90,11 @@ export default function Page() {
 					name="ContactUs"
 					component={Contact}
 				/>
-				<Stack.Screen name="Nav" component={Nav} options={{ headerShown: false }} />
+				<Stack.Screen
+					name="Nav"
+					component={Nav}
+					options={{ headerShown: false }}
+				/>
 			</Stack.Navigator>
 		</>
 	);

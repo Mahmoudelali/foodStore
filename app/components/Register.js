@@ -34,7 +34,9 @@ const Register = ({ navigation }) => {
 			password === '' ||
 			fname.length < 2 ||
 			lname.length < 2 ||
-			!terms.includes('Please accept terms of service in order to continue')
+			!terms.includes(
+				'Please accept terms of service in order to continue',
+			)
 			? true
 			: false;
 	};
@@ -82,7 +84,8 @@ const Register = ({ navigation }) => {
 	const errorLabels = {
 		emptyField: 'This field is required',
 		inValidemail: 'Please enter a valid email address',
-		wrongCredentials: 'Please make sure that your email or password is correct',
+		wrongCredentials:
+			'Please make sure that your email or password is correct',
 		termsOfService: 'Please accept terms of service in order to continue',
 	};
 
@@ -96,18 +99,22 @@ const Register = ({ navigation }) => {
 					<Text className=" uppercase  mt-2 text-xl text-center font-bold tracking-widest">
 						sign up using your email address
 					</Text>
-					{registerFields.map(({ label, handler, keyboardType }, index) => {
-						return (
-							<LabelInput
-								key={index}
-								keyboardType={keyboardType}
-								labelText={label}
-								inputHandler={handler}
-							/>
-						);
-					})}
+					{registerFields.map(
+						({ label, handler, keyboardType }, index) => {
+							return (
+								<LabelInput
+									key={index}
+									keyboardType={keyboardType}
+									labelText={label}
+									inputHandler={handler}
+								/>
+							);
+						},
+					)}
 					<PasswordInput
-						hint={'Must be 6 or more characters and contaian at least one number'}
+						hint={
+							'Must be 6 or more characters and contaian at least one number'
+						}
 						password={password}
 						setPassword={setPassword}
 					/>
@@ -121,7 +128,11 @@ const Register = ({ navigation }) => {
 							<SelectList
 								key={index}
 								placeholder={
-									time === 'days' ? 'DD' : time === 'months' ? 'MM' : 'YYYY'
+									time === 'days'
+										? 'DD'
+										: time === 'months'
+										? 'MM'
+										: 'YYYY'
 								}
 								data={
 									time == 'years'
@@ -150,7 +161,11 @@ const Register = ({ navigation }) => {
 									key={gen.id}
 									value={gen.value}
 									label={gen.label}
-									borderColor={userGender === gen.id ? '#13d0ca' : 'gray'}
+									borderColor={
+										userGender === gen.id
+											? '#13d0ca'
+											: 'gray'
+									}
 									id={gen.id}
 								/>
 							))}
