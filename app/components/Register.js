@@ -17,6 +17,7 @@ import { RadioButton } from 'react-native-radio-buttons-group';
 import { KeyboardAvoidingView } from 'react-native';
 import { Platform } from 'react-native';
 import PasswordInput from './PasswordInput';
+import Button from './Button';
 const Register = ({ navigation }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -27,8 +28,6 @@ const Register = ({ navigation }) => {
 	const [terms, setTerms] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [errors, setErrors] = useState([]);
-	// const [submitDisabled, setSubmitDisabled] = useState(true);
-	console.log(terms);
 	const validateForm = () => {
 		return !email.match(emailRegex) ||
 			!password.match(/^(?=.*\d).{6,}$/) ||
@@ -61,7 +60,7 @@ const Register = ({ navigation }) => {
 	const selectListTimeProps = {
 		dropdownStyles: styles.dropdownStyles,
 		boxStyles: styles.boxStyles,
-		maxHeight: 150,
+		maxHeight: 120,
 		setSelected: (val) => setSelected(val),
 		save: 'value',
 		search: false,
@@ -73,12 +72,12 @@ const Register = ({ navigation }) => {
 			zIndex: '100',
 			marginRight: 15,
 		},
-		color: '#32CD32',
+		color: '#13d0ca',
 		size: 20,
 		labelStyle: { color: 'gray' },
 	};
 	const genderCheckBoxProps = {
-		checkedCheckBoxColor: '#32CD32',
+		checkedCheckBoxColor: '#13d0ca',
 		rightTextStyle: { letterSpacing: 1, fontSize: 13 },
 		style: { marginBottom: 30 },
 	};
@@ -105,7 +104,6 @@ const Register = ({ navigation }) => {
 							return (
 								<LabelInput
 									key={index}
-									errLabel={'Hi'}
 									keyboardType={keyboardType}
 									labelText={label}
 									inputHandler={handler}
@@ -165,7 +163,7 @@ const Register = ({ navigation }) => {
 									label={gen.label}
 									borderColor={
 										userGender === gen.id
-											? '#32CD32'
+											? '#13d0ca'
 											: 'gray'
 									}
 									id={gen.id}
@@ -196,29 +194,18 @@ const Register = ({ navigation }) => {
 						/>
 					))}
 					<View className="py-4 px-2">
-						<Pressable
-							style={
-								validateForm
-									? styles.submitEnabled
-									: styles.submitDisabled
-							}
-							className="bg-accent-100 mb-1"
+						<Button
+							label={!loading ? 'JOIN COUPWAY' : 'Loading..'}
 							onPress={validateForm}
-						>
-							<Text className="uppercase text-center p-3 text-white font-bold text-lg">
-								{!loading ? 'JOIN COUPWAY' : 'Loading..'}
-							</Text>
-						</Pressable>
+						/>
 						<Text className="text-gray-500">
-							You have an account? Sign In
-							<Pressable
+							You have an account? Sign In{' '}
+							<Button
+								label={'Here'}
+								textStyle={styles.labelStyles}
+								buttonStyle={styles.buttonStyle}
 								onPress={() => navigation.navigate('Login')}
-							>
-								<Text className="uppercase  font-semibold text-gray-500">
-									{' '}
-									here
-								</Text>
-							</Pressable>
+							/>
 						</Text>
 					</View>
 				</View>
@@ -230,6 +217,19 @@ const Register = ({ navigation }) => {
 export default Register;
 
 const styles = StyleSheet.create({
+	labelStyles: {
+		backgroundColor: 'transparent',
+		color: '#a0a0a0',
+		fontSize: 12,
+		fontWeight: 'bold',
+		textTransform: 'uppercase',
+	},
+
+	buttonStyle: {
+		backgroundColor: 'transparent',
+		padding: 0,
+		paddingTop: 5,
+	},
 	submitEnabled: {
 		backgroundColor: '#32CD32',
 	},
@@ -244,7 +244,7 @@ const styles = StyleSheet.create({
 		borderRadius: 0,
 		borderStyle: 'dashed',
 		borderWidth: 2,
-		backgroundColor: 'lightgrey',
+		backgroundColor: '#ddd',
 		position: 'absolute',
 		top: 40,
 		left: 0,

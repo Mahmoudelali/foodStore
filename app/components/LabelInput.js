@@ -13,29 +13,29 @@ const LabelInput = ({
 	state,
 }) => {
 	const [focused, setFocused] = useState(false);
+
 	return (
 		<View>
-			<Text className="uppercase font-bold text-xs text-gray-600 mt-3 mb-1">
-				{state && state.length > 0 && labelText}
+			<Text className="uppercase font-bold text-xs text-gray-500 mt-3 mb-1">
+				{!state ? labelText : state && state.length > 0 && labelText}
 			</Text>
 			<TextInput
 				style={
-					(borderStyle === 'underline' && [styles.underLine, styles.underLineFocused],
-					borderStyle == 'underline' &&
-						focused && [styles.underLine, styles.underLineFocused])
+					!focused && borderStyle === 'underline'
+						? styles.underLine
+						: focused && borderStyle === 'underline'
+						? styles.underLineFocused
+						: focused && borderStyle !== 'underline'
+						? styles.dashedFocused
+						: styles.dahsed
 				}
 				onChangeText={inputHandler}
 				keyboardType={keyboardType}
-				className={
-					!borderStyle === 'underline'
-						? 'py-3 border-2 border-dashed border-gray-400 px-3 '
-						: 'py-3 border-b-2 border-gray-600 px-3'
-				}
+				className={'px-3 py-3'}
 				onFocus={() => setFocused(true)}
 				onBlur={() => setFocused(false)}
 				secureTextEntry={secureTextEntry ? true : false}
 				placeholder={placeholder && placeholder}
-				placeholderTextColor={borderStyle === 'underline' ? '#0a0a0a' : 'gray'}
 			/>
 			{extraComponent && extraComponent}
 			{errLabel && <Text className="text-red-800 text-xs">{errLabel}</Text>}
@@ -47,15 +47,29 @@ const styles = StyleSheet.create({
 	underLine: {
 		borderStyle: 'solid',
 		borderBottomWidth: 1,
-		borderBottomColor: 'black',
 	},
 	paddingLeftZero: {
 		paddingLeft: 0,
 	},
-	underLineFocused: {
+	underLine: {
 		borderStyle: 'solid',
 		borderBottomWidth: 2,
-		borderBottomColor: '#13d0ca',
+		borderColor: 'black',
+	},
+	underLineFocused: {
+		borderColor: '#13d0ca',
+		borderStyle: 'solid',
+		borderBottomWidth: 2,
+	},
+	dahsed: {
+		borderStyle: 'dashed',
+		borderWidth: 2,
+		borderColor: 'gray',
+	},
+	dashedFocused: {
+		borderStyle: 'dashed',
+		borderWidth: 2,
+		borderColor: '#13d0ca',
 	},
 });
 export default LabelInput;

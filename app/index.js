@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
+import WelcomePage from './screens/Welcome';
 import Home from './screens/home';
 import Search from './screens/search.js';
 import Login from './screens/Login';
@@ -22,7 +22,7 @@ const Tab = createBottomTabNavigator();
 const screenOptions = {
 	tabBarShowLabel: false,
 	headerShown: true,
-	headerTintColor:"white",
+	headerTintColor: 'white',
 	headerStyle: {
 		backgroundColor: '#13d0ca',
 	},
@@ -37,18 +37,26 @@ const screenOptions = {
 	},
 };
 
-
 const Stack = createNativeStackNavigator();
 
 export default function Page() {
-	const token = true;
+	const token = false;
 	const initialRouteName = token ? 'Nav' : 'Login';
 	return (
 		<>
 
+
 			<Stack.Navigator initialRouteName={'ContactUs'} screenOptions={screenOptions}>
 				<Stack.Screen name="Login" component={Login} />
 			
+
+
+			<Stack.Navigator
+				initialRouteName={'Welcome'}
+				screenOptions={screenOptions}
+			>
+				<Stack.Screen name="Welcome" component={WelcomePage} />
+				<Stack.Screen name="Login" component={Login} />
 
 				<Stack.Screen name="Register" component={Register} />
 				<Stack.Screen name="Home" component={Home} />
@@ -56,20 +64,44 @@ export default function Page() {
 				<Stack.Screen name="AddressBook" component={AddressBookCard} />
 				<Stack.Screen name="ProductScreen" component={ProductScreen} />
 				<Stack.Screen name="WishList" component={Notifications} />
-				<Stack.Screen name="ChangePassword" component={ChangePassword} />
+
+				<Stack.Screen
+					name="ChangePassword"
+					component={ChangePassword}
+				/>
+
 				<Stack.Screen
 					options={{ headerShown: true, title: 'edit address' }}
 					name="AddressBookEdit"
 					component={AddressBookEdit}
-
+=
 				/>
-				<Stack.Screen 	options={{ headerShown: true, title: 'MY COUPON' }}
+				<Stack.Screen
+					options={{ headerShown: true, title: 'MY COUPON' }}
+
 					name="MyCoupon"
-					component={MyCoupon}/>
-					<Stack.Screen options={{ headerShown: true, title: 'PURCHASED DEALS'}} name="PurchasedDeals" component={PurchasedDeals}/>
-					<Stack.Screen options={{ headerShown: true, title: 'USED DEALS'}} name="UsedDeals" component={UsedDeals}/>
-					<Stack.Screen options={{ headerShown: true, title: 'RESERVED DEALS'}} name="ReservedDeals" component={ReservedDeals}/>
-					<Stack.Screen options={{ headerShown: true, title: 'CONTACT US'}} name="ContactUs" component={Contact}/>
+					component={MyCoupon}
+				/>
+				<Stack.Screen
+					options={{ headerShown: true, title: 'PURCHASED DEALS' }}
+					name="PurchasedDeals"
+					component={PurchasedDeals}
+				/>
+				<Stack.Screen
+					options={{ headerShown: true, title: 'USED DEALS' }}
+					name="UsedDeals"
+					component={UsedDeals}
+				/>
+				<Stack.Screen
+					options={{ headerShown: true, title: 'RESERVED DEALS' }}
+					name="ReservedDeals"
+					component={ReservedDeals}
+				/>
+				<Stack.Screen
+					options={{ headerShown: true, title: 'CONTACT US' }}
+					name="ContactUs"
+					component={Contact}
+				/>
 				<Stack.Screen
 					name="Nav"
 					component={Nav}
