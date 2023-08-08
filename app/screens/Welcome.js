@@ -5,7 +5,7 @@ import { Ionicons } from '@expo/vector-icons';
 function WelcomePage({ navigation }) {
 	return (
 		<View className="flex-1 relative">
-			<View className="absolute inset-0 w-full h-full bg-[#0000001e] z-10" />
+			<View className="absolute inset-0 w-full h-full bg-[#00000070] z-10" />
 			<View>
 				<Image
 					style={styles.imageStyle}
