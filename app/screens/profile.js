@@ -5,18 +5,14 @@ import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
 
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
 const optionIconStyles = {
 	size: 30,
 	color: '#13d0ca',
 };
-const Option = ({ optionName, icon, navigation }) => (
+const Option = ({ optionName, icon, navigation, navigateName }) => (
 	<Pressable onPress={navigation}>
 		<View className="flex flex-row py-3 pl-10">
 			<View className="basis-[15%] ">{icon}</View>
-
 			<View className="flex flex-row items-center">
 				<Text className="basis-[70%] pl-10 pb-1 tracking-[1] font-semibold">
 					{optionName}
@@ -31,6 +27,105 @@ const Option = ({ optionName, icon, navigation }) => (
 export default function Profile({ navigation }) {
 	const token = true;
 	const Name = 'Malak';
+	const authenticatedUserOptions = [
+		{
+			optionName: 'My Coupons',
+			navigation: () => navigation.navigate('MyCoupon'),
+			navigateName: 'MyCoupon',
+			icon: (
+				<MaterialIcons
+					{...optionIconStyles}
+					name="contact-phone"
+					style={{ textAlign: 'right' }}
+				/>
+			),
+		},
+		{
+			optionName: 'My Details',
+			icon: (
+				<MaterialIcons
+					{...optionIconStyles}
+					name="contact-phone"
+					style={{ textAlign: 'right' }}
+				/>
+			),
+		},
+		{
+			optionName: 'Change Password',
+			navigateName: 'ChangePassword',
+			navigation: () => navigation.navigate('ChangePassword'),
+			icon: (
+				<MaterialIcons
+					{...optionIconStyles}
+					name="contact-phone"
+					style={{ textAlign: 'right' }}
+				/>
+			),
+		},
+	];
+	const staticOptions = [
+		{
+			optionName: 'Contact Us',
+
+			icon: (
+				<MaterialIcons
+					{...optionIconStyles}
+					name="contact-phone"
+					style={{ textAlign: 'right' }}
+				/>
+			),
+		},
+		{
+			optionName: 'Payment Method',
+			icon: (
+				<MaterialIcons
+					{...optionIconStyles}
+					name="contact-phone"
+					style={{ textAlign: 'right' }}
+				/>
+			),
+		},
+		{
+			optionName: 'Social Account',
+			icon: (
+				<MaterialIcons
+					{...optionIconStyles}
+					name="contact-phone"
+					style={{ textAlign: 'right' }}
+				/>
+			),
+		},
+		{
+			optionName: 'About Us',
+			icon: (
+				<MaterialIcons
+					{...optionIconStyles}
+					name="contact-phone"
+					style={{ textAlign: 'right' }}
+				/>
+			),
+		},
+		{
+			optionName: 'My Settings',
+			icon: (
+				<MaterialIcons
+					{...optionIconStyles}
+					name="contact-phone"
+					style={{ textAlign: 'right' }}
+				/>
+			),
+		},
+		{
+			optionName: 'Sign Out',
+			icon: (
+				<MaterialIcons
+					{...optionIconStyles}
+					name="contact-phone"
+					style={{ textAlign: 'right' }}
+				/>
+			),
+		},
+	];
 
 	return (
 		<View className="h-full bg-[#ebe6e6] ">
@@ -50,64 +145,15 @@ export default function Profile({ navigation }) {
 			</View>
 			<View className="absolute top-[15%] bottom-0 right-0 left-0 w-[150%] h-[10%] bg-[#ebe6e6] -rotate-6 "></View>
 			<View className="bg-white mt-[5%]">
-				{token ? (
-					<View>
-						<Option
-							optionName="My Coupons"
-							navigateName="MyCoupon"
-							icon={
-								<MaterialIcons
-									name="contact-phone"
-									style={{ textAlign: 'right' }}
-								/>
-							}
-						/>
-						<Option
-							optionName="My Details"
-							icon={
-								<MaterialIcons
-									name="contact-phone"
-									style={{ textAlign: 'right' }}
-								/>
-							}
-						/>
-						<Option
-							optionName={'Change Password'}
-							icon={
-								<MaterialIcons
-									name="contact-phone"
-									style={{ textAlign: 'right' }}
-								/>
-							}
-						/>
-					</View>
-				) : null}
-				<Option
-					optionName={'Contact Us'}
-					icon={<MaterialIcons name="contact-phone" style={{ textAlign: 'right' }} />}
-				/>
-				<Option
-					optionName={'Payment Method'}
-					icon={<MaterialIcons name="contact-phone" style={{ textAlign: 'right' }} />}
-				/>
-				<Option
-					optionName={'Social Account'}
-					icon={<MaterialIcons name="contact-phone" style={{ textAlign: 'right' }} />}
-				/>
-				<Option
-					optionName={'About Us'}
-					icon={<MaterialIcons name="contact-phone" style={{ textAlign: 'right' }} />}
-				/>
+				{token &&
+					authenticatedUserOptions.map((option, index) => (
+						<Option key={index} {...option} />
+					))}
 			</View>
-			<View className="bg-white mt-5">
-				<Option
-					optionName={'My Settings'}
-					icon={<MaterialIcons name="contact-phone" style={{ textAlign: 'right' }} />}
-				/>
-				<Option
-					optionName={'Sign Out'}
-					icon={<MaterialIcons name="contact-phone" style={{ textAlign: 'right' }} />}
-				/>
+			<View className="bg-white mt-[5%]">
+				{staticOptions.map((option, index) => (
+					<Option key={index} {...option} />
+				))}
 			</View>
 		</View>
 	);

@@ -46,18 +46,37 @@ const ChangePassword = ({ navigation }) => {
 						Alert.alert('password must contain at least 1 number');
 					} else {
 						Alert.alert('password changed');
+						navigation.goBack();
 					}
 				}}
-				buttonStyle={{
-					marginTop: 20,
-					backgroundColor:
-						newPassword.length < 6 || oldPassword.length < 6 ? 'lightgray' : '#13d0ca',
-				}}
+				buttonStyle={[
+					{
+						marginTop: 20,
+						backgroundColor:
+							newPassword.length < 6 || oldPassword.length < 6
+								? 'lightgray'
+								: '#13d0ca',
+					},
+					styles.buttonStyle,
+				]}
+				textStyle={styles.labelStyles}
 			/>
 		</ScrollView>
 	);
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	buttonStyle: {
+		backgroundColor: '#13d0ca',
+		padding: 10,
+	},
+	labelStyles: {
+		fontWeight: 'bold',
+		textTransform: 'uppercase',
+		textAlign: 'center',
+		color: '#fff',
+		fontSize: '24',
+	},
+});
 
 export default ChangePassword;
