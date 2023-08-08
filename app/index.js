@@ -44,29 +44,41 @@ export default function Page() {
 	const initialRouteName = token ? 'Nav' : 'Login';
 	return (
 		<>
+
+
+			<Stack.Navigator initialRouteName={'ContactUs'} screenOptions={screenOptions}>
+				<Stack.Screen name="Login" component={Login} />
+			
+
+
 			<Stack.Navigator
 				initialRouteName={'Welcome'}
 				screenOptions={screenOptions}
 			>
 				<Stack.Screen name="Welcome" component={WelcomePage} />
 				<Stack.Screen name="Login" component={Login} />
+
 				<Stack.Screen name="Register" component={Register} />
 				<Stack.Screen name="Home" component={Home} />
 				<Stack.Screen name="Search" component={Search} />
 				<Stack.Screen name="AddressBook" component={AddressBookCard} />
 				<Stack.Screen name="ProductScreen" component={ProductScreen} />
 				<Stack.Screen name="WishList" component={Notifications} />
+
 				<Stack.Screen
 					name="ChangePassword"
 					component={ChangePassword}
 				/>
+
 				<Stack.Screen
 					options={{ headerShown: true, title: 'edit address' }}
 					name="AddressBookEdit"
 					component={AddressBookEdit}
+=
 				/>
 				<Stack.Screen
 					options={{ headerShown: true, title: 'MY COUPON' }}
+
 					name="MyCoupon"
 					component={MyCoupon}
 				/>

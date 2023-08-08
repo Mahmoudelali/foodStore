@@ -9,6 +9,7 @@ const optionIconStyles = {
 	size: 30,
 	color: '#13d0ca',
 };
+
 const Option = ({ optionName, icon, navigation, navigateName }) => (
 	<Pressable onPress={navigation}>
 		<View className="flex flex-row py-3 pl-10">
@@ -22,6 +23,7 @@ const Option = ({ optionName, icon, navigation, navigateName }) => (
 			<View className="absolute bottom-0 right-0 h-[1] w-[80%] bg-gray-300 ml-5" />
 		</View>
 	</Pressable>
+
 );
 
 export default function Profile({ navigation }) {
