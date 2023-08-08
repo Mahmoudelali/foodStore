@@ -44,6 +44,8 @@ export default function Profile({ navigation }) {
 		},
 		{
 			optionName: 'My Details',
+			navigation: () => navigation.navigate('MyDetails'),
+
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
@@ -68,7 +70,7 @@ export default function Profile({ navigation }) {
 	const staticOptions = [
 		{
 			optionName: 'Contact Us',
-
+			navigation: () => navigation.navigate('ContactUs'),
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
@@ -77,28 +79,12 @@ export default function Profile({ navigation }) {
 				/>
 			),
 		},
-		{
-			optionName: 'Payment Method',
-			icon: (
-				<MaterialIcons
-					{...optionIconStyles}
-					name="payment"
-					style={{ textAlign: 'right' }}
-				/>
-			),
-		},
-		{
-			optionName: 'Social Account',
-			icon: (
-				<MaterialIcons
-					{...optionIconStyles}
-					name="groups"
-					style={{ textAlign: 'right' }}
-				/>
-			),
-		},
+		
+
 		{
 			optionName: 'About Us',
+			navigation: () => navigation.navigate('AboutUs'),
+
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
@@ -107,6 +93,10 @@ export default function Profile({ navigation }) {
 				/>
 			),
 		},
+		
+	];
+	const LastOptions = [
+		
 		{
 			optionName: 'My Settings',
 			icon: (
@@ -128,7 +118,6 @@ export default function Profile({ navigation }) {
 			),
 		},
 	];
-
 	return (
 		<View className="h-full bg-[#ebe6e6] ">
 			<StatusBar backgroundColor="#13d0ca" />
@@ -151,9 +140,12 @@ export default function Profile({ navigation }) {
 					authenticatedUserOptions.map((option, index) => (
 						<Option key={index} {...option} />
 					))}
+						{staticOptions.map((option, index) => (
+					<Option key={index} {...option} />
+				))}
 			</View>
 			<View className="bg-white mt-[5%]">
-				{staticOptions.map((option, index) => (
+				{LastOptions.map((option, index) => (
 					<Option key={index} {...option} />
 				))}
 			</View>

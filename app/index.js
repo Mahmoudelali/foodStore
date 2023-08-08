@@ -16,6 +16,10 @@ import PurchasedDeals from './screens/purchasedDeals';
 import UsedDeals from './screens/usedDeals';
 import ReservedDeals from './screens/reservedDeals';
 import Contact from './screens/contactus';
+import MyDetails from './screens/MyDetails';
+import About from './screens/aboutUs';
+import AboutCoupway from './screens/aboutCoupWay';
+import TermsCondition from './screens/termsCondition';
 
 const Tab = createBottomTabNavigator();
 const screenOptions = {
@@ -44,7 +48,7 @@ export default function Page() {
 	return (
 		<>
 			<Stack.Navigator
-				initialRouteName={'ProductScreen'}
+				initialRouteName={'Nav'}
 				screenOptions={screenOptions}
 			>
 				<Stack.Screen name="Welcome" component={WelcomePage} />
@@ -52,6 +56,11 @@ export default function Page() {
 				<Stack.Screen name="Register" component={Register} />
 				<Stack.Screen name="Home" component={Home} />
 				<Stack.Screen name="Search" component={Search} />
+				<Stack.Screen 
+					options={{ headerShown: true, title: 'MY DETAILS' }}
+				
+				name="MyDetails" component={MyDetails} />
+
 				<Stack.Screen name="AddressBook" component={AddressBookCard} />
 				<Stack.Screen name="ProductScreen" component={ProductScreen} />
 				<Stack.Screen name="WishList" component={Notifications} />
@@ -69,10 +78,25 @@ export default function Page() {
 					name="MyCoupon"
 					component={MyCoupon}
 				/>
+					<Stack.Screen
+					options={{ headerShown: true, title: 'ABOUT COUPWAY' }}
+					name="AboutCoupway"
+					component={AboutCoupway}
+				/>
+					<Stack.Screen
+					options={{ headerShown: true, title: 'TERMS & CONDITION' }}
+					name="TermsCondition"
+					component={TermsCondition}
+				/>
 				<Stack.Screen
 					options={{ headerShown: true, title: 'PURCHASED DEALS' }}
 					name="PurchasedDeals"
 					component={PurchasedDeals}
+				/>
+					<Stack.Screen
+					options={{ headerShown: true, title: 'ABOUT US' }}
+					name="AboutUs"
+					component={About}
 				/>
 				<Stack.Screen
 					options={{ headerShown: true, title: 'USED DEALS' }}

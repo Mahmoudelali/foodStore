@@ -31,7 +31,7 @@ const LabelInput = ({
 				}
 				onChangeText={inputHandler}
 				keyboardType={keyboardType}
-				className={'px-3 py-3'}
+				className={'px-3 py-1'}
 				onFocus={() => setFocused(true)}
 				onBlur={() => setFocused(false)}
 				secureTextEntry={secureTextEntry ? true : false}
