@@ -17,7 +17,6 @@ import UsedDeals from './screens/usedDeals';
 import ReservedDeals from './screens/reservedDeals';
 import Contact from './screens/contactus';
 
-const Tab = createBottomTabNavigator();
 const screenOptions = {
 	tabBarShowLabel: false,
 	headerShown: true,
@@ -37,14 +36,13 @@ const screenOptions = {
 };
 
 const Stack = createNativeStackNavigator();
-
 export default function Page() {
 	const token = false;
 	const initialRouteName = token ? 'Nav' : 'Login';
 	return (
 		<>
 			<Stack.Navigator
-				initialRouteName={'ProductScreen'}
+				initialRouteName={'Nav'}
 				screenOptions={screenOptions}
 			>
 				<Stack.Screen name="Welcome" component={WelcomePage} />
