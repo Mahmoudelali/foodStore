@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, Pressable } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
+
 const ProductDetailSection = ({
 	title,
 	textualContent,
@@ -11,7 +12,7 @@ const ProductDetailSection = ({
 	const [viewExpanded, setViewExpanded] = useState(false);
 	const iconStyles = {
 		size: 16,
-		color: '#32CD32',
+		color: '#13d0ca',
 	};
 	return (
 		<Pressable

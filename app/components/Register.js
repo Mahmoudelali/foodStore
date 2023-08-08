@@ -1,3 +1,11 @@
+import React, { useState } from 'react';
+import { ScrollView } from 'react-native-gesture-handler';
+import LabelInput from './LabelInput';
+import { SelectList } from 'react-native-dropdown-select-list';
+import CheckBox from 'react-native-check-box';
+import { RadioButton } from 'react-native-radio-buttons-group';
+import PasswordInput from './PasswordInput';
+import Button from './Button';
 import {
 	timing,
 	getYearsRange,
@@ -7,17 +15,14 @@ import {
 	checkBoxLabels,
 	emailRegex,
 } from './data';
-import React, { useState } from 'react';
-import { Text, View, Pressable, StyleSheet, Alert } from 'react-native';
-import { ScrollView, TextInput } from 'react-native-gesture-handler';
-import LabelInput from './LabelInput';
-import { SelectList } from 'react-native-dropdown-select-list';
-import CheckBox from 'react-native-check-box';
-import { RadioButton } from 'react-native-radio-buttons-group';
-import { KeyboardAvoidingView } from 'react-native';
-import { Platform } from 'react-native';
-import PasswordInput from './PasswordInput';
-import Button from './Button';
+import {
+	Platform,
+	Text,
+	View,
+	StyleSheet,
+	KeyboardAvoidingView,
+} from 'react-native';
+
 const Register = ({ navigation }) => {
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');

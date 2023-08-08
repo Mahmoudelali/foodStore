@@ -15,7 +15,7 @@ const Comment = () => {
 				<MaterialIcons
 					name="insert-comment"
 					size={26}
-					color={'#32CD32'}
+					color={'#13d0ca'}
 				/>
 			</Pressable>
 		</View>

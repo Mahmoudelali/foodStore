@@ -2,7 +2,9 @@ import React from 'react';
 import { View, StyleSheet, Text, Image, Pressable, Alert } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import Switcher from './Switcher';
+
 import ProductGradient from './productGradient';
+import ProductUserActions from './ProductUserActions';
 
 const ProductCard = ({
 	path,
@@ -13,6 +15,10 @@ const ProductCard = ({
 	RestoLocation,
 	productScreen,
 }) => {
+	const iconStyles = {
+		size: 50,
+		colors: 'gray',
+	};
 	return (
 		<Pressable
 			onPress={() => {
@@ -33,9 +39,21 @@ const ProductCard = ({
 					}
 				>
 					<View className="relative w-full h-full overflow-hidden mx-auto">
-						<Text className="absolute top-4 right-0 z-10 uppercase bg-gray-300 p-1 text-white">
-							Premium
-						</Text>
+						{productScreen && (
+							<>
+								<ProductUserActions />
+								<View className="absolute top-10 right-0 z-50 uppercase w-10 h-10">
+									<Image
+										// className="bg-red-500"
+										style={styles.crownStyles}
+										source={require('../assets/crown.svg')}
+										alt="image"
+										resizeMode="contain"
+									/>
+								</View>
+							</>
+						)}
+
 						<Image
 							source={{
 								uri: 'https://images.pexels.com/photos/566345/pexels-photo-566345.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
@@ -52,9 +70,13 @@ const ProductCard = ({
 								</Text>
 								<Text>
 									<Text className="line-through">100$</Text> -
-									<Text className="text-accent-100"> 80$</Text>
+									<Text className="text-accent-100">
+										{' '}
+										80$
+									</Text>
 								</Text>
 							</View>
+
 							{productScreen && (
 								<View className="flex flex-row items-center">
 									<Switcher />
@@ -100,6 +122,10 @@ const styles = StyleSheet.create({
 		maxWidth: '100%',
 		height: '100%',
 		objectFit: 'cover',
+	},
+	crownStyles: {
+		maxWidth: '100%',
+		height: '100%',
 	},
 	shadowProp: {
 		shadowColor: '#000',
