@@ -75,7 +75,7 @@ const styles = StyleSheet.create({
 		textTransform: 'uppercase',
 		textAlign: 'center',
 		color: '#fff',
-		fontSize: '24',
+		fontSize: 24,
 	},
 });
 
