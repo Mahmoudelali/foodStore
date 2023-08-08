@@ -3,16 +3,41 @@ import React from 'react';
 import Category from '../components/Category';
 import { ScrollView } from 'react-native-gesture-handler';
 
-export default function Search() {
+export default function Search({ navigation }) {
+	const categories = [
+		{
+			image: 'foodAndDrinks',
+			categoryName: 'food and drinks',
+		},
+		{
+			image: 'beautyAndSpa',
+			categoryName: 'beauty and spa',
+		},
+		{
+			image: 'sports',
+			categoryName: 'sports',
+		},
+		{
+			image: 'electronics',
+			categoryName: 'electronics',
+		},
+		{
+			image: 'appliances',
+			categoryName: 'appliances',
+		},
+		{
+			image: 'chill',
+			categoryName: 'chill',
+		},
+	];
 	return (
+		//To add a new category, you have to add its path in the ternary operator in the child component <Category />
+		//it's the only possible way I found in the documentation
 		<ScrollView>
 			<View className="p-4">
-				<Category image={'foodAndDrinks'} categoryName={'food and drinks'} />
-				<Category image={'beautyAndSpa'} categoryName={'beauty and spa'} />
-				<Category image={'sports'} categoryName={'sports'} />
-				<Category image={'electronics'} categoryName={'electronics'} />
-				<Category image={'appliances'} categoryName={'appliances'} />
-				<Category image={'chill'} categoryName={'chill'} />
+				{categories.map((categorie, index) => (
+					<Category key={index} {...categorie} />
+				))}
 			</View>
 		</ScrollView>
 	);
