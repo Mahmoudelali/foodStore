@@ -51,7 +51,6 @@ const ChangePassword = ({ navigation }) => {
 				}}
 				buttonStyle={[
 					{
-						marginTop: 20,
 						backgroundColor:
 							newPassword.length < 6 || oldPassword.length < 6
 								? 'lightgray'
@@ -69,6 +68,7 @@ const styles = StyleSheet.create({
 	buttonStyle: {
 		backgroundColor: '#13d0ca',
 		padding: 10,
+		marginTop: 20,
 	},
 	labelStyles: {
 		fontWeight: 'bold',

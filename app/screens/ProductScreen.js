@@ -6,17 +6,14 @@ import { ScrollView } from 'react-native-gesture-handler';
 import ProductDetailSection from '../components/ProductDetailSection';
 import Comment from '../components/Comment';
 import Location from '../components/Location';
-import {
-	Entypo,
-	Ionicons,
-	MaterialIcons,
-	SimpleLineIcons,
-} from '@expo/vector-icons';
+import { Entypo, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import Feedback from '../components/Reviews';
 import CountdownClock from '../components/CounterClock';
+import Button from '../components/Button';
+import { Alert } from 'react-native';
 const textualContent =
 	'Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit quas ea omnis impedit fuga praesentium, laboriosam dignissimos iste. Placeat et ullam doloribus unde eaque accusantium labore laboriosam perferendis, consequatur ipsam.';
-const iconStyles = { size: 14, color: '#32CD32' };
+const iconStyles = { size: 14, color: '#13d0ca' };
 
 const productScreenData = [
 	{
@@ -43,11 +40,11 @@ const productScreenData = [
 				<Comment />
 			</>
 		),
-		icon: <MaterialIcons name="feedback" size={14} color="#32CD32" />,
+		icon: <MaterialIcons name="feedback" size={14} color="#13d0ca" />,
 	},
 	{
 		title: 'Location',
-		icon: <Ionicons name="ios-location" size={14} color="#32CD32" />,
+		icon: <Ionicons name="ios-location" size={14} color="#13d0ca" />,
 		extraComponent: <Location />,
 	},
 ];
@@ -55,7 +52,7 @@ const productScreenData = [
 const ProductScreen = ({ feedbacks }) => {
 	return (
 		<ScrollView className="">
-			<View className="min-h-screen pb-8 bg-white">
+			<View className="flex-1 min-h-screen pb-8 bg-white">
 				<ProductCard productScreen={true} />
 				<ProductStats />
 				<CountdownClock targetDate={'2023-8-31T23:59:59'} />
@@ -71,17 +68,16 @@ const ProductScreen = ({ feedbacks }) => {
 								title={title}
 								icon={icon}
 								extraComponent={
-									extraComponent && (
-										<>
-											<Feedback />
-											<Comment />
-										</>
-									)
+									extraComponent && extraComponent
 								}
 							/>
 						),
 					)}
 				</View>
+				<Button
+					label={'Buy deal'}
+					onPress={() => Alert.alert('clicked')}
+				/>
 			</View>
 		</ScrollView>
 	);
