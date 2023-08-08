@@ -35,7 +35,7 @@ export default function Profile({ navigation }) {
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
-					name="contact-phone"
+					name="shopping-bag"
 					style={{ textAlign: 'right' }}
 				/>
 			),
@@ -45,7 +45,7 @@ export default function Profile({ navigation }) {
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
-					name="contact-phone"
+					name="sticky-note-2"
 					style={{ textAlign: 'right' }}
 				/>
 			),
@@ -57,7 +57,7 @@ export default function Profile({ navigation }) {
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
-					name="contact-phone"
+					name="lock"
 					style={{ textAlign: 'right' }}
 				/>
 			),
@@ -70,7 +70,7 @@ export default function Profile({ navigation }) {
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
-					name="contact-phone"
+					name="settings-phone"
 					style={{ textAlign: 'right' }}
 				/>
 			),
@@ -80,7 +80,7 @@ export default function Profile({ navigation }) {
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
-					name="contact-phone"
+					name="payment"
 					style={{ textAlign: 'right' }}
 				/>
 			),
@@ -90,7 +90,7 @@ export default function Profile({ navigation }) {
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
-					name="contact-phone"
+					name="groups"
 					style={{ textAlign: 'right' }}
 				/>
 			),
@@ -100,7 +100,7 @@ export default function Profile({ navigation }) {
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
-					name="contact-phone"
+					name="info"
 					style={{ textAlign: 'right' }}
 				/>
 			),
@@ -110,7 +110,7 @@ export default function Profile({ navigation }) {
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
-					name="contact-phone"
+					name="settings"
 					style={{ textAlign: 'right' }}
 				/>
 			),
@@ -120,7 +120,7 @@ export default function Profile({ navigation }) {
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
-					name="contact-phone"
+					name="logout"
 					style={{ textAlign: 'right' }}
 				/>
 			),
