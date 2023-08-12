@@ -7,7 +7,7 @@ const iconStyles = {
 	color: '#000',
 };
 
-const AddressBookCard = ({
+const AddressBook = ({
 	user_name,
 	user_address,
 	city,
@@ -68,7 +68,9 @@ const styles = StyleSheet.create({
 	iconStyles: {
 		textAlign: 'center',
 		marginBottom: 20,
+		fontSize: 30,
+		color: '#000',
 	},
 });
 
-export default AddressBookCard;
+export default AddressBook;

@@ -3,7 +3,10 @@ import { Pressable, Text, StyleSheet } from 'react-native';
 
 export default Button = ({ label, onPress, buttonStyle, textStyle }) => {
 	return (
-		<Pressable style={buttonStyle ? buttonStyle : styles.button} onPress={onPress}>
+		<Pressable
+			style={buttonStyle ? buttonStyle : styles.button}
+			onPress={onPress}
+		>
 			<Text style={textStyle ? textStyle : styles.text}>{label}</Text>
 		</Pressable>
 	);

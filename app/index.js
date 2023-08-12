@@ -1,14 +1,14 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
 import WelcomePage from './screens/Welcome';
 import Home from './screens/home';
+import Basket from './screens/Basket';
 import Search from './screens/search.js';
 import Login from './screens/Login';
 import Nav from './components/nav';
 import Register from './components/Register';
 import ProductScreen from './screens/ProductScreen';
 import Notifications from './screens/WishList';
-import AddressBookCard from './components/AddressBookCard';
+import AddressBook from './components/AddressBook';
 import AddressBookEdit from './components/AddressBook_edit';
 import ChangePassword from './screens/ChangePassword';
 import MyCoupon from './screens/myCoupon';
@@ -20,6 +20,8 @@ import MyDetails from './screens/MyDetails';
 import About from './screens/aboutUs';
 import AboutCoupway from './screens/aboutCoupWay';
 import TermsCondition from './screens/termsCondition';
+import Checkout from './screens/Checkout';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 const screenOptions = {
 	tabBarShowLabel: false,
@@ -46,20 +48,23 @@ export default function Page() {
 	return (
 		<>
 			<Stack.Navigator
-				initialRouteName={'Nav'}
+				initialRouteName={'Checkout'}
 				screenOptions={screenOptions}
 			>
 				<Stack.Screen name="Welcome" component={WelcomePage} />
 				<Stack.Screen name="Login" component={Login} />
 				<Stack.Screen name="Register" component={Register} />
+				<Stack.Screen name="Basket" component={Basket} />
 				<Stack.Screen name="Home" component={Home} />
 				<Stack.Screen name="Search" component={Search} />
-				<Stack.Screen 
+				<Stack.Screen name="Checkout" component={Checkout} />
+				<Stack.Screen
 					options={{ headerShown: true, title: 'MY DETAILS' }}
-				
-				name="MyDetails" component={MyDetails} />
+					name="MyDetails"
+					component={MyDetails}
+				/>
 
-				<Stack.Screen name="AddressBook" component={AddressBookCard} />
+				<Stack.Screen name="AddressBook" component={AddressBook} />
 				<Stack.Screen name="ProductScreen" component={ProductScreen} />
 				<Stack.Screen name="WishList" component={Notifications} />
 				<Stack.Screen
@@ -76,12 +81,12 @@ export default function Page() {
 					name="MyCoupon"
 					component={MyCoupon}
 				/>
-					<Stack.Screen
+				<Stack.Screen
 					options={{ headerShown: true, title: 'ABOUT COUPWAY' }}
 					name="AboutCoupway"
 					component={AboutCoupway}
 				/>
-					<Stack.Screen
+				<Stack.Screen
 					options={{ headerShown: true, title: 'TERMS & CONDITION' }}
 					name="TermsCondition"
 					component={TermsCondition}
@@ -91,7 +96,7 @@ export default function Page() {
 					name="PurchasedDeals"
 					component={PurchasedDeals}
 				/>
-					<Stack.Screen
+				<Stack.Screen
 					options={{ headerShown: true, title: 'ABOUT US' }}
 					name="AboutUs"
 					component={About}
