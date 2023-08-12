@@ -105,9 +105,13 @@ const DrawerContent = ({ selectedCategory }) => {
 	return (
 		<View className="flex-1 ">
 			<View className="pt-14">
-				<View className="mb-6">
-					<View className="w-full h-28">
-						<Image source={icon} style={styles.imageStyles} />
+				<View className="mb-6 ">
+					<View className="w-full h-28 mx-auto ">
+						<Image
+							source={icon}
+							style={styles.imageStyles}
+							className="mx-auto"
+						/>
 					</View>
 					<Text className="uppercase font-bold text-center my-4 tracking-widest">
 						{selectedCategory.categoryName}
@@ -162,6 +166,7 @@ const styles = StyleSheet.create({
 		fontSize: 16,
 	},
 	imageStyles: {
+		marginHorizontal: 'auto',
 		maxWidth: '100%',
 		maxHeight: '100%',
 		objectFit: 'contain',
