@@ -121,6 +121,7 @@ const DrawerContent = ({ selectedCategory }) => {
 					{selectedCategory?.subCategories.map((cat, index) => {
 						return (
 							<Pressable
+								key={index}
 								onPress={() => Alert.alert('pressed')}
 								style={styles.borderBottom}
 								className="w-4/5 "
