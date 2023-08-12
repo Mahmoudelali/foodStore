@@ -89,8 +89,6 @@ const Content = ({ setSelectedCategory }) => {
 	);
 };
 const DrawerContent = ({ selectedCategory }) => {
-	
-
 	const icon =
 		selectedCategory?.image === 'beautyAndSpa'
 			? require('../assets/beautyAndSpa.jpg')

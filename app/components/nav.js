@@ -7,6 +7,7 @@ import Profile from '../screens/profile.js';
 import Home from '../screens/home';
 import Search from '../screens/search.js';
 import { Platform } from 'react-native';
+import Basket from '../screens/Basket.js';
 const Tab = createBottomTabNavigator();
 export default function Nav() {
 	return (
@@ -19,8 +20,8 @@ export default function Nav() {
 							tabIconName = focused ? 'home' : 'home-outline';
 						} else if (route.name == 'Search') {
 							tabIconName = focused ? 'search' : 'search-outline';
-						} else if (route.name == 'WishList') {
-							tabIconName = focused ? 'heart' : 'heart-outline';
+						} else if (route.name == 'Basket') {
+							tabIconName = focused ? 'cart' : 'cart-outline';
 						} else if (route.name == 'Notifications') {
 							tabIconName = focused
 								? 'notifications'
@@ -46,7 +47,7 @@ export default function Nav() {
 					tabBarInactiveTintColor: '#fff',
 					tabBarStyle: {
 						position: 'absolute',
-                        bottom: Platform.OS === 'ios' ? -25 : 0,
+						bottom: Platform.OS === 'ios' ? -25 : 0,
 						left: 0,
 						width: '100%',
 						backgroundColor: '#13d0ca',
@@ -62,8 +63,12 @@ export default function Nav() {
 					component={Search}
 				/>
 				<Tab.Screen name="Notifications" component={Notifications} />
-				<Tab.Screen name="WishList" component={WishList} />
-				<Tab.Screen name="Profile" component={Profile} options={{ headerShown: false}}/>
+				<Tab.Screen name="Basket" component={Basket} />
+				<Tab.Screen
+					name="Profile"
+					component={Profile}
+					options={{ headerShown: false }}
+				/>
 			</Tab.Navigator>
 		</>
 	);
