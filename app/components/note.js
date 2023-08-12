@@ -15,7 +15,7 @@ const Note = ({ text }) => {
 
 const styles = StyleSheet.create({
 	CircularView: {
-		borderRadius: '50%',
+		borderRadius: 6,
 	},
 });
 
