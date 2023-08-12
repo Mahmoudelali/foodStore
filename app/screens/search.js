@@ -114,7 +114,7 @@ const DrawerContent = ({ selectedCategory }) => {
 						/>
 					</View>
 					<Text className="uppercase font-bold text-center my-4 tracking-widest">
-						{selectedCategory.categoryName}
+						{selectedCategory?.categoryName}
 					</Text>
 				</View>
 				<View>
