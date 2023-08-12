@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Pressable } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import Invoice from '../components/invoice';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -20,30 +21,26 @@ const MyBag = () => (
 		<Basket />
 	</View>
 );
-const DeliveryAddress = ({ navigation }) => (
-	<View className="bg-white  my-5 py-4 px-5">
-		<Text className="uppercase text-lg font-bold ">delivery address</Text>
-		<AddressBookCard editable={false} />
-		<Button
-			label="Change"
-			buttonStyle={styles.changeAddressButton}
-			textStyle={styles.changeAddressLabelStyle}
-			onPress={() => navigation.navigate('AddressBook')}
-		/>
-	</View>
-);
+const DeliveryAddress = () => {
+	const navigation = useNavigation();
+	return (
+		<View className="bg-white  my-5 py-4 px-5">
+			<Text className="uppercase text-lg font-bold ">
+				delivery address
+			</Text>
+			<AddressBookCard editable={false} />
+			<Button
+				label="Change"
+				buttonStyle={styles.changeAddressButton}
+				textStyle={styles.changeAddressLabelStyle}
+				onPress={() => navigation.navigate('AddressBook')}
+			/>
+		</View>
+	);
+};
 
 const Checkout = () => {
 	const [deliveryMethod, setDeliveryMethod] = useState('free');
-	// onClick={() => {
-	// 	!terms.includes(label)
-	// 		? setTerms([...terms, label])
-	// 		: setTerms(
-	// 				terms.filter((term) => {
-	// 					return term !== label;
-	// 				}),
-	// 		  );
-	// }}
 	return (
 		<ScrollView className="flex-1" style={styles.container}>
 			<View className=" flex flex-col min-h-screen">
