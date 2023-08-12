@@ -9,17 +9,9 @@ export default function Notifications({ notificationsList }) {
 			{!notificationsList ? (
 				<Text>No notifications to display</Text>
 			) : (
-				notificationsList.map(
-					({ initialPrice, dealPrice, restoName, offer }, index) => {
-						const notificationsProps = {
-							initialPrice,
-							dealPrice,
-							restoName,
-							offer,
-						};
-						return <WishBox key={index} {...notificationsProps} />;
-					},
-				)
+				notificationsList.map((productData, index) => {
+					return <WishBox key={index} {...productData} />;
+				})
 			)}
 
 			{/* ### test Display ### */}
@@ -29,5 +21,3 @@ export default function Notifications({ notificationsList }) {
 		</ScrollView>
 	);
 }
-
-
