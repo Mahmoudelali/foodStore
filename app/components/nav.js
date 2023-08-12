@@ -7,10 +7,12 @@ import Profile from '../screens/profile.js';
 import Home from '../screens/home';
 import Search from '../screens/search.js';
 import { Platform } from 'react-native';
+import { StatusBar } from 'expo-status-bar';
 const Tab = createBottomTabNavigator();
 export default function Nav() {
 	return (
 		<>
+		<StatusBar backgroundColor="#13d0ca" />
 			<Tab.Navigator
 				screenOptions={({ route }, index) => ({
 					tabBarIcon: ({ size, color, focused }) => {
@@ -53,7 +55,9 @@ export default function Nav() {
 					},
 				})}
 			>
-				<Tab.Screen name="Home" component={Home} />
+				<Tab.Screen name="Home" component={Home} options={{
+						headerTitle: () => <SearchInput />,
+					}} />
 				<Tab.Screen
 					options={{
 						headerTitle: () => <SearchInput />,

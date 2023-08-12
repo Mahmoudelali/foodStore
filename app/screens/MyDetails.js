@@ -19,7 +19,6 @@ const MyDetails = ({ navigation }) => {
 	const genderRadiosProps = {
 		onPress: setUserGender,
 		containerStyle: {
-			zIndex: '100',
 			marginRight: 15,
 		},
 		color: '#13d0ca',
@@ -99,7 +98,7 @@ const MyDetails = ({ navigation }) => {
 					labelText="phone Number"
 				/>
 
-				<View className="flex flex-row  py-6">
+				<View className="flex flex-row  py-3">
 					{GenderLabels.map((gen) => (
 						<RadioButton
 							{...genderRadiosProps}

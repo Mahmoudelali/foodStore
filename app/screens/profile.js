@@ -99,6 +99,8 @@ export default function Profile({ navigation }) {
 		
 		{
 			optionName: 'My Settings',
+			navigation: () => navigation.navigate('AppSetting'),
+
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
