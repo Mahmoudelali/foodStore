@@ -48,7 +48,7 @@ export default function Page() {
 	return (
 		<>
 			<Stack.Navigator
-				initialRouteName={'Checkout'}
+				initialRouteName={'Nav'}
 				screenOptions={screenOptions}
 			>
 				<Stack.Screen name="Welcome" component={WelcomePage} />
