@@ -100,14 +100,14 @@ export default function Page() {
 					name="PurchasedDeals"
 					component={PurchasedDeals}
 				/>
-=
+
 					<Stack.Screen
 					options={{ headerShown: true, title: 'APP SETTING' }}
 					name="AppSetting"
 					component={AppSetting}
 				/>
 					<Stack.Screen
-=
+
 					options={{ headerShown: true, title: 'ABOUT US' }}
 					name="AboutUs"
 					component={About}
