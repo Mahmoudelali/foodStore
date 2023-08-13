@@ -2,18 +2,13 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, Pressable } from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
-
 const ProductDetailSection = ({
 	title,
 	textualContent,
 	icon,
 	extraComponent,
 }) => {
-	const [viewExpanded, setViewExpanded] = useState(false);
-	const iconStyles = {
-		size: 16,
-		color: '#13d0ca',
-	};
+	const [viewExpanded, setViewExpanded] = useState(true);
 	return (
 		<Pressable
 			onPress={() => {
@@ -29,11 +24,10 @@ const ProductDetailSection = ({
 					<Text className="font-semibold tracking-wide text-accent-100 mb-4 text-md">
 						{title ? title : 'title ? '}
 					</Text>
-					{viewExpanded ? (
-						<FontAwesome5 {...iconStyles} name="caret-up" />
-					) : (
-						<FontAwesome5 {...iconStyles} name="caret-down" />
-					)}
+					<FontAwesome5
+						style={styles.iconStyles}
+						name={viewExpanded ? 'caret-up' : 'caret-down'}
+					/>
 				</View>
 
 				{textualContent && (
@@ -66,6 +60,10 @@ const styles = StyleSheet.create({
 	},
 	viewCollapsed: {
 		display: 'none',
+	},
+	iconStyles: {
+		fontSize: 16,
+		color: '#13d0ca',
 	},
 });
 

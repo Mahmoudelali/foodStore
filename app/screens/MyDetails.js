@@ -118,4 +118,7 @@ const MyDetails = ({ navigation }) => {
 		</ScrollView>
 	);
 };
+const styles = StyleSheet.create({
+	container: { flex: 1 },
+});
 export default MyDetails;

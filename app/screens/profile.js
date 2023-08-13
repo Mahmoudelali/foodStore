@@ -23,7 +23,6 @@ const Option = ({ optionName, icon, navigation, navigateName }) => (
 			<View className="absolute bottom-0 right-0 h-[1] w-[80%] bg-gray-300 ml-5" />
 		</View>
 	</Pressable>
-
 );
 
 export default function Profile({ navigation }) {
@@ -79,7 +78,6 @@ export default function Profile({ navigation }) {
 				/>
 			),
 		},
-		
 
 		{
 			optionName: 'About Us',
@@ -93,10 +91,8 @@ export default function Profile({ navigation }) {
 				/>
 			),
 		},
-		
 	];
 	const LastOptions = [
-		
 		{
 			optionName: 'My Settings',
 			navigation: () => navigation.navigate('AppSetting'),
@@ -142,7 +138,7 @@ export default function Profile({ navigation }) {
 					authenticatedUserOptions.map((option, index) => (
 						<Option key={index} {...option} />
 					))}
-						{staticOptions.map((option, index) => (
+				{staticOptions.map((option, index) => (
 					<Option key={index} {...option} />
 				))}
 			</View>
