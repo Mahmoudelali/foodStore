@@ -20,8 +20,12 @@ import MyDetails from './screens/MyDetails';
 import About from './screens/aboutUs';
 import AboutCoupway from './screens/aboutCoupWay';
 import TermsCondition from './screens/termsCondition';
+
+import AppSetting from './screens/appSetting';
+
 import Checkout from './screens/Checkout';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 const screenOptions = {
 	tabBarShowLabel: false,
@@ -96,7 +100,14 @@ export default function Page() {
 					name="PurchasedDeals"
 					component={PurchasedDeals}
 				/>
-				<Stack.Screen
+=
+					<Stack.Screen
+					options={{ headerShown: true, title: 'APP SETTING' }}
+					name="AppSetting"
+					component={AppSetting}
+				/>
+					<Stack.Screen
+=
 					options={{ headerShown: true, title: 'ABOUT US' }}
 					name="AboutUs"
 					component={About}
@@ -121,6 +132,7 @@ export default function Page() {
 					component={Nav}
 					options={{ headerShown: false }}
 				/>
+
 			</Stack.Navigator>
 		</>
 	);
