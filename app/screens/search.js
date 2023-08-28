@@ -4,6 +4,7 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import React, { useState } from 'react';
 import Category from '../components/Category';
 import { useNavigation } from '@react-navigation/native';
+import { images } from '../assets';
 
 const Drawer = createDrawerNavigator();
 
@@ -89,18 +90,7 @@ const Content = ({ setSelectedCategory }) => {
 	);
 };
 const DrawerContent = ({ selectedCategory }) => {
-	const icon =
-		selectedCategory?.image === 'beautyAndSpa'
-			? require('../assets/beautyAndSpa.jpg')
-			: selectedCategory?.image === 'sports'
-			? require('../assets/bicycle.jpg')
-			: selectedCategory?.image === 'electronics'
-			? require('../assets/electricals.jpg')
-			: selectedCategory?.image === 'appliances'
-			? require('../assets/electronics.jpg')
-			: selectedCategory?.image === 'chill'
-			? require('../assets/umbrella.jpg')
-			: require('../assets/foodDrinks.jpg');
+	const icon = images[selectedCategory?.image] || images.default;
 
 	return (
 		<View className="flex-1 ">

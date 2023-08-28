@@ -1,5 +1,6 @@
 import React from 'react';
 import WelcomePage from './screens/Welcome';
+import ProductCard from './components/productCard';
 import Home from './screens/home';
 import Basket from './screens/Basket';
 import Search from './screens/search.js';
@@ -52,6 +53,7 @@ export default function Page() {
 				screenOptions={screenOptions}
 			>
 				<Stack.Screen name="Welcome" component={WelcomePage} />
+				<Stack.Screen name="ProductCard" component={ProductCard} />
 				<Stack.Screen name="Login" component={Login} />
 				<Stack.Screen name="Register" component={Register} />
 				<Stack.Screen name="Basket" component={Basket} />
@@ -63,7 +65,6 @@ export default function Page() {
 					name="MyDetails"
 					component={MyDetails}
 				/>
-
 				<Stack.Screen name="AddressBook" component={AddressBook} />
 				<Stack.Screen name="ProductScreen" component={ProductScreen} />
 				<Stack.Screen name="WishList" component={Notifications} />
