@@ -95,6 +95,8 @@ export default function Profile({ navigation }) {
 	const LastOptions = [
 		{
 			optionName: 'My Settings',
+			navigation: () => navigation.navigate('AppSetting'),
+
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
