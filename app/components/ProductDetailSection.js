@@ -1,5 +1,11 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Text, Pressable } from 'react-native';
+import {
+	View,
+	StyleSheet,
+	Text,
+	Pressable,
+	LayoutAnimation,
+} from 'react-native';
 import { FontAwesome5 } from '@expo/vector-icons';
 
 const ProductDetailSection = ({
@@ -8,10 +14,16 @@ const ProductDetailSection = ({
 	icon,
 	extraComponent,
 }) => {
+	const toggleView = () => {
+		LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+		setViewExpanded(!viewExpanded);
+	};
+
 	const [viewExpanded, setViewExpanded] = useState(true);
 	return (
 		<Pressable
 			onPress={() => {
+				toggleView();
 				setViewExpanded(!viewExpanded);
 			}}
 			className="relative  min-h-[50] border-l-2 border-gray-200"

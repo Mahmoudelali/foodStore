@@ -143,9 +143,7 @@ function Search() {
 				name="Home"
 				options={{ headerShown: false, drawerPosition: 'right' }}
 			>
-				{(props) => (
-					<Content setSelectedCategory={setSelectedCategory} />
-				)}
+				{() => <Content setSelectedCategory={setSelectedCategory} />}
 			</Drawer.Screen>
 		</Drawer.Navigator>
 	);

@@ -30,7 +30,7 @@ const ProductStats = ({
 					Full Value
 				</Text>
 				<Text className="text-center text-black text-sm ">
-					{fullValue ? fullValue : '$100'}
+					{`$${fullValue}`}
 				</Text>
 			</View>
 			<View className="basis-1/4  border-r-2 border-gray-200">
@@ -38,7 +38,7 @@ const ProductStats = ({
 					Price
 				</Text>
 				<Text className="text-center text-sm text-accent-100">
-					{price ? price : '$80'}
+					${price}
 				</Text>
 			</View>
 		</View>

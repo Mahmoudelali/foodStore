@@ -18,16 +18,14 @@ const CountdownClock = ({ targetDate }) => {
 	}, [targetDate]);
 
 	return (
-		<View className="flex flex-row gap-x-1 mx-auto absolute px-2">
+		<View className="flex flex-row gap-x-1 mx-auto absolute top-2 px-2">
 			{remainingTime.map(({ value, label }, index) => (
 				<View key={index}>
-					<Text className="text-center text-lg font-bold ">
+					<Text className="text-center text-lg font-bold text-accent-100 ">
 						{' '}
 						{value}
 					</Text>
-					<Text className="text-center text-xs text-accent-100">
-						{label}
-					</Text>
+					<Text className="text-center text-xs">{label}</Text>
 				</View>
 			))}
 		</View>

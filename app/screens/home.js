@@ -1,54 +1,80 @@
-import React, { useEffect, useState } from 'react';
-import { StatusBar } from 'expo-status-bar';
-import ProductCard from '../components/productCard';
+import React from 'react';
+import { Pressable, StyleSheet } from 'react-native';
+
 import { View, Text, FlatList } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 import NotFound from '../components/NotFound';
-import axios from 'axios';
+import useFetch from '../components/useFetch';
+import HeroCard from '../components/HeroCard';
+import AccessBar from '../components/AccessBar';
+import ProductCard from '../components/productCard';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Home() {
-	const [menuItems, setMenuItems] = useState([]);
-	useEffect(() => {
-		axios.get('http://192.168.0.105:8000/api/getalloffers/').then((res) => {
-			console.log(res.data);
-			setMenuItems(res.data);
-		});
-	}, []);
+	const uri = process.env.EXPO_PUBLIC_SERVER_URL + 'api/getalloffers/';
+	const [data, loading] = useFetch(uri);
 
+	const renderItems = ({ item, index }) => {
+		return (
+			index > 0 && (
+				// <View className="w-full bg-red-200">
+				<ProductCard productScreen={false} item={item} />
+				// {/* </View> */}
+			)
+		);
+	};
 	return (
-		<View>
-			<View className="bg-white p-1 mb-3 flex-row justify-center border-b-2 border-gray-300 ">
-				<StatusBar backgroundColor="#13d0ca" />
-				<Text className="text-gray-400 border-dashed border-2 border-gray-400 px-2 py-0.5 text-sm m-2">
-					Deals
-				</Text>
-
-				<Text className="text-gray-400 border-dashed border-2 border-gray-400 px-2 py-0.5 m-2">
-					Sort By
-				</Text>
-				<Text className="text-gray-400 border-dashed border-2 border-gray-400 px-2 py-0.5 m-2">
-					Price
-				</Text>
-				<Text className="text-gray-400 border-dashed border-2 border-gray-400 px-2 py-0.5 m-2">
-					Distance
-				</Text>
-			</View>
-
-			<FlatList
-				data={menuItems}
-				ListEmptyComponent={<NotFound />}
-				renderItem={({ item, index }) => (
-					<ProductCard
-						isModuloFive={index % 5 == 0 ? true : false}
-						priceBeforeDiscount={item.old_price}
-						priceAfterDiscount={item.new_price}
-						location={item.location}
-						highlight={item.highlights}
-						companyName={item.company}
+		<View className="flex-1">
+			<AccessBar />
+			{loading ? (
+				<Text>Loading</Text>
+			) : (
+				<ScrollView>
+					<HeroCard productScreen={false} item={data[0]} />
+					<FlatList
+						data={data}
+						ListEmptyComponent={<NotFound />}
+						contentContainerStyle={style}
+						keyExtractor={(item) => item.id}
+						renderItem={renderItems}
+						// horizontal={true}
+						numColumns={3}
+						columnWrapperStyle={{
+							display: 'flex',
+							justifyContent: 'space-between',
+						}}
 					/>
-				)}
-				keyExtractor={(item) => item.id}
-			/>
+				</ScrollView>
+			)}
 		</View>
 	);
 }
+const style = {
+	flex: 1,
+	display: 'flex',
+	flexDirection: 'column',
+	paddingHorizontal: 5,
+};
+
+const styles = StyleSheet.create({
+	isModuloFive: {
+		width: '100%',
+	},
+	productListScreen: {
+		padding: 6,
+	},
+	imageStyles: {
+		maxWidth: '100%',
+		height: '100%',
+		objectFit: 'cover',
+	},
+	crownStyles: {
+		maxWidth: '100%',
+		height: '100%',
+	},
+	shadowProp: {
+		shadowColor: '#000',
+		shadowOffset: { width: -2, height: 4 },
+		shadowOpacity: 1,
+		shadowRadius: 10,
+	},
+});
