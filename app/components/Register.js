@@ -74,7 +74,7 @@ const Register = ({ navigation }) => {
 	const genderRadiosProps = {
 		onPress: setUserGender,
 		containerStyle: {
-			zIndex: '100',
+			// zIndex: '100',
 			marginRight: 15,
 		},
 		color: '#13d0ca',
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 	},
 	dropdownStyles: {
-		zIndex: 50,
+		// zIndex: 50,
 		borderRadius: 0,
 		borderStyle: 'dashed',
 		borderWidth: 2,

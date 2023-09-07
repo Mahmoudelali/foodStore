@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 
 import ProductCard from "../components/productCard";
 import { View, Text } from "react-native";
+import Filter from "./HomeFiltter";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <Text className="text-gray-400 border-dashed border-2 border-gray-400 px-2 py-0.5 m-2">Price</Text>
         <Text className="text-gray-400 border-dashed border-2 border-gray-400 px-2 py-0.5 m-2">Distance</Text>
       </View>
+  
       <ProductCard />
     </>
   );

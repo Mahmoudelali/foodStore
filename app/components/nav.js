@@ -45,6 +45,7 @@ export default function Nav() {
 					},
 					tabBarShowLabel: false,
 					headerShown: true,
+					headerTintColor:"white",
 					headerStyle: {
 						backgroundColor: '#13d0ca',
 					},

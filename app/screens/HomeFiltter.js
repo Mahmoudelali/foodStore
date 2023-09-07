@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, Image, Pressable, Alert } from "react-native";
+import { View, Text, StyleSheet, Pressable, Alert } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import React, { useState } from "react";
@@ -11,21 +11,11 @@ const Content = ({ setSelectedCategory }) => {
   const navigation = useNavigation();
   const categories = [
     {
-      image: "foodAndDrinks",
-      categoryName: "food and drinks",
-      subCategories: [
-        "Fine Dining",
-        "Pizza ",
-        "Pasta",
-        "Fast Food",
-        "Sushi",
-        "Alcohol",
-        "Tobacco",
-      ],
+      categoryName: "Deals",
+      subCategories: ["Premium Deals", "All Deals "],
     },
     {
-      image: "beautyAndSpa",
-      categoryName: "beauty and spa",
+      categoryName: "Sort By",
       subCategories: [
         "Nails Spa",
         "Salon For Ladies",
@@ -35,13 +25,11 @@ const Content = ({ setSelectedCategory }) => {
       ],
     },
     {
-      image: "sports",
-      categoryName: "Activities",
+      categoryName: "Price",
       subCategories: ["Outdoor", "Indoor", "Classes"],
     },
     {
-      image: "electronics",
-      categoryName: "electronics",
+      categoryName: "Distance",
       subCategories: [
         "Phones",
         "Laptops",
@@ -52,27 +40,9 @@ const Content = ({ setSelectedCategory }) => {
         "Home Appliances",
       ],
     },
-    {
-      image: "appliances",
-      categoryName: "Home",
-      subCategories: [
-        "Kitchen",
-        "Bathroom products",
-        "Bedroom products",
-        "Dinning &  bar",
-        "Home Storage",
-        "Garden Suplies",
-        "Home Decor",
-      ],
-    },
-    {
-      image: "chill",
-      categoryName: "Getaways",
-      subCategories: ["Cruises", "Hotels and Escapes", "Resorts"],
-    },
   ];
   return (
-    <ScrollView>
+   
       <View className="p-4">
         {categories.map((category, index) => (
           <Category
@@ -85,34 +55,14 @@ const Content = ({ setSelectedCategory }) => {
           />
         ))}
       </View>
-    </ScrollView>
+   
   );
 };
 const DrawerContent = ({ selectedCategory }) => {
-  const icon =
-    selectedCategory?.image === "beautyAndSpa"
-      ? require("../assets/beautyAndSpa.jpg")
-      : selectedCategory?.image === "sports"
-      ? require("../assets/bicycle.jpg")
-      : selectedCategory?.image === "electronics"
-      ? require("../assets/electricals.jpg")
-      : selectedCategory?.image === "appliances"
-      ? require("../assets/electronics.jpg")
-      : selectedCategory?.image === "chill"
-      ? require("../assets/umbrella.jpg")
-      : require("../assets/foodDrinks.jpg");
-
   return (
-    <View className="flex-1 ">
+    <View className="flex-1 h-fit">
       <View className="pt-14">
         <View className="mb-6 ">
-          <View className="w-full h-28 mx-auto ">
-            <Image
-              source={icon}
-              style={styles.imageStyles}
-              className="mx-auto"
-            />
-          </View>
           <Text className="uppercase font-bold text-center my-4 tracking-widest">
             {selectedCategory?.categoryName}
           </Text>
@@ -141,7 +91,7 @@ const DrawerContent = ({ selectedCategory }) => {
     </View>
   );
 };
-function Search() {
+function Filter() {
   const [selectedCategory, setSelectedCategory] = useState(null);
   return (
     <Drawer.Navigator
@@ -151,7 +101,7 @@ function Search() {
     >
       <Drawer.Screen
         name="Home"
-        options={{ headerShown: false, drawerPosition: "right" }}
+        options={{ headerShown: false ,drawerPosition:"right"}}
       >
         {(props) => <Content setSelectedCategory={setSelectedCategory} />}
       </Drawer.Screen>
@@ -164,17 +114,13 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     fontSize: 16,
   },
-  imageStyles: {
-    marginHorizontal: "auto",
-    maxWidth: "100%",
-    maxHeight: "100%",
-    objectFit: "contain",
-  },
+
   borderBottom: {
     borderBottomWidth: 1,
     borderBottomColor: "#bbb",
     marginBottom: 10,
     paddingBottom: 5,
   },
+
 });
-export default Search;
+export default Filter;
