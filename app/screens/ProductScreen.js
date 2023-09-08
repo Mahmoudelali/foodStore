@@ -13,38 +13,43 @@ import CountdownClock from '../components/CounterClock';
 import Button from '../components/Button';
 import useFetch from '../components/useFetch';
 
-const iconStyles = { size: 14, color: '#13d0ca' };
-
 const ProductScreen = ({ route }) => {
 	const id = route.params.product;
-
 	uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${id}`;
 	const feedbacks_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${id}/provide-feedback`;
+	const [feedbacks, feedbackLoading, setFeedbacks] = useFetch(feedbacks_uri);
 	const [data, loading] = useFetch(uri);
-	const [feedbacks, feedbackLoading] = useFetch(feedbacks_uri);
-
 	const productScreenData = [
 		{
 			title: 'What you get',
 			textualContent: data?.compensations,
-			icon: <Ionicons name="bulb" {...iconStyles} />,
+			icon: <Ionicons name="bulb" size={14} color="#13d0ca" />,
 		},
 		{
 			title: 'About This Deal',
 			textualContent: data?.description,
-			icon: <Entypo name="info-with-circle" {...iconStyles} />,
+			icon: <Entypo name="info-with-circle" size={14} color="#13d0ca" />,
 		},
 		{
 			title: 'The Fine Print',
 			textualContent: data?.fine_print,
-			icon: <Ionicons name="newspaper" {...iconStyles} />,
+			icon: <Ionicons name="newspaper" size={14} color="#13d0ca" />,
 		},
 		{
 			title: 'Feedbacks',
 			extraComponent: (
 				<>
-					<Feedback feedbacks={feedbacks} />
-					<Comment offer_id={id} />
+					{feedbackLoading ? (
+						<Text>Loading</Text>
+					) : (
+						<Feedback feedbacks={feedbacks} />
+					)}
+					<Comment
+						offer_id={id}
+						setFeedbacks={setFeedbacks}
+						feedbacks={feedbacks}
+						feedback_loading={feedbackLoading}
+					/>
 				</>
 			),
 			icon: <MaterialIcons name="feedback" size={14} color="#13d0ca" />,

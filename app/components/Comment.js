@@ -1,44 +1,56 @@
-import React, { useState } from 'react';
-import { Pressable, View, StyleSheet, TextInput } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { Pressable, Text, View, StyleSheet, TextInput } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
-import { Alert } from 'react-native';
 import axios from 'axios';
 
-const Comment = ({ offer_id }) => {
-	const [feedback, setFeedback] = useState(null);
-	const feedback_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${offer_id}/provide-feedback`;
+const Comment = ({ offer_id, setFeedbacks, feedback_loading, feedbacks }) => {
+	const [feedback, setFeedback] = useState('');
+	const [error, setError] = useState(false);
+	const user_id = 2; //to be changed later
 
-	const add_review = () => {
+	let req_body = { user_id, offer_id, feedback_content: '' };
+	useEffect(() => {
+		req_body = { ...req_body, feedback_content: feedback };
+	}, [feedback]);
+	const feedback_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${offer_id}/provide-feedback`;
+	const handlePostFeedback = () => {
 		axios
-			.post(feedback_uri, {
-				username: 'mahmoud',
-				feedback_content: feedback,
-				offer: offer_id,
-			})
+			.post(feedback_uri, req_body)
 			.then((response) => {
 				console.log(response.data);
+				setFeedbacks([...feedbacks, response.data]);
 			})
-			.catch((error) => console.error(error));
+			.catch((error) => console.log(error.message));
 	};
-
 	return (
-		<View className="bg-gray-100 px-4 py-6 flex flex-row gap-x-2 mb-4">
-			<TextInput
-				className="bg-white w-[85%] pl-2"
-				keyboardType="default"
-				placeholder="Write comment.."
-				placeholderTextColor={'gray'}
-				multiline={true}
-				onChangeText={setFeedback}
-			/>
-			<Pressable className="" onPress={() => Alert.alert('Hi')}>
-				<MaterialIcons
-					name="insert-comment"
-					size={26}
-					color={'#13d0ca'}
-					onPress={() => add_review()}
+		<View className="mb-4">
+			<View className="bg-gray-100 px-4 py-6 flex flex-row gap-x-2">
+				<TextInput
+					className="bg-white w-[85%] pl-2"
+					keyboardType="default"
+					placeholder="Write comment.."
+					placeholderTextColor={'gray'}
+					multiline={true}
+					onChangeText={setFeedback}
 				/>
-			</Pressable>
+				<Pressable className="" onPress={() => handlePostFeedback()}>
+					<MaterialIcons
+						name="insert-comment"
+						size={26}
+						color={'#13d0ca'}
+						onPress={() =>
+							feedback != ''
+								? handlePostFeedback()
+								: setError(true)
+						}
+					/>
+				</Pressable>
+			</View>
+			{error && (
+				<Text className="text-red-500 ml-1 font-semibold text-xs">
+					Please Provide a valid feedback..
+				</Text>
+			)}
 		</View>
 	);
 };

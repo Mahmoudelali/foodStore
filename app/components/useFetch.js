@@ -25,7 +25,7 @@ const useFetch = (url, method = 'GET', postData = null) => {
 			});
 	}, [url, method, postData]);
 
-	return [data, loading];
+	return [data, loading, setData];
 };
 
 export default useFetch;

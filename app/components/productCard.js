@@ -26,7 +26,6 @@ export const DealPrices = ({ is_hero, old_price, new_price }) => (
 	</View>
 );
 const ProductCard = ({ item, productScreen }) => {
-	console.log(item);
 	const navigation = useNavigation();
 
 	return (
