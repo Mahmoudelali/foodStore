@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, createContext, useEffect } from 'react';
+
 import WelcomePage from './screens/Welcome';
 import ProductCard from './components/productCard';
 import Home from './screens/home';
@@ -44,11 +45,14 @@ const screenOptions = {
 };
 
 const Stack = createNativeStackNavigator();
+export const BasketContext = createContext();
 export default function Page() {
 	const token = false;
 	const initialRouteName = token ? 'Nav' : 'Login';
+
+	const [basket, setBasket] = useState([]);
 	return (
-		<>
+		<BasketContext.Provider value={[basket, setBasket]}>
 			<Stack.Navigator
 				initialRouteName={'Nav'}
 				screenOptions={screenOptions}
@@ -130,6 +134,6 @@ export default function Page() {
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>
-		</>
+		</BasketContext.Provider>
 	);
 }

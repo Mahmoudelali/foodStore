@@ -1,11 +1,18 @@
 import React from 'react';
 import { View, StyleSheet, Pressable, Image, Text, Alert } from 'react-native';
 
-const BasketItem = ({ image, title, placeName, price }) => {
+const BasketItem = ({
+	image,
+	highlights,
+	placeName,
+	price,
+	location,
+	pressHandler,
+}) => {
 	return (
-		<Pressable onPress={() => Alert.alert('pressed')} className="p-2">
-			<View className="flex flex-row h-28 bg-white p-2">
-				<View className=" w-[30%]">
+		<Pressable onPress={pressHandler} className="p-2">
+			<View className="flex flex-row h-28 bg-white p-2 ">
+				<View className=" w-[30%] h-30 ">
 					<Image
 						source={{
 							uri: 'https://images.pexels.com/photos/566345/pexels-photo-566345.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
@@ -17,17 +24,19 @@ const BasketItem = ({ image, title, placeName, price }) => {
 				</View>
 
 				<View className="ml-1 px-1 basis-[65%] flex justify-evenly">
-					<Text className="font-bold">{price || '$ 20.00'}</Text>
+					<Text className="font-bold">$ {price}</Text>
 					<View className="self-start">
-						<Text className="text-xs">
-							20% discount on sea food dishes
+						<Text className="text-xs text-gray-500">
+							{highlights}
 						</Text>
 
-						<Text className="text-md  text-accent-100 uppercase font-semibold ">
-							RestoName
-						</Text>
-						<Text className="text-sm text-gray-500 ">
-							lorem lorem
+						<Text>
+							<Text className="text-md  text-accent-100 uppercase font-semibold ">
+								{placeName}
+							</Text>
+							<Text className="text-sm text-gray-500 ">
+								{location}
+							</Text>
 						</Text>
 					</View>
 				</View>

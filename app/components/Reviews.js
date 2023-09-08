@@ -14,7 +14,7 @@ const Feedback = ({ feedbacks }) => {
 				feedbacks &&
 				feedbacks.map(({ user, feedback_content, id }) => (
 					<View className="flex flex-row  mb-5" key={id}>
-						<View className="h-12 w-12 rounded-[50%] mt-1">
+						<View className="h-12 w-8 rounded-[50%] mt-1">
 							<Image
 								source={user_icon}
 								resizeMode="contain"
@@ -22,10 +22,10 @@ const Feedback = ({ feedbacks }) => {
 							/>
 						</View>
 						<View className="ml-2 overflow-hidden ">
-							<Text className="text-[14px] text-gray-600 text-ellipsis uppercase font-bold italic">
+							<Text className="text-[13px] text-gray-600 text-ellipsis uppercase font-bold italic">
 								{user.username}
 							</Text>
-							<Text className="text-gray-500 text-xs">
+							<Text className="text-gray-500 text-xs text-ellipsis">
 								{feedback_content}
 							</Text>
 						</View>
@@ -40,7 +40,8 @@ const styles = StyleSheet.create({
 	userImageIcon: {
 		maxWidth: '100%',
 		height: '100%',
-		objectFit: 'contain',
+		objectFit: 'cover',
+		marginTop: -6,
 	},
 });
 

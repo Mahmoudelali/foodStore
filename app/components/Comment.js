@@ -19,6 +19,8 @@ const Comment = ({ offer_id, setFeedbacks, feedback_loading, feedbacks }) => {
 			.then((response) => {
 				console.log(response.data);
 				setFeedbacks([...feedbacks, response.data]);
+				setFeedback('');
+				setError(false);
 			})
 			.catch((error) => console.log(error.message));
 	};
@@ -32,6 +34,7 @@ const Comment = ({ offer_id, setFeedbacks, feedback_loading, feedbacks }) => {
 					placeholderTextColor={'gray'}
 					multiline={true}
 					onChangeText={setFeedback}
+					value={feedback}
 				/>
 				<Pressable className="" onPress={() => handlePostFeedback()}>
 					<MaterialIcons

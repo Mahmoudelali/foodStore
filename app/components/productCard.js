@@ -1,7 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, Pressable, Alert } from 'react-native';
+import { View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import Switcher from './Switcher';
 import ProductGradient from './productGradient';
 import { useNavigation } from '@react-navigation/native';
 import ProductUserActions from './ProductUserActions';
@@ -32,7 +31,7 @@ const ProductCard = ({ item, productScreen }) => {
 		<>
 			<Pressable
 				onPress={() => {
-					navigation.navigate('ProductScreen', {
+					navigation.push('ProductScreen', {
 						product: item.id,
 						productScreen: true,
 					});
@@ -48,7 +47,7 @@ const ProductCard = ({ item, productScreen }) => {
 					start={{ x: 0, y: 0.2 }}
 					end={{ x: 0.9, y: 0.2 }}
 				>
-					{productScreen && <ProductUserActions />}
+					{productScreen && <ProductUserActions offer={item} />}
 					<View
 						className="w-full min-h-64 flex flex-row items-center justify-center"
 						style={

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { createContext, useContext, useState } from 'react';
 import { View, Text } from 'react-native';
 import { Entypo, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -19,6 +19,7 @@ const ProductScreen = ({ route }) => {
 	const feedbacks_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${id}/provide-feedback`;
 	const [feedbacks, feedbackLoading, setFeedbacks] = useFetch(feedbacks_uri);
 	const [data, loading] = useFetch(uri);
+
 	const productScreenData = [
 		{
 			title: 'What you get',
@@ -62,33 +63,38 @@ const ProductScreen = ({ route }) => {
 	];
 
 	return (
-		<ScrollView>
-			{loading ? (
-				<Text>Loading.. </Text>
-			) : (
-				<View className="flex-1 min-h-screen pb-8 bg-white">
-					<ProductCard
-						productScreen={true}
-						isModuloFive={true}
-						item={data}
-					/>
-					<ProductStats
-						fullValue={data.old_price}
-						price={data.new_price}
-					/>
-					<CountdownClock targetDate={'2023-10-31T23:59:59'} />
-					<View className="bg-white flex-1 pl-12 pr-2 pt-6 ">
-						{productScreenData.map((section, index) => (
-							<ProductDetailSection key={index} {...section} />
-						))}
+		<>
+			<ScrollView>
+				{loading ? (
+					<Text>Loading.. </Text>
+				) : (
+					<View className="flex-1 min-h-screen pb-8 bg-white">
+						<ProductCard
+							productScreen={true}
+							isModuloFive={true}
+							item={data}
+						/>
+						<ProductStats
+							fullValue={data.old_price}
+							price={data.new_price}
+						/>
+						<CountdownClock targetDate={'2023-10-31T23:59:59'} />
+						<View className="bg-white flex-1 pl-12 pr-2 pt-6 ">
+							{productScreenData.map((section, index) => (
+								<ProductDetailSection
+									key={index}
+									{...section}
+								/>
+							))}
+						</View>
+						<Button
+							label={'Buy deal'}
+							onPress={() => Alert.alert('clicked')}
+						/>
 					</View>
-					<Button
-						label={'Buy deal'}
-						onPress={() => Alert.alert('clicked')}
-					/>
-				</View>
-			)}
-		</ScrollView>
+				)}
+			</ScrollView>
+		</>
 	);
 };
 

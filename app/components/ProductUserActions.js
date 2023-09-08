@@ -1,17 +1,38 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Pressable } from 'react-native';
 import { View, StyleSheet } from 'react-native';
 import AddToWhishlist from './AddToWhishlist';
 import { Ionicons } from '@expo/vector-icons';
+import { BasketContext } from '../index.js';
 
-const AddToBasket = () => {
-	const [pressed, handlePress] = useState(false);
+const AddToBasket = ({ offer }) => {
+	const [basket, setBasket] = useContext(BasketContext);
+	// const [pressed, handlePress] = useState(basket.includes(offer));
+	const [isClicked, setIsClicked] = useState(false);
+	console.log("basketttt", JSON.stringify(basket, null, 2));
+	const handlePress = () => {
+		let basketObj = [...basket];
+		if (isClicked) { 
+			basketObj = basketObj.filter(b => b.id != offer.id);
+			setIsClicked(false)
+		} else {
+			basketObj.push(offer);
+			
+		}
+		setBasket(basketObj);
+	}
+	useEffect(() => {
+		if (!basket) return;
+		if (basket.find(b => b.id === offer.id)) setIsClicked(true);
+	},[basket])
 	return (
-		<Pressable onPress={() => handlePress(!pressed)}>
+		<Pressable
+			onPress={handlePress }
+		>
 			<Ionicons
-				name={pressed ? 'cart-outline' : 'cart'}
+				name={isClicked == false ? 'cart-outline' : 'cart'}
 				style={
-					pressed
+					isClicked == false
 						? styles.iconStyles
 						: [styles.iconStyles, styles.cartIconPressed]
 				}
@@ -19,7 +40,7 @@ const AddToBasket = () => {
 		</Pressable>
 	);
 };
-const ProductUserActions = () => {
+const ProductUserActions = ({ offer }) => {
 	return (
 		<View className="absolute top-1 -right-2 my-1 mr-3 z-50 flex flex-row">
 			<Pressable>
@@ -29,7 +50,7 @@ const ProductUserActions = () => {
 				/>
 			</Pressable>
 			<AddToWhishlist />
-			<AddToBasket />
+			<AddToBasket offer={offer} />
 		</View>
 	);
 };
