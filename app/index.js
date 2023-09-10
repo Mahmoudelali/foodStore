@@ -43,7 +43,7 @@ const screenOptions = {
 		backgroundColor: '#13d0ca',
 	},
 };
-
+export const uri = process.env.EXPO_PUBLIC_SERVER_URL;
 const Stack = createNativeStackNavigator();
 export const BasketContext = createContext();
 export default function Page() {

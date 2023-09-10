@@ -5,6 +5,7 @@ import ProductGradient from './productGradient';
 import { useNavigation } from '@react-navigation/native';
 import ProductUserActions from './ProductUserActions';
 import NotificationToggle from './NotificationToggle';
+import { uri } from '../index.js';
 
 export const DealPrices = ({ is_hero, old_price, new_price }) => (
 	<View className="self-end">
@@ -26,6 +27,8 @@ export const DealPrices = ({ is_hero, old_price, new_price }) => (
 );
 const ProductCard = ({ item, productScreen }) => {
 	const navigation = useNavigation();
+	const image = `${uri + item?.main_picture}`;
+	console.log(image);
 
 	return (
 		<>
@@ -56,18 +59,20 @@ const ProductCard = ({ item, productScreen }) => {
 								: styles.productListScreen
 						}
 					>
-						<View className="relative w-full h-full overflow-hidden mx-auto ">
+						<View className="relative w-full h-full overflow-hidden mx-auto">
 							<Image
 								source={{
-									uri: 'https://images.pexels.com/photos/566345/pexels-photo-566345.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+									uri: !productScreen
+										? image
+										: item?.main_picture,
 								}}
 								alt="food image"
 								resizeMode={'cover'}
 								style={styles.imageStyles}
 							/>
 							<ProductGradient
-								height={!productScreen ? 80 : 110}
-								bottom={10}
+								height={!productScreen ? 90 : 120}
+								bottom={!productScreen ? -1 : -4}
 							/>
 							<View
 								className={
@@ -84,15 +89,17 @@ const ProductCard = ({ item, productScreen }) => {
 
 								{productScreen && <NotificationToggle />}
 								<View className="self-start">
-									<Text
-										className={
-											!productScreen
-												? 'text-xs'
-												: 'text-sm'
-										}
-									>
-										{item.highlights}
-									</Text>
+									{!productScreen && (
+										<Text
+											className={
+												!productScreen
+													? 'text-xs'
+													: 'text-sm'
+											}
+										>
+											{!item.highlights}
+										</Text>
+									)}
 									<Text>
 										<Text
 											className={
@@ -143,5 +150,10 @@ const styles = StyleSheet.create({
 		shadowOpacity: 1,
 		shadowRadius: 10,
 	},
+
+	container: {
+		paddingTop: 50,
+	},
 });
+
 export default ProductCard;

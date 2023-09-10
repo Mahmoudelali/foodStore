@@ -6,10 +6,13 @@ import { DealPrices } from './productCard';
 import ProductUserActions from './ProductUserActions';
 import Switcher from './Switcher';
 import { useNavigation } from '@react-navigation/native';
+import { uri } from '../index.js';
 
 const HeroCard = ({ productScreen, item }) => {
+	const image = `${uri + item?.main_picture}`;
+	console.log(image);
 	const navigation = useNavigation();
-
+	console.log(item?.main_picture);
 	return (
 		<Pressable
 			onPress={() => {
@@ -51,9 +54,9 @@ const HeroCard = ({ productScreen, item }) => {
 
 						<Image
 							source={{
-								uri: 'https://images.pexels.com/photos/566345/pexels-photo-566345.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+								uri: image,
 							}}
-							alt="food image"
+							alt="item image"
 							resizeMode={'cover'}
 							style={styles.imageStyles}
 						/>
@@ -74,7 +77,7 @@ const HeroCard = ({ productScreen, item }) => {
 							)}
 
 							<View className="self-start">
-								<Text className="text-lg">
+								<Text className="text-base text-gray-600 ">
 									{item.highlights}
 								</Text>
 								<Text>
@@ -110,6 +113,7 @@ const styles = StyleSheet.create({
 		maxWidth: '100%',
 		height: '100%',
 		objectFit: 'cover',
+		backgroundColor: 'gray',
 	},
 	crownStyles: {
 		maxWidth: '100%',

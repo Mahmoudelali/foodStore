@@ -6,7 +6,7 @@ import axios from 'axios';
 const Comment = ({ offer_id, setFeedbacks, feedback_loading, feedbacks }) => {
 	const [feedback, setFeedback] = useState('');
 	const [error, setError] = useState(false);
-	const user_id = 2; //to be changed later
+	const user_id = 1; //to be changed later
 
 	let req_body = { user_id, offer_id, feedback_content: '' };
 	useEffect(() => {

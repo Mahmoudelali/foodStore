@@ -4,6 +4,7 @@ import { Pressable, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { BasketContext } from '../index.js';
 import { useNavigation } from '@react-navigation/native';
+import NotFound from '../components/NotFound';
 
 const Basket = () => {
 	const navigation = useNavigation();
@@ -12,7 +13,7 @@ const Basket = () => {
 	return (
 		<ScrollView>
 			{basket.length == 0 ? (
-				<Text>You didn't pick any items </Text>
+				<NotFound label={'Which List is empty!'} />
 			) : (
 				<Pressable>
 					{basket.map((off, index) => (
