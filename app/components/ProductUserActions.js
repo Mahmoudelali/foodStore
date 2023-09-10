@@ -9,26 +9,23 @@ const AddToBasket = ({ offer }) => {
 	const [basket, setBasket] = useContext(BasketContext);
 	// const [pressed, handlePress] = useState(basket.includes(offer));
 	const [isClicked, setIsClicked] = useState(false);
-	console.log("basketttt", JSON.stringify(basket, null, 2));
+	console.log('basketttt', JSON.stringify(basket, null, 2));
 	const handlePress = () => {
 		let basketObj = [...basket];
-		if (isClicked) { 
-			basketObj = basketObj.filter(b => b.id != offer.id);
-			setIsClicked(false)
+		if (isClicked) {
+			basketObj = basketObj.filter((b) => b.id != offer.id);
+			setIsClicked(false);
 		} else {
 			basketObj.push(offer);
-			
 		}
 		setBasket(basketObj);
-	}
+	};
 	useEffect(() => {
 		if (!basket) return;
-		if (basket.find(b => b.id === offer.id)) setIsClicked(true);
-	},[basket])
+		if (basket.find((b) => b.id === offer.id)) setIsClicked(true);
+	}, [basket]);
 	return (
-		<Pressable
-			onPress={handlePress }
-		>
+		<Pressable onPress={handlePress}>
 			<Ionicons
 				name={isClicked == false ? 'cart-outline' : 'cart'}
 				style={
@@ -49,7 +46,7 @@ const ProductUserActions = ({ offer }) => {
 					name="share-social-outline"
 				/>
 			</Pressable>
-			<AddToWhishlist />
+			{/* <AddToWhishlist /> */}
 			<AddToBasket offer={offer} />
 		</View>
 	);

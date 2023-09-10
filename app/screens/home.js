@@ -1,6 +1,4 @@
 import React from 'react';
-import { Pressable, StyleSheet } from 'react-native';
-
 import { View, Text, FlatList } from 'react-native';
 import NotFound from '../components/NotFound';
 import useFetch from '../components/useFetch';
@@ -13,15 +11,9 @@ export default function Home() {
 	const uri = process.env.EXPO_PUBLIC_SERVER_URL + 'api/getalloffers/';
 	const [data, loading] = useFetch(uri);
 
-	const renderItems = ({ item, index }) => {
-		return (
-			index > 0 && (
-				// <View className="w-full bg-red-200">
-				<ProductCard productScreen={false} item={item} />
-				// {/* </View> */}
-			)
-		);
-	};
+	const renderItems = ({ item, index }) =>
+		index > 0 && <ProductCard productScreen={false} item={item} />;
+
 	return (
 		<View className="flex-1">
 			<AccessBar />
@@ -36,7 +28,6 @@ export default function Home() {
 						contentContainerStyle={style}
 						keyExtractor={(item) => item.id}
 						renderItem={renderItems}
-						// horizontal={true}
 						numColumns={3}
 						columnWrapperStyle={{
 							display: 'flex',
@@ -54,27 +45,3 @@ const style = {
 	flexDirection: 'column',
 	paddingHorizontal: 5,
 };
-
-const styles = StyleSheet.create({
-	isModuloFive: {
-		width: '100%',
-	},
-	productListScreen: {
-		padding: 6,
-	},
-	imageStyles: {
-		maxWidth: '100%',
-		height: '100%',
-		objectFit: 'cover',
-	},
-	crownStyles: {
-		maxWidth: '100%',
-		height: '100%',
-	},
-	shadowProp: {
-		shadowColor: '#000',
-		shadowOffset: { width: -2, height: 4 },
-		shadowOpacity: 1,
-		shadowRadius: 10,
-	},
-});
