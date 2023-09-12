@@ -1,13 +1,20 @@
 import { View, Text, StyleSheet, Image, Pressable, Alert } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Category from "../components/Category";
 import { useNavigation } from "@react-navigation/native";
-
+import axios from 'axios'
 const Drawer = createDrawerNavigator();
 
-const Content = ({ setSelectedCategory }) => {
+
+
+
+
+
+const Content = ({ setSelectedCategory ,categoriesData}) => {
+console.log(categoriesData)
+
   const navigation = useNavigation();
   const categories = [
     {
@@ -74,16 +81,18 @@ const Content = ({ setSelectedCategory }) => {
   return (
     <ScrollView>
       <View className="p-4">
-        {categories.map((category, index) => (
+      {categoriesData?categoriesData.map((category, index) => (
           <Category
             onPress={() => {
               setSelectedCategory(category);
               navigation.openDrawer();
             }}
             key={index}
-            {...category}
+            // image={category.image} // Use the image property from the API data
+            categoryName={category.name} 
+            subCategories={category.subcategories.map((subCategory) => subCategory.name)} 
           />
-        ))}
+        )):null}
       </View>
     </ScrollView>
   );
@@ -143,6 +152,21 @@ const DrawerContent = ({ selectedCategory }) => {
 };
 function Search() {
   const [selectedCategory, setSelectedCategory] = useState(null);
+  const [categoriesData, setCategoriesData] = useState([]);
+
+  useEffect(() => {
+    
+    axios
+      .get("http://127.0.0.1:8000/api/getcategories/")
+      .then((response) => {
+        
+        setCategoriesData(response.data);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+      });
+  }, []); 
+
   return (
     <Drawer.Navigator
       drawerContent={() => (
@@ -153,7 +177,7 @@ function Search() {
         name="Home"
         options={{ headerShown: false, drawerPosition: "right" }}
       >
-        {(props) => <Content setSelectedCategory={setSelectedCategory} />}
+        {(props) => <Content setSelectedCategory={setSelectedCategory} categories={categoriesData}/>}
       </Drawer.Screen>
     </Drawer.Navigator>
   );
