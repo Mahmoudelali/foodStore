@@ -43,6 +43,11 @@ const screenOptions = {
 		backgroundColor: '#13d0ca',
 	},
 };
+export const toast_options = {
+	visibilityTime: 2000,
+	position: 'top',
+	topOffset: 10,
+};
 export const uri = process.env.EXPO_PUBLIC_SERVER_URL;
 const Stack = createNativeStackNavigator();
 export const BasketContext = createContext();

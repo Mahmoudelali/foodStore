@@ -15,7 +15,7 @@ const BasketItem = ({
 				<View className=" w-[30%] h-30 ">
 					<Image
 						source={{
-							uri: 'https://images.pexels.com/photos/566345/pexels-photo-566345.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+							uri: image,
 						}}
 						alt="food image"
 						resizeMode={'cover'}

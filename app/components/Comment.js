@@ -1,12 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { forwardRef, useEffect, useState } from 'react';
 import { Pressable, Text, View, StyleSheet, TextInput } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
+import Toast from 'react-native-toast-message';
+import { toast_options } from '../index.js';
 
-const Comment = ({ offer_id, setFeedbacks, feedback_loading, feedbacks }) => {
+const Comment = ({
+	offer_id,
+	setFeedbacks,
+	feedback_loading,
+	feedbacks,
+	toTop,
+}) => {
 	const [feedback, setFeedback] = useState('');
 	const [error, setError] = useState(false);
-	const user_id = 1; //to be changed later
+
+	const user_id = 1;
 
 	let req_body = { user_id, offer_id, feedback_content: '' };
 	useEffect(() => {
@@ -21,6 +30,12 @@ const Comment = ({ offer_id, setFeedbacks, feedback_loading, feedbacks }) => {
 				setFeedbacks([...feedbacks, response.data]);
 				setFeedback('');
 				setError(false);
+				Toast.show({
+					type: 'success',
+					text1: 'Thanks for your feedback',
+					text2: 'It is highly appreciated',
+					position: 'top',
+				});
 			})
 			.catch((error) => console.log(error.message));
 	};
@@ -36,16 +51,16 @@ const Comment = ({ offer_id, setFeedbacks, feedback_loading, feedbacks }) => {
 					onChangeText={setFeedback}
 					value={feedback}
 				/>
-				<Pressable className="" onPress={() => handlePostFeedback()}>
+				<Pressable
+					onPress={() => {
+						feedback != '' && toTop();
+						feedback != '' ? handlePostFeedback() : setError(true);
+					}}
+				>
 					<MaterialIcons
 						name="insert-comment"
 						size={26}
 						color={'#13d0ca'}
-						onPress={() =>
-							feedback != ''
-								? handlePostFeedback()
-								: setError(true)
-						}
 					/>
 				</Pressable>
 			</View>
@@ -57,7 +72,5 @@ const Comment = ({ offer_id, setFeedbacks, feedback_loading, feedbacks }) => {
 		</View>
 	);
 };
-
-const styles = StyleSheet.create({});
 
 export default Comment;

@@ -1,8 +1,8 @@
-import React, { createContext, useContext, useState } from 'react';
-import { View, Text } from 'react-native';
+import React, { useRef } from 'react';
+import { View, Text, Linking } from 'react-native';
 import { Entypo, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
-import { Alert } from 'react-native';
+import Toast from 'react-native-toast-message';
 import ProductCard from '../components/productCard';
 import ProductStats from '../components/ProductStats';
 import ProductDetailSection from '../components/ProductDetailSection';
@@ -12,13 +12,78 @@ import Feedback from '../components/Reviews';
 import CountdownClock from '../components/CounterClock';
 import Button from '../components/Button';
 import useFetch from '../components/useFetch';
+import axios from 'axios';
+import { toast_options } from '../index.js';
+
+const showToast = (type, label1, label2) => {
+	return Toast.show({
+		type: type,
+		text1: label1,
+		text2: label2 || '',
+	});
+};
 
 const ProductScreen = ({ route }) => {
-	const id = route.params.product;
-	uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${id}`;
-	const feedbacks_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${id}/provide-feedback`;
+	const scrollRef = useRef();
+
+	const toTop = () => {
+		console.log('scroll Fired');
+		scrollRef.current?.scrollTo({
+			y: 0,
+			animated: true,
+		});
+	};
+
+	const sendWhatsAppMessage = (number, message) => {
+		const whatsappUrl = `whatsapp://send?phone=${number}&text=${encodeURIComponent(
+			message,
+		)}`;
+
+		Linking.openURL(whatsappUrl)
+			.then(() => console.log('WhatsApp message sent'))
+			.catch((error) =>
+				console.error('Error sending WhatsApp message', error),
+			);
+	};
+
+	const user_id = 1;
+	const offer_id = route.params.product;
+	uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${offer_id}`;
+	const order_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/createorder/`;
+	const feedbacks_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${offer_id}/provide-feedback`;
 	const [feedbacks, feedbackLoading, setFeedbacks] = useFetch(feedbacks_uri);
 	const [data, loading] = useFetch(uri);
+	const order_data = [
+		{
+			user_id,
+			offer_id,
+			coupons_ordered: 1,
+			test: 'test',
+		},
+	];
+
+	const postOffer = () => {
+		axios
+			.post(order_uri, order_data)
+			.then((res) => {
+				console.log(res.data[0]);
+				const offer = res.data[0];
+				showToast(
+					'success',
+					'Order placed successfully',
+					'Redirecting to Whatsapp..',
+				);
+				var message = `Hi, i'm interested to order the offer with 
+Offer id : ${offer.id}
+My id : ${offer.user_id}
+Activate it for me ASAP, please.
+				`;
+				setTimeout(() => {
+					sendWhatsAppMessage('96176325264', message);
+				}, 2000);
+			})
+			.catch((err) => console.log(err.message));
+	};
 
 	const productScreenData = [
 		{
@@ -46,7 +111,8 @@ const ProductScreen = ({ route }) => {
 						<Feedback feedbacks={feedbacks} />
 					)}
 					<Comment
-						offer_id={id}
+						toTop={toTop}
+						offer_id={offer_id}
 						setFeedbacks={setFeedbacks}
 						feedbacks={feedbacks}
 						feedback_loading={feedbackLoading}
@@ -64,7 +130,7 @@ const ProductScreen = ({ route }) => {
 
 	return (
 		<>
-			<ScrollView>
+			<ScrollView ref={scrollRef}>
 				{loading ? (
 					<Text>Loading.. </Text>
 				) : (
@@ -77,6 +143,7 @@ const ProductScreen = ({ route }) => {
 						<ProductStats
 							fullValue={data.old_price}
 							price={data.new_price}
+							coupons={data.coupons}
 						/>
 						<CountdownClock targetDate={'2023-10-31T23:59:59'} />
 						<View className="bg-white flex-1 pl-12 pr-2 pt-6 ">
@@ -87,9 +154,13 @@ const ProductScreen = ({ route }) => {
 								/>
 							))}
 						</View>
+						<Toast {...toast_options} />
 						<Button
 							label={'Buy deal'}
-							onPress={() => Alert.alert('clicked')}
+							onPress={() => {
+								postOffer();
+								toTop();
+							}}
 						/>
 					</View>
 				)}
