@@ -1,20 +1,15 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 
-const ProductStats = ({
-	availableQuantity,
-	TimeRemaining,
-	fullValue,
-	price,
-}) => {
+const ProductStats = ({ coupons, TimeRemaining, fullValue, price }) => {
 	return (
 		<View className="flex flex-row py-3">
 			<View className="basis-1/4  border-r-2 border-gray-200">
 				<Text className="text-center text-gray-400 text-xs  ">
-					Available
+					Coupons
 				</Text>
 				<Text className="text-center text-black text-sm ">
-					{availableQuantity ? availableQuantity : '10/29'}
+					{coupons ? coupons : '10/29'}
 				</Text>
 			</View>
 			<View className="basis-1/4  border-r-2 border-gray-200">

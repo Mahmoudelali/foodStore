@@ -6,6 +6,7 @@ import { useNavigation } from '@react-navigation/native';
 import ProductUserActions from './ProductUserActions';
 import NotificationToggle from './NotificationToggle';
 import { uri } from '../index.js';
+import CrownIcon from './CrownIcon';
 
 export const DealPrices = ({ is_hero, old_price, new_price }) => (
 	<View className="self-end">
@@ -25,11 +26,11 @@ export const DealPrices = ({ is_hero, old_price, new_price }) => (
 		</Text>
 	</View>
 );
+
 const ProductCard = ({ item, productScreen }) => {
 	const navigation = useNavigation();
 	const image = `${uri + item?.main_picture}`;
-	console.log(image);
-
+	// console.log(item)
 	return (
 		<>
 			<Pressable
@@ -51,6 +52,7 @@ const ProductCard = ({ item, productScreen }) => {
 					end={{ x: 0.9, y: 0.2 }}
 				>
 					{productScreen && <ProductUserActions offer={item} />}
+
 					<View
 						className="w-full min-h-64 flex flex-row items-center justify-center"
 						style={
@@ -70,6 +72,16 @@ const ProductCard = ({ item, productScreen }) => {
 								resizeMode={'cover'}
 								style={styles.imageStyles}
 							/>
+							<View
+								className="absolute right-0 flex flex-row items-center bg-[#FFD700] min-w-[50] rounded-bl-lg rounded-tl-lg pl-1"
+								style={
+									productScreen
+										? styles.crownInside
+										: styles.crownOutside
+								}
+							>
+								<CrownIcon />
+							</View>
 							<ProductGradient
 								height={!productScreen ? 90 : 120}
 								bottom={!productScreen ? -1 : -4}
@@ -88,6 +100,7 @@ const ProductCard = ({ item, productScreen }) => {
 								/>
 
 								{productScreen && <NotificationToggle />}
+
 								<View className="self-start">
 									{!productScreen && (
 										<Text
@@ -153,6 +166,15 @@ const styles = StyleSheet.create({
 
 	container: {
 		paddingTop: 50,
+	},
+	crownOutside: {
+		top: 10,
+	},
+	crownInside: {
+		top: 50,
+		width: 60,
+		height: 40,
+		paddingLeft: 10,
 	},
 });
 

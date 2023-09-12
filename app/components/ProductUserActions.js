@@ -9,7 +9,6 @@ const AddToBasket = ({ offer }) => {
 	const [basket, setBasket] = useContext(BasketContext);
 	// const [pressed, handlePress] = useState(basket.includes(offer));
 	const [isClicked, setIsClicked] = useState(false);
-	console.log('basketttt', JSON.stringify(basket, null, 2));
 	const handlePress = () => {
 		let basketObj = [...basket];
 		if (isClicked) {
