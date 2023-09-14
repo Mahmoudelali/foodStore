@@ -1,20 +1,15 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const useFetch = (url, method = 'GET', postData = null) => {
+const useFetch = (url) => {
 	const [data, setData] = useState(null);
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
-		setLoading(true); // Set loading to true when a new request is initiated.
+		setLoading(true);
 
-		const axiosConfig = {
-			method,
-			url,
-			data: postData, // Include the request body for POST requests.
-		};
-
-		axios(axiosConfig)
+		axios
+			.get(url)
 			.then((response) => {
 				setData(response.data);
 				setLoading(false);
@@ -23,9 +18,9 @@ const useFetch = (url, method = 'GET', postData = null) => {
 				console.error(err);
 				setLoading(false);
 			});
-	}, [url, method, postData]);
+	}, [url]);
 
-	return [data, loading, setData];
+	return [data, loading, setData, setLoading];
 };
 
 export default useFetch;
