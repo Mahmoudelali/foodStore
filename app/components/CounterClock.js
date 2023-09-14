@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { calculateRemainingTime } from './data';
-const time = ['D', 'H', 'M', 'S'];
-const CountdownClock = ({ targetDate }) => {
+
+const CountdownClock = ({ targetDate, isPoster }) => {
 	const [remainingTime, setRemainingTime] = useState(
 		calculateRemainingTime(targetDate),
 	);
@@ -17,19 +17,37 @@ const CountdownClock = ({ targetDate }) => {
 		return () => clearInterval(interval);
 	}, [targetDate]);
 
-	return (
-		<View className="flex flex-row gap-x-1 mx-auto absolute top-2 px-2">
+		return (
+		<View className="flex flex-row gap-x-0.5 mx-auto absolute top-3 px-2">
 			{remainingTime.map(({ value, label }, index) => (
 				<View key={index}>
-					<Text className="text-center text-lg font-bold text-accent-100 ">
-						{' '}
+					<Text
+						className="text-center font-bold text-accent-100 mr-1"
+						style={
+							isPoster ? style.posterClock : style.productClock
+						}
+					>
 						{value}
+						{!isPoster && (
+							<Text className="text-[10px] text-gray-600 lowercase">
+								{label}
+							</Text>
+						)}
 					</Text>
-					<Text className="text-center text-xs">{label}</Text>
+					{isPoster && (
+						<Text className="text-center text-xs">{label}</Text>
+					)}
 				</View>
 			))}
 		</View>
 	);
 };
 
+const style = StyleSheet.create({
+	posterClock: {
+		fontSize: 18, //inside the offer
+		// gap : 1
+	},
+	productClock: { fontSize: 13, fontWeight: 500, rowGap: 10 },
+});
 export default CountdownClock;

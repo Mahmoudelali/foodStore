@@ -54,7 +54,6 @@ export const BasketContext = createContext();
 export default function Page() {
 	const token = false;
 	const initialRouteName = token ? 'Nav' : 'Login';
-
 	const [basket, setBasket] = useState([]);
 	return (
 		<BasketContext.Provider value={[basket, setBasket]}>
