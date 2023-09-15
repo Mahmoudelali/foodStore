@@ -1,63 +1,14 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 import LabelInput from '../components/LabelInput';
 import Button from '../components/Button';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Toast from 'react-native-toast-message';
-import { toast_options } from '../index.js';
-import Snipper from '../components/Snipper';
 
 const Login = ({ navigation }) => {
-
-	const showToast = (type,label1,label2 ) => {
-		return Toast.show({
-			type: type,
-			text1: label1,
-			text2: label2 || '',
-		});
-	};
-
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
+	const [email, setEmail] = React.useState('');
+	const [password, setPassword] = React.useState('');
 	const [loading, setLoading] = useState(false);
-	const [loder ,setLoder] = useState(false)
-	const uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/registration/accounts/login/`;
 
-	const login =async () => {
-		const data = {
-		  login: email,
-		  password: password
-		};
-		axios.get(`${process.env.EXPO_PUBLIC_SERVER_URL}api/get-csrf-token/`).then((res) => {
-			setLoder(true)
-			axios.post(uri, data,{
-				headers: {
-					'X-CSRFToken':res.data.csrfToken
-				}
-			})
-				.then(async (response) => {
-					await AsyncStorage.setItem('authData', JSON.stringify(response.data));
-					showToast(
-						'success',
-						`welcome ${response.data.user_data.username} !`
-					)	
-					setLoder(false)
-					setTimeout(() => {
-					  navigation.navigate('Nav')
-					} , 2000)
-			  })
-			  .catch((err) => {
-				console.log(err);
-			  });
-		}).catch((err) => {
-			console.log(err)
-		})
-		
-	  }
-	  
-	
 	const loginFields = [
 		{
 			label: 'Email Address:',
@@ -87,7 +38,7 @@ const Login = ({ navigation }) => {
 					/>
 				))}
 				<View>
-					<Button label={loder == false ? "Sign In" : <Snipper/>} onPress={login} />
+					<Button label={'Sign In'} />
 
 					<Text className="uppercase font-light text-xs mt-1">
 						dont have an account? Sign up{' '}
@@ -100,7 +51,6 @@ const Login = ({ navigation }) => {
 					</Text>
 				</View>
 			</View>
-			<Toast {...toast_options} />
 		</ScrollView>
 	);
 };

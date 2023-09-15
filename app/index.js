@@ -56,90 +56,106 @@ export const QueryContext = createContext();
 export default function Page() {
 	const token = false;
 	const initialRouteName = token ? 'Nav' : 'Login';
-
-
+	const [basket, setBasket] = useState([]);
+	const [queryset, setQueryset] = useState(null);
 	return (
-			<Stack.Navigator
-				initialRouteName={'Nav'}
-				screenOptions={screenOptions}
-			>
-				<Stack.Screen name="Welcome" component={WelcomePage} />
-				<Stack.Screen name="ProductCard" component={ProductCard} />
-				<Stack.Screen name="Login" component={Login} />
-				<Stack.Screen name="Register" component={Register} />
-				<Stack.Screen name="Basket" component={Basket} />
-				<Stack.Screen name="Home" component={Home} />
-				<Stack.Screen name="Search" component={Search} />
-				<Stack.Screen name="Checkout" component={Checkout} />
-				<Stack.Screen
-					options={{ headerShown: true, title: 'MY DETAILS' }}
-					name="MyDetails"
-					component={MyDetails}
-				/>
-				<Stack.Screen name="AddressBook" component={AddressBook} />
-				<Stack.Screen name="ProductScreen" component={ProductScreen} />
-				<Stack.Screen name="WishList" component={Notifications} />
-				<Stack.Screen
-					name="ChangePassword"
-					component={ChangePassword}
-				/>
-				<Stack.Screen
-					options={{ headerShown: true, title: 'edit address' }}
-					name="AddressBookEdit"
-					component={AddressBookEdit}
-				/>
-				<Stack.Screen
-					options={{ headerShown: true, title: 'MY COUPON' }}
-					name="MyCoupon"
-					component={MyCoupon}
-				/>
-				<Stack.Screen
-					options={{ headerShown: true, title: 'ABOUT COUPWAY' }}
-					name="AboutCoupway"
-					component={AboutCoupway}
-				/>
-				<Stack.Screen
-					options={{ headerShown: true, title: 'TERMS & CONDITION' }}
-					name="TermsCondition"
-					component={TermsCondition}
-				/>
-				<Stack.Screen
-					options={{ headerShown: true, title: 'PURCHASED DEALS' }}
-					name="PurchasedDeals"
-					component={PurchasedDeals}
-				/>
+		<QueryContext.Provider value={[queryset, setQueryset]}>
+			<BasketContext.Provider value={[basket, setBasket]}>
+				<Stack.Navigator
+					initialRouteName={'Nav'}
+					screenOptions={screenOptions}
+				>
+					<Stack.Screen name="Welcome" component={WelcomePage} />
+					<Stack.Screen name="ProductCard" component={ProductCard} />
+					<Stack.Screen name="Login" component={Login} />
+					<Stack.Screen name="Register" component={Register} />
+					<Stack.Screen name="Basket" component={Basket} />
+					<Stack.Screen name="Home" component={Home} />
+					<Stack.Screen name="Search" component={Search} />
+					<Stack.Screen name="Checkout" component={Checkout} />
+					<Stack.Screen
+						options={{ headerShown: true, title: 'MY DETAILS' }}
+						name="MyDetails"
+						component={MyDetails}
+					/>
+					<Stack.Screen name="AddressBook" component={AddressBook} />
+					<Stack.Screen
+						name="FiltratedOffers"
+						component={FiltratedOffers}
+					/>
+					<Stack.Screen
+						name="ProductScreen"
+						component={ProductScreen}
+					/>
+					<Stack.Screen name="WishList" component={Notifications} />
+					<Stack.Screen
+						name="ChangePassword"
+						component={ChangePassword}
+					/>
+					<Stack.Screen
+						options={{ headerShown: true, title: 'edit address' }}
+						name="AddressBookEdit"
+						component={AddressBookEdit}
+					/>
+					<Stack.Screen
+						options={{ headerShown: true, title: 'MY COUPON' }}
+						name="MyCoupon"
+						component={MyCoupon}
+					/>
+					<Stack.Screen
+						options={{ headerShown: true, title: 'ABOUT COUPWAY' }}
+						name="AboutCoupway"
+						component={AboutCoupway}
+					/>
+					<Stack.Screen
+						options={{
+							headerShown: true,
+							title: 'TERMS & CONDITION',
+						}}
+						name="TermsCondition"
+						component={TermsCondition}
+					/>
+					<Stack.Screen
+						options={{
+							headerShown: true,
+							title: 'PURCHASED DEALS',
+						}}
+						name="PurchasedDeals"
+						component={PurchasedDeals}
+					/>
 
-				<Stack.Screen
-					options={{ headerShown: true, title: 'APP SETTING' }}
-					name="AppSetting"
-					component={AppSetting}
-				/>
-				<Stack.Screen
-					options={{ headerShown: true, title: 'ABOUT US' }}
-					name="AboutUs"
-					component={About}
-				/>
-				<Stack.Screen
-					options={{ headerShown: true, title: 'USED DEALS' }}
-					name="UsedDeals"
-					component={UsedDeals}
-				/>
-				<Stack.Screen
-					options={{ headerShown: true, title: 'RESERVED DEALS' }}
-					name="ReservedDeals"
-					component={ReservedDeals}
-				/>
-				<Stack.Screen
-					options={{ headerShown: true, title: 'CONTACT US' }}
-					name="ContactUs"
-					component={Contact}
-				/>
-				<Stack.Screen
-					name="Nav"
-					component={Nav}
-					options={{ headerShown: false }}
-				/>
-			</Stack.Navigator>
-
+					<Stack.Screen
+						options={{ headerShown: true, title: 'APP SETTING' }}
+						name="AppSetting"
+						component={AppSetting}
+					/>
+					<Stack.Screen
+						options={{ headerShown: true, title: 'ABOUT US' }}
+						name="AboutUs"
+						component={About}
+					/>
+					<Stack.Screen
+						options={{ headerShown: true, title: 'USED DEALS' }}
+						name="UsedDeals"
+						component={UsedDeals}
+					/>
+					<Stack.Screen
+						options={{ headerShown: true, title: 'RESERVED DEALS' }}
+						name="ReservedDeals"
+						component={ReservedDeals}
+					/>
+					<Stack.Screen
+						options={{ headerShown: true, title: 'CONTACT US' }}
+						name="ContactUs"
+						component={Contact}
+					/>
+					<Stack.Screen
+						name="Nav"
+						component={Nav}
+						options={{ headerShown: false }}
+					/>
+				</Stack.Navigator>
+			</BasketContext.Provider>
+		</QueryContext.Provider>
 	);
 }
