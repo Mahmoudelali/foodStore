@@ -4,25 +4,36 @@ import { View, StyleSheet } from 'react-native';
 import AddToWhishlist from './AddToWhishlist';
 import { Ionicons } from '@expo/vector-icons';
 import { BasketContext } from '../index.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddToBasket = ({ offer }) => {
-	const [basket, setBasket] = useContext(BasketContext);
 	// const [pressed, handlePress] = useState(basket.includes(offer));
 	const [isClicked, setIsClicked] = useState(false);
-	const handlePress = () => {
-		let basketObj = [...basket];
-		if (isClicked) {
-			basketObj = basketObj.filter((b) => b.id != offer.id);
-			setIsClicked(false);
+
+	 const handlePress = async() => {
+		const data = JSON.parse(await AsyncStorage.getItem("MyBasket")) || [];
+		const isProductInBasket = data.some((item) => item.id === offer.id);
+	  
+		if (isProductInBasket) {
+		  const updatedBasket = data.filter((item) => item.id !== offer.id);
+		  await AsyncStorage.setItem("MyBasket", JSON.stringify(updatedBasket));
 		} else {
-			basketObj.push(offer);
+		  data.push(offer);
+		  await AsyncStorage.setItem("MyBasket", JSON.stringify(data));
 		}
-		setBasket(basketObj);
-	};
+	  
+		setIsClicked(!isProductInBasket);
+	}
+
 	useEffect(() => {
-		if (!basket) return;
-		if (basket.find((b) => b.id === offer.id)) setIsClicked(true);
-	}, [basket]);
+		(async () => {
+		  const data = JSON.parse(await AsyncStorage.getItem("MyBasket")) || [];
+		  const isProductInBasket = data.some((item) => item.id === offer.id);
+		  setIsClicked(isProductInBasket);
+		})();
+	  }, [offer.id]);
+	
+	
 	return (
 		<Pressable onPress={handlePress}>
 			<Ionicons

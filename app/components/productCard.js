@@ -31,6 +31,8 @@ const ProductCard = ({ item, productScreen }) => {
 	const navigation = useNavigation();
 	const image = `${uri + item?.main_picture}`;
 	// console.log(item)
+
+	
 	return (
 		<>
 			<Pressable

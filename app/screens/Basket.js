@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
 import BasketItem from '../components/BasketItem';
 import { Pressable, Text, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -8,13 +8,31 @@ import NotFound from '../components/NotFound';
 import Button from '../components/Button';
 import axios, { Axios } from 'axios';
 import Toast from 'react-native-toast-message';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Basket = () => {
 	const navigation = useNavigation();
 	const [loading, setLoading] = useState(false);
-	const [basket, setBasket] = useContext(BasketContext);
 	const user_id = 1; // to be changed
 	const order_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/createorder/`;
+
+	const [basket, setBasketData] = useState([])
+	
+	useEffect(() => {
+		const fetchData = async () => {
+		  try {
+			const basketData = await AsyncStorage.getItem('MyBasket');
+			if (basketData) {
+			  setBasketData(JSON.parse(basketData));
+			}
+		  } catch (error) {
+			console.error('Error fetching basket data:', error);
+		  }
+		};
+	  
+		fetchData();
+	  }, [basket]);
+
 
 	const showToast = (type, label1, label2) => {
 		return Toast.show({
@@ -63,8 +81,7 @@ const Basket = () => {
 			) : (
 				<View className="pb-20 ">
 					<Pressable>
-						{basket.map((off, index) => {
-							return (
+						{basket.map((off, index) => 
 								<BasketItem
 									pressHandler={() =>
 										navigation.push('ProductScreen', {
@@ -72,15 +89,15 @@ const Basket = () => {
 											productScreen: true,
 										})
 									}
-									key={index}
+									key= {index}
 									highlights={off.highlights}
 									location={off.company.city}
 									placeName={off.company.name}
 									price={off.new_price}
-									image={off.main_picture}
+								    image={off.main_picture}
 								/>
-							);
-						})}
+							)
+						}
 					</Pressable>
 					<Button
 						label={'Proceed to Checkout'}
