@@ -40,7 +40,7 @@ export default function Profile({ navigation }) {
 				console.error('Error fetching basket data:', error);
 			}
 		};
-		fetchData(); // Call the async function here
+		fetchData(); 
 	}, [dataUser]);
 
 	const token = dataUser == null;
