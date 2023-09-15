@@ -10,6 +10,7 @@ const optionIconStyles = {
 	color: '#13d0ca',
 };
 
+
 const Option = ({ optionName, icon, navigation, navigateName }) => (
 	<Pressable onPress={navigation}>
 		<View className="flex flex-row py-3 pl-10">
