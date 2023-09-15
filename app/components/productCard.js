@@ -1,38 +1,20 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import ProductGradient from './productGradient';
 import { useNavigation } from '@react-navigation/native';
+import { uri } from '../index.js';
 import ProductUserActions from './ProductUserActions';
 import NotificationToggle from './NotificationToggle';
-import { uri } from '../index.js';
 import CrownIcon from './CrownIcon';
-
-export const DealPrices = ({ is_hero, old_price, new_price }) => (
-	<View className="self-end">
-		<Text
-			className={
-				!is_hero && 'text-[10px] uppercase text-right font-bold mb-0'
-			}
-		>
-			Deal Price
-		</Text>
-		<Text
-			className={!is_hero ? ' text-[9px] font-bold' : 'text-sm font-bold'}
-		>
-			<Text className="text-accent-100">{old_price}$</Text>
-			{' - '}
-			<Text>{new_price}$</Text>
-		</Text>
-	</View>
-);
+import RatingStar from './RatingStar';
+import DealPrices from './DealPrices';
+import ProductGradient from './productGradient';
+import CountdownClock from './CounterClock';
 
 const ProductCard = ({ item, productScreen }) => {
 	const navigation = useNavigation();
 	const image = `${uri + item?.main_picture}`;
-	// console.log(item)
 
-	
 	return (
 		<>
 			<Pressable
@@ -44,7 +26,7 @@ const ProductCard = ({ item, productScreen }) => {
 				}}
 				className={
 					!productScreen
-						? 'max-h-[220] w-[49%]'
+						? 'max-h-[220] w-[49%] my-1'
 						: 'max-h-[270] w-screen'
 				}
 			>
@@ -74,16 +56,25 @@ const ProductCard = ({ item, productScreen }) => {
 								resizeMode={'cover'}
 								style={styles.imageStyles}
 							/>
-							<View
-								className="absolute right-0 flex flex-row items-center bg-[#FFD700] min-w-[50] rounded-bl-lg rounded-tl-lg pl-1"
-								style={
-									productScreen
-										? styles.crownInside
-										: styles.crownOutside
-								}
-							>
-								<CrownIcon />
-							</View>
+							{!productScreen && (
+								<CountdownClock
+									isPoster={false}
+									targetDate={'2023-10-31T23:59:59'}
+								/>
+							)}
+							{item.isVip && (
+								<View
+									className="absolute right-0 flex flex-row items-center bg-[#FFD700] min-w-[30] rounded-bl-md rounded-tl-md pl-1"
+									style={
+										productScreen
+											? styles.crownInside
+											: styles.crownOutside
+									}
+								>
+									<CrownIcon />
+								</View>
+							)}
+
 							<ProductGradient
 								height={!productScreen ? 90 : 120}
 								bottom={!productScreen ? -1 : -4}
@@ -91,8 +82,8 @@ const ProductCard = ({ item, productScreen }) => {
 							<View
 								className={
 									!productScreen
-										? 'absolute -bottom-0 left-0 right-0 w-full h-[150] flex justify-end gap-y-1 py-1 px-2'
-										: 'absolute -bottom-0 left-0 right-0 w-full h-[150] flex justify-end gap-y-1 py-1 pl-3 pr-2'
+										? 'absolute -bottom-0 left-0 right-0 w-full h-[150] flex justify-end gap-y pb-1 px-2'
+										: 'absolute -bottom-0 left-0 right-0 w-full h-[150] flex justify-end gap-y pb-1 pl-3 pr-2'
 								}
 							>
 								<DealPrices
@@ -115,20 +106,26 @@ const ProductCard = ({ item, productScreen }) => {
 											{!item.highlights}
 										</Text>
 									)}
-									<Text>
+									<View>
 										<Text
 											className={
 												!productScreen
-													? 'text-[12px] text-accent-100 uppercase '
+													? 'text-[12px] text-accent-100 uppercase'
 													: 'text-[16px] font-semibold mr-2 text-accent-100 uppercase '
 											}
 										>
 											{item.company.name}{' '}
 										</Text>
-										<Text className="text-xs text-gray-500 ">
-											{item.company.city}
-										</Text>
-									</Text>
+										<View className="flex flex-row">
+											<Text className="text-xs text-gray-500  ">
+												{item.company.city}
+											</Text>
+											<RatingStar
+												rating={item.company.review}
+												size={15}
+											/>
+										</View>
+									</View>
 								</View>
 							</View>
 						</View>
@@ -174,8 +171,8 @@ const styles = StyleSheet.create({
 	},
 	crownInside: {
 		top: 50,
-		width: 60,
-		height: 40,
+		width: 50,
+		height: 35,
 		paddingLeft: 10,
 	},
 });

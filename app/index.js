@@ -25,6 +25,7 @@ import TermsCondition from './screens/termsCondition';
 import AppSetting from './screens/appSetting';
 import Checkout from './screens/Checkout';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import FiltratedOffers from './screens/customFiltrationScreen.js';
 
 const screenOptions = {
 	tabBarShowLabel: false,
@@ -51,9 +52,11 @@ export const toast_options = {
 export const uri = process.env.EXPO_PUBLIC_SERVER_URL;
 const Stack = createNativeStackNavigator();
 export const BasketContext = createContext();
+export const QueryContext = createContext();
 export default function Page() {
 	const token = false;
 	const initialRouteName = token ? 'Nav' : 'Login';
+
 
 	return (
 			<Stack.Navigator
@@ -137,5 +140,6 @@ export default function Page() {
 					options={{ headerShown: false }}
 				/>
 			</Stack.Navigator>
+
 	);
 }

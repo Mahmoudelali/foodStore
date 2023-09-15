@@ -56,7 +56,7 @@ const ProductUserActions = ({ offer }) => {
 					name="share-social-outline"
 				/>
 			</Pressable>
-			{/* <AddToWhishlist /> */}
+			<AddToWhishlist />
 			<AddToBasket offer={offer} />
 		</View>
 	);

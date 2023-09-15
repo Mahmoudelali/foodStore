@@ -1,5 +1,12 @@
 import React, { forwardRef, useEffect, useState } from 'react';
-import { Pressable, Text, View, StyleSheet, TextInput } from 'react-native';
+import {
+	Pressable,
+	Text,
+	View,
+	StyleSheet,
+	TextInput,
+	KeyboardAvoidingView,
+} from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
@@ -35,13 +42,16 @@ const Comment = ({
 					text1: 'Thanks for your feedback',
 					text2: 'It is highly appreciated',
 					position: 'top',
+					...toast_options,
 				});
 			})
 			.catch((error) => console.log(error.message));
 	};
 	return (
-		<View className="mb-4">
-			<View className="bg-gray-100 px-4 py-6 flex flex-row gap-x-2">
+		<KeyboardAvoidingView
+			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+		>
+			<View className="bg-gray-100 px-4 py-6 flex flex-row gap-x-2  flex-1 ">
 				<TextInput
 					className="bg-white w-[85%] pl-2"
 					keyboardType="default"
@@ -69,8 +79,31 @@ const Comment = ({
 					Please Provide a valid feedback..
 				</Text>
 			)}
-		</View>
+		</KeyboardAvoidingView>
 	);
 };
-
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
+	inner: {
+		padding: 24,
+		flex: 1,
+		justifyContent: 'space-around',
+	},
+	header: {
+		fontSize: 36,
+		marginBottom: 48,
+	},
+	textInput: {
+		height: 40,
+		borderColor: '#000000',
+		borderBottomWidth: 1,
+		marginBottom: 36,
+	},
+	btnContainer: {
+		backgroundColor: 'white',
+		marginTop: 12,
+	},
+});
 export default Comment;

@@ -2,21 +2,21 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Notifications from '../screens/Notifications.js';
 import SearchInput from './searchInput.js';
-import WishList from '../screens/WishList.js';
 import Profile from '../screens/profile.js';
 import Home from '../screens/home';
-import Search from '../screens/search.js';
 import { Platform } from 'react-native';
-
 import { StatusBar } from 'expo-status-bar';
-
+import Search from '../screens/search.js';
+import useFetch from './useFetch.js';
 import Basket from '../screens/Basket.js';
-
 const Tab = createBottomTabNavigator();
+
 export default function Nav() {
+	const uri = process.env.EXPO_PUBLIC_SERVER_URL + 'api/getalloffers/';
+	const [data, loading, setData, setLoading] = useFetch(uri);
 	return (
 		<>
-		<StatusBar backgroundColor="#13d0ca" />
+			<StatusBar backgroundColor="#13d0ca" />
 			<Tab.Navigator
 				screenOptions={({ route }, index) => ({
 					tabBarIcon: ({ size, color, focused }) => {
@@ -59,16 +59,27 @@ export default function Nav() {
 					},
 				})}
 			>
-				<Tab.Screen name="Home" component={Home} options={{
-						headerTitle: () => <SearchInput />,
-					}} />
+				<Tab.Screen
+					name="Home"
+					options={{
+						headerTitle: () => (
+							<SearchInput
+								setData={setData}
+								setLoading={setLoading}
+							/>
+						),
+					}}
+				>
+					{() => <Home data={data} loading={loading} />}
+				</Tab.Screen>
 				<Tab.Screen
 					options={{
-						headerTitle: () => <SearchInput />,
+						headerTitle: <SearchInput />,
 					}}
 					name="Search"
 					component={Search}
 				/>
+
 				<Tab.Screen name="Notifications" component={Notifications} />
 				<Tab.Screen name="Basket" component={Basket} />
 				<Tab.Screen

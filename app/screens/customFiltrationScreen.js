@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import {
 	View,
 	Text,
@@ -9,16 +9,17 @@ import {
 import NotFound from '../components/NotFound';
 import AccessBar from '../components/AccessBar';
 import ProductCard from '../components/productCard';
-import { QueryContext } from '../index.js';
 import useFetch from '../components/useFetch';
 import { uri } from '../index.js';
 
-export default function Home({ data, loading }) {
-	const [queryset] = useContext(QueryContext);
-	const filtration_uri = `${uri}api/searchoffers/?${queryset}`;
-	const [filtered_data] = useFetch(filtration_uri);
+function FiltratedOffers({ route }) {
+	const { queryset } = route.params;
+	console.log(queryset);
 
-	const renderItems = ({ item, index }) => (
+	const filtration_uri = `${uri}api/searchoffers/?${queryset}`;
+	const [filtered_data, loading] = useFetch(filtration_uri);
+
+	const renderItems = ({ item }) => (
 		<ProductCard productScreen={false} item={item} />
 	);
 
@@ -26,13 +27,11 @@ export default function Home({ data, loading }) {
 		<View className="flex-1">
 			<AccessBar />
 			{loading ? (
-				<View style={style.activityIndicator}>
-					<ActivityIndicator />
-				</View>
+				<ActivityIndicator />
 			) : (
 				<View style={style.container}>
 					<FlatList
-						data={filtered_data ? filtered_data : data}
+						data={filtered_data}
 						ListEmptyComponent={<NotFound />}
 						contentContainerStyle={style}
 						keyExtractor={(item) => item.id}
@@ -48,12 +47,9 @@ export default function Home({ data, loading }) {
 		</View>
 	);
 }
+export default FiltratedOffers;
 const style = StyleSheet.create({
 	container: {
 		flex: 0.9,
-	},
-	activityIndicator: {
-		flex: 1,
-		justifyContent: 'center',
 	},
 });
