@@ -5,6 +5,7 @@ import {
 	Linking,
 	KeyboardAvoidingView,
 	StyleSheet,
+	ActivityIndicator,
 } from 'react-native';
 import { Entypo, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -20,6 +21,7 @@ import Button from '../components/Button';
 import useFetch from '../components/useFetch';
 import axios from 'axios';
 import { toast_options } from '../index.js';
+
 const showToast = (type, label1, label2) => {
 	return Toast.show({
 		type: type,
@@ -61,7 +63,8 @@ const ProductScreen = ({ route }) => {
 	uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${offer_id}`;
 	const order_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/createorder/`;
 	const feedbacks_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${offer_id}/provide-feedback`;
-	const [feedbacks, feedbackLoading, setFeedbacks] = useFetch(feedbacks_uri);
+	let [feedbacks, feedbackLoading, setFeedbacks] = useFetch(feedbacks_uri);
+
 	const [data, loading] = useFetch(uri);
 	const order_data = [
 		{
@@ -123,7 +126,11 @@ Activate it for me ASAP, please.
 			extraComponent: (
 				<>
 					{feedbackLoading ? (
-						<Text>Loading</Text>
+						<ActivityIndicator />
+					) : feedbacks.length == 0 ? (
+						<Text className="pb-6 pl-2 text-gray-500">
+							No available feedbacks for this product!
+						</Text>
 					) : (
 						<Feedback feedbacks={feedbacks} />
 					)}
@@ -160,7 +167,12 @@ Activate it for me ASAP, please.
 					keyboardShouldPersistTaps={'handled'}
 				>
 					{loading ? (
-						<Text>Loading.. </Text>
+						<View
+							className="min-h-screen justify-center"
+							style={styles.container}
+						>
+							<ActivityIndicator />
+						</View>
 					) : (
 						<View className="flex-1 min-h-screen pb-8 bg-white">
 							<ProductCard

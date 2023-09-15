@@ -1,17 +1,21 @@
 import React, { useContext } from 'react';
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import {
+	View,
+	Text,
+	FlatList,
+	StyleSheet,
+	ActivityIndicator,
+} from 'react-native';
 import NotFound from '../components/NotFound';
 import AccessBar from '../components/AccessBar';
 import ProductCard from '../components/productCard';
 import { QueryContext } from '../index.js';
 import useFetch from '../components/useFetch';
 import { uri } from '../index.js';
-import { ActivityIndicator } from 'react-native-web';
 
 export default function Home({ data, loading }) {
-	const [queryset, setQueryset] = useContext(QueryContext);
+	const [queryset] = useContext(QueryContext);
 	const filtration_uri = `${uri}api/searchoffers/?${queryset}`;
-
 	const [filtered_data] = useFetch(filtration_uri);
 
 	const renderItems = ({ item, index }) => (
@@ -22,7 +26,9 @@ export default function Home({ data, loading }) {
 		<View className="flex-1">
 			<AccessBar />
 			{loading ? (
-				<ActivityIndicator />
+				<View style={style.activityIndicator}>
+					<ActivityIndicator />
+				</View>
 			) : (
 				<View style={style.container}>
 					<FlatList
@@ -45,5 +51,9 @@ export default function Home({ data, loading }) {
 const style = StyleSheet.create({
 	container: {
 		flex: 0.9,
+	},
+	activityIndicator: {
+		flex: 1,
+		justifyContent: 'center',
 	},
 });
