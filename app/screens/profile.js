@@ -1,5 +1,5 @@
 import { View, Text, Pressable } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
@@ -27,6 +27,7 @@ const Option = ({ optionName, icon, navigation, navigateName }) => (
 );
 
 export default function Profile({ navigation }) {
+
 	const [dataUser, setDataUser] = useState(null);
 	console.log(dataUser);
 	useEffect(() => {
@@ -45,6 +46,7 @@ export default function Profile({ navigation }) {
 
 	const token = dataUser == null;
 	const Name = 'Guest';
+
 	const authenticatedUserOptions = [
 		{
 			optionName: 'My Coupons',
@@ -123,8 +125,7 @@ export default function Profile({ navigation }) {
 			),
 		},
 		{
-			optionName: 'Sign In',
-			navigation: () => navigation.navigate('Login'),
+			optionName: 'Sign Out',
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
