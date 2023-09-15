@@ -10,6 +10,7 @@ const optionIconStyles = {
 	color: '#13d0ca',
 };
 
+
 const Option = ({ optionName, icon, navigation, navigateName }) => (
 	<Pressable onPress={navigation}>
 		<View className="flex flex-row py-3 pl-10">
@@ -26,8 +27,26 @@ const Option = ({ optionName, icon, navigation, navigateName }) => (
 );
 
 export default function Profile({ navigation }) {
-	const token = true;
-	const Name = 'Malak';
+
+	const [dataUser, setDataUser] = useState(null);
+	console.log(dataUser);
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const User = await AsyncStorage.getItem('authData');
+				if (User) {
+					setDataUser(JSON.parse(User));
+				}
+			} catch (error) {
+				console.error('Error fetching basket data:', error);
+			}
+		};
+		fetchData(); 
+	}, [dataUser]);
+
+	const token = dataUser == null;
+	const Name = 'Guest';
+
 	const authenticatedUserOptions = [
 		{
 			optionName: 'My Coupons',
