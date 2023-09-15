@@ -1,5 +1,5 @@
 import { View, Text, Pressable } from 'react-native';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
@@ -9,7 +9,6 @@ const optionIconStyles = {
 	size: 30,
 	color: '#13d0ca',
 };
-
 
 const Option = ({ optionName, icon, navigation, navigateName }) => (
 	<Pressable onPress={navigation}>
@@ -27,7 +26,6 @@ const Option = ({ optionName, icon, navigation, navigateName }) => (
 );
 
 export default function Profile({ navigation }) {
-
 	const [dataUser, setDataUser] = useState(null);
 	console.log(dataUser);
 	useEffect(() => {
@@ -41,7 +39,7 @@ export default function Profile({ navigation }) {
 				console.error('Error fetching basket data:', error);
 			}
 		};
-		fetchData(); 
+		fetchData();
 	}, [dataUser]);
 
 	const token = dataUser == null;
