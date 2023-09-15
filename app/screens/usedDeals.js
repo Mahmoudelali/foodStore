@@ -1,15 +1,16 @@
-import { View, Text } from 'react-native';
+import { Text, ScrollView } from 'react-native';
 import React from 'react';
 import PurchasedBox from '../components/PurchasedBox';
-import UsedBox from '../components/UsedBox';
+import OrderBox from '../components/UsedBox';
 
-export default function UsedDeals() {
+export default function UsedDeals({ route }) {
+	const { data } = route.params;
+
 	return (
-		<View >
-
-			<UsedBox/>
-			<UsedBox/>
-
-		</View>
+		<ScrollView className="pt-4">
+			{data.map((off) => (
+				<OrderBox key={off.id} {...off} />
+			))}
+		</ScrollView>
 	);
 }

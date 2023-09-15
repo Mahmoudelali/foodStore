@@ -1,5 +1,12 @@
 import React, { useRef } from 'react';
-import { View, Text, Linking } from 'react-native';
+import {
+	View,
+	Text,
+	Linking,
+	KeyboardAvoidingView,
+	StyleSheet,
+	ActivityIndicator,
+} from 'react-native';
 import { Entypo, Ionicons, MaterialIcons } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
@@ -41,9 +48,14 @@ const ProductScreen = ({ route }) => {
 
 		Linking.openURL(whatsappUrl)
 			.then(() => console.log('WhatsApp message sent'))
-			.catch((error) =>
-				console.error('Error sending WhatsApp message', error),
-			);
+			.catch((error) => {
+				console.error('Error sending WhatsApp message', error);
+				showToast(
+					'error',
+					'Sorry! Something went wrong',
+					'Try again later',
+				);
+			});
 	};
 
 	const user_id = 1;
@@ -51,7 +63,8 @@ const ProductScreen = ({ route }) => {
 	uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${offer_id}`;
 	const order_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/createorder/`;
 	const feedbacks_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${offer_id}/provide-feedback`;
-	const [feedbacks, feedbackLoading, setFeedbacks] = useFetch(feedbacks_uri);
+	let [feedbacks, feedbackLoading, setFeedbacks] = useFetch(feedbacks_uri);
+
 	const [data, loading] = useFetch(uri);
 	const order_data = [
 		{
@@ -82,7 +95,14 @@ Activate it for me ASAP, please.
 					sendWhatsAppMessage('96176325264', message);
 				}, 2000);
 			})
-			.catch((err) => console.log(err.message));
+			.catch((err) => {
+				console.log(err.message);
+				showToast(
+					'error',
+					'Sorry, Failed to place order',
+					'Please try again later',
+				);
+			});
 	};
 
 	const productScreenData = [
@@ -106,7 +126,11 @@ Activate it for me ASAP, please.
 			extraComponent: (
 				<>
 					{feedbackLoading ? (
-						<Text>Loading</Text>
+						<ActivityIndicator />
+					) : feedbacks.length == 0 ? (
+						<Text className="pb-6 pl-2 text-gray-500">
+							No available feedbacks for this product!
+						</Text>
 					) : (
 						<Feedback feedbacks={feedbacks} />
 					)}
@@ -127,46 +151,90 @@ Activate it for me ASAP, please.
 			extraComponent: <Location />,
 		},
 	];
-
 	return (
 		<>
-			<ScrollView ref={scrollRef}>
-				{loading ? (
-					<Text>Loading.. </Text>
-				) : (
-					<View className="flex-1 min-h-screen pb-8 bg-white">
-						<ProductCard
-							productScreen={true}
-							isModuloFive={true}
-							item={data}
-						/>
-						<ProductStats
-							fullValue={data.old_price}
-							price={data.new_price}
-							coupons={data.coupons}
-						/>
-						<CountdownClock targetDate={'2023-10-31T23:59:59'} />
-						<View className="bg-white flex-1 pl-12 pr-2 pt-6 ">
-							{productScreenData.map((section, index) => (
-								<ProductDetailSection
-									key={index}
-									{...section}
-								/>
-							))}
+			<KeyboardAvoidingView
+				enabled={true}
+				behavior={Platform.OS === 'ios' ? 'padding' : null}
+				keyboardVerticalOffset={Platform.select({
+					ios: 0,
+					android: 500,
+				})}
+				style={styles.container}
+			>
+				<ScrollView
+					ref={scrollRef}
+					keyboardShouldPersistTaps={'handled'}
+				>
+					{loading ? (
+						<View
+							className="min-h-screen justify-center"
+							style={styles.container}
+						>
+							<ActivityIndicator />
 						</View>
-						<Toast {...toast_options} />
-						<Button
-							label={'Buy deal'}
-							onPress={() => {
-								postOffer();
-								toTop();
-							}}
-						/>
-					</View>
-				)}
-			</ScrollView>
+					) : (
+						<View className="flex-1 min-h-screen pb-8 bg-white">
+							<ProductCard
+								productScreen={true}
+								isModuloFive={true}
+								item={data}
+							/>
+							<ProductStats
+								fullValue={data.old_price}
+								price={data.new_price}
+								coupons={data.coupons}
+							/>
+							<CountdownClock
+								isPoster={true}
+								targetDate={'2023-10-31T23:59:59'}
+							/>
+							<View className="bg-white flex-1 pl-12 pr-2 pt-6 ">
+								{productScreenData.map((section, index) => (
+									<ProductDetailSection
+										key={index}
+										{...section}
+									/>
+								))}
+							</View>
+							<Toast {...toast_options} />
+							<Button
+								label={'Buy deal'}
+								onPress={() => {
+									postOffer();
+									toTop();
+								}}
+							/>
+						</View>
+					)}
+				</ScrollView>
+			</KeyboardAvoidingView>
 		</>
 	);
 };
 
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+	},
+	inner: {
+		padding: 24,
+		flex: 1,
+		justifyContent: 'space-around',
+	},
+	header: {
+		fontSize: 36,
+		marginBottom: 48,
+	},
+	textInput: {
+		height: 40,
+		borderColor: '#000000',
+		borderBottomWidth: 1,
+		marginBottom: 36,
+	},
+	btnContainer: {
+		backgroundColor: 'white',
+		marginTop: 12,
+	},
+});
 export default ProductScreen;
