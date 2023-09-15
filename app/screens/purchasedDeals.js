@@ -1,11 +1,15 @@
 import { View, Text } from 'react-native';
 import React from 'react';
-import PurchasedBox from '../components/PurchasedBox';
+import { ScrollView } from 'react-native-gesture-handler';
+import OrderBox from '../components/UsedBox';
 
-export default function PurchasedDeals() {
+export default function PurchasedDeals({ route }) {
+	const { data } = route.params;
 	return (
-		<View >
-			<PurchasedBox/>
-		</View>
+		<ScrollView className="pt-3">
+			{data.map((off) => (
+				<OrderBox key={off.id} {...off} />
+			))}
+		</ScrollView>
 	);
 }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
-export const DealPrices = ({ is_hero, old_price, new_price }) => (
+export const DealPrices = ({ is_hero, old_price, new_price, card_style }) => (
 	<View className="self-end">
 		<Text
 			className={

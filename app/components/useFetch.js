@@ -6,6 +6,7 @@ const useFetch = (url) => {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
+		if (url == null) return;
 		setLoading(true);
 
 		axios
@@ -15,7 +16,7 @@ const useFetch = (url) => {
 				setLoading(false);
 			})
 			.catch((err) => {
-				console.error(err);
+				console.error(err, url);
 				setLoading(false);
 			});
 	}, [url]);
