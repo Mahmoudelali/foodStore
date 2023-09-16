@@ -4,6 +4,7 @@ import { View, StyleSheet } from 'react-native';
 import AddToWhishlist from './AddToWhishlist';
 import { Ionicons } from '@expo/vector-icons';
 import { BasketContext } from '../index.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const AddToBasket = ({ offer }) => {
 	const [basket, setBasket] = useContext(BasketContext);

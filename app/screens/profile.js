@@ -1,9 +1,12 @@
 import { View, Text, Pressable } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
 import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserInfoContext } from "../index.js"
+import { useRoute } from '@react-navigation/native';
 
 const optionIconStyles = {
 	size: 30,
@@ -26,24 +29,35 @@ const Option = ({ optionName, icon, navigation, navigateName }) => (
 );
 
 export default function Profile({ navigation }) {
-	const [dataUser, setDataUser] = useState(null);
-	console.log(dataUser);
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const User = await AsyncStorage.getItem('authData');
-				if (User) {
-					setDataUser(JSON.parse(User));
-				}
-			} catch (error) {
-				console.error('Error fetching basket data:', error);
-			}
-		};
-		fetchData();
-	}, [dataUser]);
+	const [dataUser, setDataUser] = useContext(UserInfoContext);
 
-	const token = dataUser == null;
-	const Name = 'Guest';
+	const route = useRoute();
+	const UserInfo = route.params || null;
+	
+	useEffect(() => {
+		if (!dataUser) {
+		setDataUser(UserInfo);
+	  }
+	}, [ UserInfo]);
+	
+
+	const navigationUser = async () => {
+		if (!dataUser) {
+			navigation.navigate('Login');
+		} else {
+			try {
+				await AsyncStorage.removeItem('authData');
+				setDataUser(null);
+				navigation.navigate('Login');
+			} catch (error) {
+				console.error('Error removing authData:', error);
+			}
+		}
+	};
+
+	const token = !!dataUser; // Check if dataUser exists
+
+	const Name = !dataUser ? 'There' : dataUser.user_data.username;
 
 	const authenticatedUserOptions = [
 		{
@@ -123,7 +137,8 @@ export default function Profile({ navigation }) {
 			),
 		},
 		{
-			optionName: 'Sign Out',
+			optionName: token == true ? 'Sign Out' : 'Sign In',
+			navigation: () => navigationUser(),
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}

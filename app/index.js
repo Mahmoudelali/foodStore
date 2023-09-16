@@ -26,6 +26,7 @@ import AppSetting from './screens/appSetting';
 import Checkout from './screens/Checkout';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FiltratedOffers from './screens/customFiltrationScreen.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const screenOptions = {
 	tabBarShowLabel: false,
@@ -53,108 +54,151 @@ export const uri = process.env.EXPO_PUBLIC_SERVER_URL;
 const Stack = createNativeStackNavigator();
 export const BasketContext = createContext();
 export const QueryContext = createContext();
+export const UserInfoContext = createContext();
 export default function Page() {
 	const token = false;
 	const initialRouteName = token ? 'Nav' : 'Login';
 	const [basket, setBasket] = useState([]);
 	const [queryset, setQueryset] = useState(null);
+	const [dataUser, setDataUser] = useState(null);
+
+	useEffect(() => {
+		const fetchData = async () => {
+			try {
+				const User = await AsyncStorage.getItem('authData');
+				if (User) {
+					const parsedUser = JSON.parse(User);
+					setDataUser(parsedUser);
+				} else {
+					console.log('No authData found in AsyncStorage');
+				}
+			} catch (error) {
+				console.error('Error fetching authData:', error);
+			}
+		};
+		fetchData();
+	}, []);
+
 	return (
 		<QueryContext.Provider value={[queryset, setQueryset]}>
 			<BasketContext.Provider value={[basket, setBasket]}>
-				<Stack.Navigator
-					initialRouteName={'Nav'}
-					screenOptions={screenOptions}
-				>
-					<Stack.Screen name="Welcome" component={WelcomePage} />
-					<Stack.Screen name="ProductCard" component={ProductCard} />
-					<Stack.Screen name="Login" component={Login} />
-					<Stack.Screen name="Register" component={Register} />
-					<Stack.Screen name="Basket" component={Basket} />
-					<Stack.Screen name="Home" component={Home} />
-					<Stack.Screen name="Search" component={Search} />
-					<Stack.Screen name="Checkout" component={Checkout} />
-					<Stack.Screen
-						options={{ headerShown: true, title: 'MY DETAILS' }}
-						name="MyDetails"
-						component={MyDetails}
-					/>
-					<Stack.Screen name="AddressBook" component={AddressBook} />
-					<Stack.Screen
-						name="FiltratedOffers"
-						component={FiltratedOffers}
-					/>
-					<Stack.Screen
-						name="ProductScreen"
-						component={ProductScreen}
-					/>
-					<Stack.Screen name="WishList" component={Notifications} />
-					<Stack.Screen
-						name="ChangePassword"
-						component={ChangePassword}
-					/>
-					<Stack.Screen
-						options={{ headerShown: true, title: 'edit address' }}
-						name="AddressBookEdit"
-						component={AddressBookEdit}
-					/>
-					<Stack.Screen
-						options={{ headerShown: true, title: 'MY COUPON' }}
-						name="MyCoupon"
-						component={MyCoupon}
-					/>
-					<Stack.Screen
-						options={{ headerShown: true, title: 'ABOUT COUPWAY' }}
-						name="AboutCoupway"
-						component={AboutCoupway}
-					/>
-					<Stack.Screen
-						options={{
-							headerShown: true,
-							title: 'TERMS & CONDITION',
-						}}
-						name="TermsCondition"
-						component={TermsCondition}
-					/>
-					<Stack.Screen
-						options={{
-							headerShown: true,
-							title: 'PURCHASED DEALS',
-						}}
-						name="PurchasedDeals"
-						component={PurchasedDeals}
-					/>
+				<UserInfoContext.Provider value={[dataUser, setDataUser]}>
+					<Stack.Navigator
+						initialRouteName={'Nav'}
+						screenOptions={screenOptions}
+					>
+						<Stack.Screen name="Welcome" component={WelcomePage} />
+						<Stack.Screen
+							name="ProductCard"
+							component={ProductCard}
+						/>
+						<Stack.Screen name="Login" component={Login} />
+						<Stack.Screen name="Register" component={Register} />
+						<Stack.Screen name="Basket" component={Basket} />
+						<Stack.Screen name="Home" component={Home} />
+						<Stack.Screen name="Search" component={Search} />
+						<Stack.Screen name="Checkout" component={Checkout} />
+						<Stack.Screen
+							options={{ headerShown: true, title: 'MY DETAILS' }}
+							name="MyDetails"
+							component={MyDetails}
+						/>
+						<Stack.Screen
+							name="AddressBook"
+							component={AddressBook}
+						/>
+						<Stack.Screen
+							name="FiltratedOffers"
+							component={FiltratedOffers}
+						/>
+						<Stack.Screen
+							name="ProductScreen"
+							component={ProductScreen}
+						/>
+						<Stack.Screen
+							name="WishList"
+							component={Notifications}
+						/>
+						<Stack.Screen
+							name="ChangePassword"
+							component={ChangePassword}
+						/>
+						<Stack.Screen
+							options={{
+								headerShown: true,
+								title: 'edit address',
+							}}
+							name="AddressBookEdit"
+							component={AddressBookEdit}
+						/>
+						<Stack.Screen
+							options={{ headerShown: true, title: 'MY COUPON' }}
+							name="MyCoupon"
+							component={MyCoupon}
+						/>
+						<Stack.Screen
+							options={{
+								headerShown: true,
+								title: 'ABOUT COUPWAY',
+							}}
+							name="AboutCoupway"
+							component={AboutCoupway}
+						/>
+						<Stack.Screen
+							options={{
+								headerShown: true,
+								title: 'TERMS & CONDITION',
+							}}
+							name="TermsCondition"
+							component={TermsCondition}
+						/>
+						<Stack.Screen
+							options={{
+								headerShown: true,
+								title: 'PURCHASED DEALS',
+							}}
+							name="PurchasedDeals"
+							component={PurchasedDeals}
+						/>
 
-					<Stack.Screen
-						options={{ headerShown: true, title: 'APP SETTING' }}
-						name="AppSetting"
-						component={AppSetting}
-					/>
-					<Stack.Screen
-						options={{ headerShown: true, title: 'ABOUT US' }}
-						name="AboutUs"
-						component={About}
-					/>
-					<Stack.Screen
-						options={{ headerShown: true, title: 'USED DEALS' }}
-						name="UsedDeals"
-						component={UsedDeals}
-					/>
-					<Stack.Screen
-						options={{ headerShown: true, title: 'RESERVED DEALS' }}
-						name="ReservedDeals"
-						component={ReservedDeals}
-					/>
-					<Stack.Screen
-						options={{ headerShown: true, title: 'CONTACT US' }}
-						name="ContactUs"
-						component={Contact}
-					/>
-					<Stack.Screen
-						name="Nav"
-						component={Nav}
-						options={{ headerShown: false }}
-					/>
-				</Stack.Navigator>
+						<Stack.Screen
+							options={{
+								headerShown: true,
+								title: 'APP SETTING',
+							}}
+							name="AppSetting"
+							component={AppSetting}
+						/>
+						<Stack.Screen
+							options={{ headerShown: true, title: 'ABOUT US' }}
+							name="AboutUs"
+							component={About}
+						/>
+						<Stack.Screen
+							options={{ headerShown: true, title: 'USED DEALS' }}
+							name="UsedDeals"
+							component={UsedDeals}
+						/>
+						<Stack.Screen
+							options={{
+								headerShown: true,
+								title: 'RESERVED DEALS',
+							}}
+							name="ReservedDeals"
+							component={ReservedDeals}
+						/>
+						<Stack.Screen
+							options={{ headerShown: true, title: 'CONTACT US' }}
+							name="ContactUs"
+							component={Contact}
+						/>
+						<Stack.Screen
+							name="Nav"
+							component={Nav}
+							options={{ headerShown: false }}
+						/>
+					</Stack.Navigator>
+				</UserInfoContext.Provider>
 			</BasketContext.Provider>
 		</QueryContext.Provider>
 	);
