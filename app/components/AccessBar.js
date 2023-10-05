@@ -1,33 +1,37 @@
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import { FlatList } from 'react-native-gesture-handler';
+import { View, StyleSheet, Text, Pressable, Alert } from 'react-native';
+import { useNavigation } from 'expo-router';
+
 const textComponents = [
-	{
-		text: 'Deals',
-		id: 1,
-	},
 	{
 		text: 'Sort By',
 		id: 2,
 	},
 	{
+		text: 'Deals',
+		id: 1,
+	},
+	{
 		text: 'Price',
 		id: 3,
 	},
-	{
-		text: 'Distance',
-		id: 4,
-	},
 ];
 
-const AccessBar = () => {
+const AccessBar = ({ setQueryset }) => {
+	const navigation = useNavigation();
 	return (
-		<View className="bg-white py-2 mb-3 flex-row justify-center border-b-2 border-gray-300 ">
+		<View className=" pl-2 bg-white flex-row justify-center border-gray-300 ">
 			{textComponents.map(({ text }, index) => (
-				<View style={styles.AccessBarBorder} key={index}>
+				<Pressable
+					style={styles.AccessBarBorder}
+					key={index}
+					onPress={() => {
+						setQueryset();
+						navigation.openDrawer();
+					}}
+				>
 					<Text style={styles.textStyles}>{text}</Text>
-				</View>
+				</Pressable>
 			))}
 		</View>
 	);

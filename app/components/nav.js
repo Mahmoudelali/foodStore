@@ -10,7 +10,6 @@ import Search from '../screens/search.js';
 import useFetch from './useFetch.js';
 import Basket from '../screens/Basket.js';
 const Tab = createBottomTabNavigator();
-
 export default function Nav() {
 	const uri = process.env.EXPO_PUBLIC_SERVER_URL + 'api/getalloffers/';
 	const [data, loading, setData, setLoading] = useFetch(uri);

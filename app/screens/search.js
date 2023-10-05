@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Content from '../components/categoryContent.js';
 import DrawerContent from '../components/searchCategories';
 const Drawer = createDrawerNavigator();
-// search -> content -> drawer content
+
 function Search() {
 	const [selectedCategory, setSelectedCategory] = useState(null);
 	return (

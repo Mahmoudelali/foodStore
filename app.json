@@ -11,6 +11,14 @@
     "slug": "my-app",
     "plugins": [
       "expo-router"
-    ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "fb683cdd-c276-497f-992c-ff1ccee3113b"
+      }
+    }
   }
 }

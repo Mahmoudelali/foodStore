@@ -1,23 +1,29 @@
-import React from 'react';
-import {
-	View,
-	Text,
-	FlatList,
-	StyleSheet,
-	ActivityIndicator,
-} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { View, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
 import NotFound from '../components/NotFound';
 import AccessBar from '../components/AccessBar';
 import ProductCard from '../components/productCard';
-import useFetch from '../components/useFetch';
-import { uri } from '../index.js';
-
 function FiltratedOffers({ route }) {
 	const { queryset } = route.params;
-	console.log(queryset);
-
-	const filtration_uri = `${uri}api/searchoffers/?${queryset}`;
-	const [filtered_data, loading] = useFetch(filtration_uri);
+	const filtration_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/searchoffers/?${queryset}`;
+	const [filtered_data, setFiltratedData] = useState(null);
+	const [loading, setLoadin] = useState(false);
+	useEffect(() => {
+		if (queryset == null) return;
+		else {
+			setLoadin(true);
+			axios
+				.get(filtration_uri)
+				.then((response) => {
+					setFiltratedData(response.data);
+					setLoadin(false);
+				})
+				.catch((err) => {
+					console.error(err, url);
+				});
+		}
+	}, [queryset]);
 
 	const renderItems = ({ item }) => (
 		<ProductCard productScreen={false} item={item} />

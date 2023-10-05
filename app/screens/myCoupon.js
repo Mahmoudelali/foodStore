@@ -1,13 +1,13 @@
 import { View, Text, Pressable } from 'react-native';
-import React from 'react';
+import React, { useContext } from 'react';
 import useFetch from '../components/useFetch.js';
-import { uri } from '../index.js';
+import { UserContext } from '../index.js';
 
 export default function MyCoupon({ navigation }) {
-	const user_id = 1; //to be changed later
-	const userOrderURI = `${uri}api/getuserorders/${user_id}`;
+	const [user] = useContext(UserContext);
+	const user_id = user.user_id; //to be changed later
+	const userOrderURI = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getuserorders/${user_id}`;
 	const [orders] = useFetch(userOrderURI);
-
 	const purchased_deals =
 		orders &&
 		orders.filter(

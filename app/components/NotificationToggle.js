@@ -4,7 +4,7 @@ import Switcher from './Switcher';
 
 const NotificationToggle = () => {
 	return (
-		<View className="flex flex-row items-center">
+		<View className="flex flex-row items-center py-1">
 			<Switcher />
 			<Text className="ml-2 text-xs text-gray-400">
 				Notify me for similar offers

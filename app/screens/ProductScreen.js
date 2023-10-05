@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useContext, useRef } from 'react';
 import {
 	View,
 	Text,
@@ -20,7 +20,13 @@ import CountdownClock from '../components/CounterClock';
 import Button from '../components/Button';
 import useFetch from '../components/useFetch';
 import axios from 'axios';
-import { toast_options } from '../index.js';
+import { UserContext } from '../index.js';
+
+const toast_options = {
+	visibilityTime: 2000,
+	position: 'top',
+	topOffset: 10,
+};
 
 const showToast = (type, label1, label2) => {
 	return Toast.show({
@@ -31,10 +37,9 @@ const showToast = (type, label1, label2) => {
 };
 
 const ProductScreen = ({ route }) => {
+	const [user] = useContext(UserContext);
 	const scrollRef = useRef();
-
 	const toTop = () => {
-		console.log('scroll Fired');
 		scrollRef.current?.scrollTo({
 			y: 0,
 			animated: true,
@@ -42,9 +47,7 @@ const ProductScreen = ({ route }) => {
 	};
 
 	const sendWhatsAppMessage = (number, message) => {
-		const whatsappUrl = `whatsapp://send?phone=${number}&text=${encodeURIComponent(
-			message,
-		)}`;
+		const whatsappUrl = `whatsapp://send?phone=${number}&text=${message}`;
 
 		Linking.openURL(whatsappUrl)
 			.then(() => console.log('WhatsApp message sent'))
@@ -57,29 +60,38 @@ const ProductScreen = ({ route }) => {
 				);
 			});
 	};
-
-	const user_id = 1;
+	const user_id = user.user_id;
 	const offer_id = route.params.product;
-	uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${offer_id}`;
+	const server_uri = process.env.EXPO_PUBLIC_SERVER_URL;
+	const uri = `${server_uri}api/getalloffers/${offer_id}`;
+	const [data, loading] = useFetch(uri);
+	const image = data?.main_picture;
+
 	const order_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/createorder/`;
 	const feedbacks_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${offer_id}/provide-feedback`;
 	let [feedbacks, feedbackLoading, setFeedbacks] = useFetch(feedbacks_uri);
-
-	const [data, loading] = useFetch(uri);
 	const order_data = [
 		{
 			user_id,
 			offer_id,
 			coupons_ordered: 1,
-			test: 'test',
 		},
 	];
 
 	const postOffer = () => {
+		const request_headers = {
+			headers: {
+				Authorization: 'Token ' + user.token,
+			},
+		};
+
+		if (user.token === 'dummy-token') {
+			return showToast('error', 'you must login first');
+		}
+
 		axios
-			.post(order_uri, order_data)
+			.post(order_uri, order_data, request_headers)
 			.then((res) => {
-				console.log(res.data[0]);
 				const offer = res.data[0];
 				showToast(
 					'success',
@@ -87,16 +99,20 @@ const ProductScreen = ({ route }) => {
 					'Redirecting to Whatsapp..',
 				);
 				var message = `Hi, i'm interested to order the offer with 
-Offer id : ${offer.id}
+Order id : ${res.data[0].id}
 My id : ${offer.user_id}
 Activate it for me ASAP, please.
+
+
+${server_uri}admin/orders/order/${res.data[0].id}/change/
 				`;
+				console.log(res.data[0]);
 				setTimeout(() => {
 					sendWhatsAppMessage('96176325264', message);
 				}, 2000);
 			})
 			.catch((err) => {
-				console.log(err.message);
+				console.log('error', err.message);
 				showToast(
 					'error',
 					'Sorry, Failed to place order',
@@ -151,7 +167,11 @@ Activate it for me ASAP, please.
 			extraComponent: <Location />,
 		},
 	];
-	return (
+	return loading ? (
+		<View className="min-h-screen justify-center">
+			<ActivityIndicator />
+		</View>
+	) : (
 		<>
 			<KeyboardAvoidingView
 				enabled={true}
@@ -166,47 +186,39 @@ Activate it for me ASAP, please.
 					ref={scrollRef}
 					keyboardShouldPersistTaps={'handled'}
 				>
-					{loading ? (
-						<View
-							className="min-h-screen justify-center"
-							style={styles.container}
-						>
-							<ActivityIndicator />
+					<View className="flex-1 min-h-screen pb-8 bg-white">
+						<ProductCard
+							image={image}
+							productScreen={true}
+							isModuloFive={true}
+							item={data}
+						/>
+						<ProductStats
+							fullValue={data.old_price}
+							price={data.new_price}
+							coupons={data.coupons}
+						/>
+						{/* <CountdownClock
+							isPoster={true}
+							targetDate={'2023-10-31T23:59:59'}
+						/> */}
+						<View className="bg-white flex-1 pl-12 pr-2 pt-6 ">
+							{productScreenData.map((section, index) => (
+								<ProductDetailSection
+									key={index}
+									{...section}
+								/>
+							))}
 						</View>
-					) : (
-						<View className="flex-1 min-h-screen pb-8 bg-white">
-							<ProductCard
-								productScreen={true}
-								isModuloFive={true}
-								item={data}
-							/>
-							<ProductStats
-								fullValue={data.old_price}
-								price={data.new_price}
-								coupons={data.coupons}
-							/>
-							<CountdownClock
-								isPoster={true}
-								targetDate={'2023-10-31T23:59:59'}
-							/>
-							<View className="bg-white flex-1 pl-12 pr-2 pt-6 ">
-								{productScreenData.map((section, index) => (
-									<ProductDetailSection
-										key={index}
-										{...section}
-									/>
-								))}
-							</View>
-							<Toast {...toast_options} />
-							<Button
-								label={'Buy deal'}
-								onPress={() => {
-									postOffer();
-									toTop();
-								}}
-							/>
-						</View>
-					)}
+						<Toast {...toast_options} />
+						<Button
+							label={'Buy deal'}
+							onPress={() => {
+								postOffer();
+								toTop();
+							}}
+						/>
+					</View>
 				</ScrollView>
 			</KeyboardAvoidingView>
 		</>

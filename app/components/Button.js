@@ -1,14 +1,31 @@
 import React from 'react';
-import { Pressable, Text, StyleSheet } from 'react-native';
+import { Pressable, Text, StyleSheet, View } from 'react-native';
 
-export default Button = ({ label, onPress, buttonStyle, textStyle }) => {
+export default Button = ({
+	error,
+	label,
+	onPress,
+	buttonStyle,
+	textStyle,
+	disabled,
+}) => {
 	return (
-		<Pressable
-			style={buttonStyle ? [styles.button, buttonStyle] : styles.button}
-			onPress={onPress}
-		>
-			<Text style={textStyle ? textStyle : styles.text}>{label}</Text>
-		</Pressable>
+		<View>
+			<Pressable
+				style={
+					buttonStyle ? [styles.button, buttonStyle] : styles.button
+				}
+				disabled={disabled}
+				onPress={onPress}
+			>
+				<Text style={textStyle ? textStyle : styles.text}>{label}</Text>
+			</Pressable>
+			{error && (
+				<Text className="text-xs text-red-700 mt-1">
+					All field must be filled!
+				</Text>
+			)}
+		</View>
 	);
 };
 

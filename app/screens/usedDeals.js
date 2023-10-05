@@ -1,6 +1,6 @@
-import { Text, ScrollView } from 'react-native';
+import { ScrollView } from 'react-native';
 import React from 'react';
-import PurchasedBox from '../components/PurchasedBox';
+import NotFound from '../components/NotFound';
 import OrderBox from '../components/UsedBox';
 
 export default function UsedDeals({ route }) {
@@ -8,9 +8,13 @@ export default function UsedDeals({ route }) {
 
 	return (
 		<ScrollView className="pt-4">
-			{data.map((off) => (
-				<OrderBox key={off.id} {...off} />
-			))}
+			{data.length === 0 ? (
+				<NotFound label={`you have not used any deals! `} />
+			) : (
+				data.map((off) => (
+					<OrderBox key={off.id} {...off} status="redeemed" />
+				))
+			)}
 		</ScrollView>
 	);
 }

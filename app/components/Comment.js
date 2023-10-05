@@ -1,4 +1,4 @@
-import React, { forwardRef, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Pressable,
 	Text,
@@ -10,15 +10,13 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
-import { toast_options } from '../index.js';
+const toast_options = {
+	visibilityTime: 2000,
+	position: 'top',
+	topOffset: 10,
+};
 
-const Comment = ({
-	offer_id,
-	setFeedbacks,
-	feedback_loading,
-	feedbacks,
-	toTop,
-}) => {
+const Comment = ({ offer_id, setFeedbacks, feedbacks, toTop }) => {
 	const [feedback, setFeedback] = useState('');
 	const [error, setError] = useState(false);
 

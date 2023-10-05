@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { TextInput, View, StyleSheet } from 'react-native';
 import axios from 'axios';
-import { uri } from '../index.js';
 import { Ionicons } from '@expo/vector-icons';
 
 const SearchInput = ({ setData, setLoading }) => {
@@ -20,7 +19,9 @@ const SearchInput = ({ setData, setLoading }) => {
 	};
 	const allOffersURL =
 		process.env.EXPO_PUBLIC_SERVER_URL + 'api/getalloffers/';
-	var filteringURI = `${uri}api/searchoffers/${handleQuery()}`;
+	var filteringURI = `${
+		process.env.EXPO_PUBLIC_SERVER_URL
+	}api/searchoffers/${handleQuery()}`;
 	let timeoutId = null;
 
 	const getfilteredOffers = (url) => {
@@ -82,24 +83,6 @@ const SearchInput = ({ setData, setLoading }) => {
 						/>
 					</View>
 				))}
-
-				{/* <View className="h-[100%] w-[1] bg-gray-300" /> */}
-				{/* <View className="basis-2/5">
-					<EvilIcons
-						name="location"
-						size={24}
-						color="#13d0ca"
-						style={style.searchIcons}
-					/>
-					<TextInput
-						clearTextOnFocus={true}
-						onChangeText={setLocation}
-						style={style.searchIcons}
-						placeholder="Location"
-						placeholderTextColor={'gray'}
-						className="text-gray-600 relative pl-7"
-					/>
-				</View> */}
 			</View>
 		</View>
 	);

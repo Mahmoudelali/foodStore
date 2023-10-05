@@ -8,7 +8,6 @@ const useFetch = (url) => {
 	useEffect(() => {
 		if (url == null) return;
 		setLoading(true);
-
 		axios
 			.get(url)
 			.then((response) => {

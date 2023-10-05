@@ -15,8 +15,8 @@ const RatingStar = ({ rating, size }) => {
 			: 'red';
 	};
 	return (
-		<View className="pt-0.5 pr-1 ">
-			<Ionicons color={handleRating(rating)} size={size} name={'star'} />
+		<View className="flex flex-row items-end translate-y-0.5 ">
+			<Ionicons color={handleRating(rating)} size={size} name="star" />
 		</View>
 	);
 };

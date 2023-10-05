@@ -1,41 +1,57 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable } from 'react-native';
 import { View, StyleSheet } from 'react-native';
 import AddToWhishlist from './AddToWhishlist';
 import { Ionicons } from '@expo/vector-icons';
-import { BasketContext } from '../index.js';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const defaultIconProps = {
+	size: 30,
+	color: 'gray',
+};
+const iconPressedProps = {
+	color: '#13d0ca',
+	size: 30,
+};
 const AddToBasket = ({ offer }) => {
-	const [basket, setBasket] = useContext(BasketContext);
-	// const [pressed, handlePress] = useState(basket.includes(offer));
-	const [isClicked, setIsClicked] = useState(false);
-	const handlePress = () => {
-		let basketObj = [...basket];
-		if (isClicked) {
-			basketObj = basketObj.filter((b) => b.id != offer.id);
-			setIsClicked(false);
-		} else {
-			basketObj.push(offer);
-		}
-		setBasket(basketObj);
-	};
+	const [isClicked, setIsClicked] = useState(null);
 	useEffect(() => {
-		if (!basket) return;
-		if (basket.find((b) => b.id === offer.id)) setIsClicked(true);
-	}, [basket]);
+		AsyncStorage.getItem('offers').then((storedOffers) => {
+			if (storedOffers) {
+				const parsedOffers = JSON.parse(storedOffers);
+				parsedOffers.some((off) => off.id === offer.id) &&
+					setIsClicked(true);
+			} else setIsClicked(false);
+		});
+	}, [isClicked]);
+
+	const handlePress = async () => {
+		const storedOffers = await AsyncStorage.getItem('offers');
+		let offers = [];
+
+		if (storedOffers) {
+			offers = JSON.parse(storedOffers);
+		}
+		if (isClicked) {
+			const updatedOffers = offers.filter((off) => off.id !== offer.id);
+			await AsyncStorage.setItem('offers', JSON.stringify(updatedOffers));
+		} else {
+			offers.push(offer);
+			await AsyncStorage.setItem('offers', JSON.stringify(offers));
+		}
+		setIsClicked((prevIsClicked) => !prevIsClicked);
+	};
 	return (
 		<Pressable onPress={handlePress}>
-			<Ionicons
-				name={isClicked == false ? 'cart-outline' : 'cart'}
-				style={
-					isClicked == false
-						? styles.iconStyles
-						: [styles.iconStyles, styles.cartIconPressed]
-				}
-			/>
+			{!isClicked ? (
+				<Ionicons name={'cart-outline'} {...defaultIconProps} />
+			) : (
+				<Ionicons name={'cart'} {...iconPressedProps} />
+			)}
 		</Pressable>
 	);
 };
+
 const ProductUserActions = ({ offer }) => {
 	return (
 		<View className="absolute top-1 -right-2 my-1 mr-3 z-50 flex flex-row">
@@ -45,7 +61,6 @@ const ProductUserActions = ({ offer }) => {
 					name="share-social-outline"
 				/>
 			</Pressable>
-			<AddToWhishlist />
 			<AddToBasket offer={offer} />
 		</View>
 	);
@@ -53,9 +68,9 @@ const ProductUserActions = ({ offer }) => {
 
 const styles = StyleSheet.create({
 	iconStyles: {
+		marginHorizontal: 6,
 		fontSize: 30,
 		color: 'gray',
-		marginHorizontal: 6,
 	},
 	cartIconPressed: {
 		color: '#13d0ca',

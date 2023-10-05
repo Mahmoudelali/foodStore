@@ -14,7 +14,7 @@ const Switcher = ({ isEnabled }) => {
 			<View
 				className="h-5 w-5  rounded-[50%]"
 				style={enabled ? styles.enabledBGColor : styles.disabledBGColor}
-			></View>
+			/>
 		</Pressable>
 	);
 };

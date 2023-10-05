@@ -1,3 +1,7 @@
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Toast from 'react-native-toast-message';
+
 export const validateEmail = (email) => {
 	return email.match(
 		/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
@@ -31,6 +35,76 @@ export const getMonthsRange = [
 	'Nov',
 	'Dec',
 ];
+
+export const priceRanges = [
+	{
+		from: 0,
+		to: 10,
+	},
+	{
+		from: 10,
+		to: 25,
+	},
+	{
+		from: 25,
+		to: 65,
+	},
+	{
+		from: 65,
+		to: 100,
+	},
+	{
+		from: 100,
+		to: 150,
+	},
+	{
+		from: 150,
+		to: 10000,
+	},
+];
+export const showToast = (type, label1, label2) => {
+	return Toast.show({
+		type: type,
+		text1: label1,
+		text2: label2 || '',
+	});
+};
+export const signIn = async (
+	data,
+	loading_handler,
+	user_data_handler,
+	loggedInHandler,
+) => {
+	loading_handler(true);
+	const save_user = async (userdata) => {
+		try {
+			await AsyncStorage.setItem('user_data', JSON.stringify(userdata));
+		} catch (error) {
+			console.log('error saving user ');
+		}
+	};
+
+	try {
+		const response = await axios.post(
+			`${process.env.EXPO_PUBLIC_SERVER_URL}api-token-auth/`,
+			data,
+		);
+		const user_data = response.data;
+		await save_user(user_data);
+		user_data_handler(user_data);
+		loggedInHandler(true);
+		loading_handler(false);
+	} catch (error) {
+		loading_handler(false);
+		console.log('err logging in user', error.response.status);
+		error.response.status == 400 &&
+			showToast(
+				'error',
+				'wrong username or password',
+				'please try again',
+			);
+	}
+};
 export const GenderLabels = [
 	{
 		id: '1',

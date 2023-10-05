@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Pressable, Image, Text, Alert } from 'react-native';
+import { View, StyleSheet, Pressable, Image, Text } from 'react-native';
 
 const BasketItem = ({
 	image,
@@ -9,13 +9,15 @@ const BasketItem = ({
 	location,
 	pressHandler,
 }) => {
+	const main_picture = image;
+
 	return (
 		<Pressable onPress={pressHandler} className="p-2">
 			<View className="flex flex-row h-28 bg-white p-2 ">
 				<View className=" w-[30%] h-30 ">
 					<Image
 						source={{
-							uri: image,
+							uri: main_picture,
 						}}
 						alt="food image"
 						resizeMode={'cover'}
@@ -29,7 +31,6 @@ const BasketItem = ({
 						<Text className="text-xs text-gray-500">
 							{highlights}
 						</Text>
-
 						<Text>
 							<Text className="text-md  text-accent-100 uppercase font-semibold ">
 								{placeName}

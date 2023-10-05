@@ -3,8 +3,8 @@ import { View, Text } from 'react-native';
 
 const NotFound = ({ label }) => {
 	return label ? (
-		<View className="h-72 flex items-center justify-end mx-auto ">
-			<Text className="text-lg">{label}</Text>
+		<View className="h-72 flex items-center justify-end mx-auto">
+			<Text className="text-sm">{label}</Text>
 		</View>
 	) : (
 		<View className="h-72 flex items-center justify-end mx-auto">
