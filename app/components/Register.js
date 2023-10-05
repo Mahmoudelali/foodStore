@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ScrollView } from 'react-native-gesture-handler';
 import LabelInput from './LabelInput';
 import { SelectList } from 'react-native-dropdown-select-list';
-import CheckBox from 'react-native-check-box';
+import Checkbox from 'expo-checkbox';
 import { RadioButton } from 'react-native-radio-buttons-group';
 import PasswordInput from './PasswordInput';
+import { useNavigation } from 'expo-router';
 import Button from './Button';
 import {
 	timing,
@@ -22,9 +23,46 @@ import {
 	StyleSheet,
 	KeyboardAvoidingView,
 } from 'react-native';
+import axios from 'axios';
+import Toast from 'react-native-toast-message';
 
-const Register = ({ navigation }) => {
+const showToast = (type, label1, label2) => {
+	return Toast.show({
+		type: type,
+		text1: label1,
+		text2: label2 || '',
+	});
+};
+
+const Register = ({ setUser, setIsLoggedIn }) => {
+	const navigation = useNavigation();
+	const selectListTimeProps = {
+		dropdownStyles: styles.dropdownStyles,
+		boxStyles: styles.boxStyles,
+		maxHeight: 120,
+		setSelected: (val) => setSelected(val),
+		save: 'value',
+		search: false,
+		label: 'year',
+	};
+	const toast_options = {
+		visibilityTime: 2000,
+		position: 'top',
+		topOffset: 10,
+	};
+	const genderRadiosProps = {
+		onPress: setUserGender,
+		containerStyle: {
+			zIndex: '100',
+			marginRight: 15,
+		},
+		color: '#13d0ca',
+		size: 20,
+		labelStyle: { color: 'gray' },
+	};
+	const new_user_uri = process.env.EXPO_PUBLIC_SERVER_URL;
 	const [email, setEmail] = useState('');
+	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 	const [fname, setFname] = useState('');
 	const [lname, setLname] = useState('');
@@ -32,24 +70,71 @@ const Register = ({ navigation }) => {
 	const [userGender, setUserGender] = useState(null);
 	const [terms, setTerms] = useState([]);
 	const [loading, setLoading] = useState(false);
-	const [errors, setErrors] = useState([]);
-	const validateForm = () => {
-		return !email.match(emailRegex) ||
+	const scrollRef = useRef();
+
+	const toTop = () => {
+		scrollRef.current?.scrollTo({
+			y: 0,
+			animated: true,
+		});
+	};
+
+	const register_user = async () => {
+		const user_data = {
+			username,
+			password,
+			password_confirm: password,
+			first_name: fname,
+			last_name: lname,
+			email_address: email,
+		};
+		if (
+			!email.match(emailRegex) ||
 			!password.match(/^(?=.*\d).{6,}$/) ||
 			password === '' ||
 			fname.length < 2 ||
-			lname.length < 2 ||
-			!terms.includes(
-				'Please accept terms of service in order to continue',
+			lname.length < 2
+		) {
+			toTop();
+			showToast('error', 'Check your inputs');
+			return;
+		}
+		setLoading(true);
+		axios
+			.post(
+				`${new_user_uri}api/registration/accounts/register/`,
+				user_data,
 			)
-			? true
-			: false;
+			.then((res) => {
+				setLoading(false);
+				toTop();
+				showToast('success', 'Welcome to coupway!');
+				setTimeout(() => {
+					navigation.navigate('Login');
+				}, 1000);
+			})
+			.catch((error) => {
+				setLoading(false);
+				toTop();
+				showToast(
+					'error',
+					'Failed to create an account!',
+					'Try again later',
+				);
+				console.log(error.message);
+			});
 	};
 	const registerFields = [
 		{
 			label: 'Email Address:',
 			handler: setEmail,
 			keyboardType: 'email-address',
+		},
+
+		{
+			label: 'username:',
+			handler: setUsername,
+			keyboardType: 'default',
 		},
 		{
 			label: 'first name:',
@@ -62,45 +147,21 @@ const Register = ({ navigation }) => {
 			keyboardType: 'default',
 		},
 	];
-	const selectListTimeProps = {
-		dropdownStyles: styles.dropdownStyles,
-		boxStyles: styles.boxStyles,
-		maxHeight: 120,
-		setSelected: (val) => setSelected(val),
-		save: 'value',
-		search: false,
-		label: 'year',
-	};
-	const genderRadiosProps = {
-		onPress: setUserGender,
-		containerStyle: {
-			zIndex: '100',
-			marginRight: 15,
-		},
-		color: '#13d0ca',
-		size: 20,
-		labelStyle: { color: 'gray' },
-	};
-	const genderCheckBoxProps = {
-		checkedCheckBoxColor: '#13d0ca',
-		rightTextStyle: { letterSpacing: 1, fontSize: 13 },
-		style: { marginBottom: 30 },
-	};
-	const errorLabels = {
-		emptyField: 'This field is required',
-		inValidemail: 'Please enter a valid email address',
-		wrongCredentials:
-			'Please make sure that your email or password is correct',
-		termsOfService: 'Please accept terms of service in order to continue',
-	};
 
 	return (
 		<KeyboardAvoidingView
 			behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
 			style={styles.container}
 		>
-			<ScrollView className="px-2 " keyboardDismissMode="on-drag">
+			<ScrollView
+				className="px-2 "
+				keyboardDismissMode="on-drag"
+				ref={scrollRef}
+			>
 				<View className="bg-white px-2 py-8">
+					<View className="relative z-20">
+						<Toast {...toast_options} />
+					</View>
 					<Text className=" uppercase  mt-2 text-xl text-center font-bold tracking-widest">
 						sign up using your email address
 					</Text>
@@ -118,7 +179,7 @@ const Register = ({ navigation }) => {
 					)}
 					<PasswordInput
 						hint={
-							'Must be 6 or more characters and contaian at least one number'
+							'Must be 6 or more characters and contaian one number'
 						}
 						password={password}
 						setPassword={setPassword}
@@ -159,11 +220,11 @@ const Register = ({ navigation }) => {
 							Gender (optional)
 						</Text>
 						<View className="flex flex-row">
-							{GenderLabels.map((gen) => (
+							{GenderLabels.map((gen, index) => (
 								<RadioButton
 									{...genderRadiosProps}
 									selected={userGender == gen.id && true}
-									key={gen.id}
+									key={index}
 									value={gen.value}
 									label={gen.label}
 									borderColor={
@@ -178,40 +239,48 @@ const Register = ({ navigation }) => {
 					</View>
 				</View>
 				<View className="px-2 py-6 bg-white ">
-					<Text className="uppercase font-bold text-xs text-gray-600 my-3">
+					<Text className="uppercase font-bold text-xs text-gray-600 mb-4">
 						Contact preferences
 					</Text>
-					{checkBoxLabels.map(({ label, id }) => (
-						<CheckBox
-							{...genderCheckBoxProps}
-							key={id}
-							isChecked={terms.includes(label)}
-							rightText={label}
-							onClick={() => {
-								!terms.includes(label)
-									? setTerms([...terms, label])
-									: setTerms(
-											terms.filter((term) => {
-												return term !== label;
-											}),
-									  );
-							}}
-						/>
+					{checkBoxLabels.map(({ label }, index) => (
+						<View className="flex-row items-start  pr-2 mb-8">
+							<Checkbox
+								className='mt-1.5'
+								value={terms.includes(label)}
+								color={terms.includes(label) && '#13d0ca'}
+								key={index}
+								onValueChange={() => {
+									!terms.includes(label)
+										? setTerms([...terms, label])
+										: setTerms(
+												terms.filter((term) => {
+													return term !== label;
+												}),
+										  );
+								}}
+							/>
+							<Text className="pl-2 leading-5 tracking-wider">
+								{' '}
+								{label}
+							</Text>
+						</View>
 					))}
 					<View className="py-4 px-2">
 						<Button
 							label={!loading ? 'JOIN COUPWAY' : 'Loading..'}
-							onPress={validateForm}
+							onPress={() => register_user()}
 						/>
-						<Text className="text-gray-500">
-							You have an account? Sign In{' '}
+						<View className="flex-row items-center justify-center">
+							<Text className="text-gray-500 flex-row ">
+								You have an account? Sign In{' '}
+							</Text>
 							<Button
 								label={'Here'}
 								textStyle={styles.labelStyles}
 								buttonStyle={styles.buttonStyle}
 								onPress={() => navigation.navigate('Login')}
 							/>
-						</Text>
+						</View>
 					</View>
 				</View>
 			</ScrollView>
@@ -225,7 +294,7 @@ const styles = StyleSheet.create({
 	labelStyles: {
 		backgroundColor: 'transparent',
 		color: '#a0a0a0',
-		fontSize: 12,
+		fontSize: 14,
 		fontWeight: 'bold',
 		textTransform: 'uppercase',
 	},

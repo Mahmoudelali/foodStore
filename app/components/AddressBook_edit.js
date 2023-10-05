@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Pressable, Text } from 'react-native';
 import LabelInput from './LabelInput';
 import { ScrollView } from 'react-native-gesture-handler';
-import CheckBox from 'react-native-check-box';
+import Checkbox from 'expo-checkbox';
 import { Alert } from 'react-native';
 const CheckBoxProps = {
 	checkedCheckBoxColor: '#13d0ca',

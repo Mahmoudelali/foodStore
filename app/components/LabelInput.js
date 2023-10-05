@@ -13,9 +13,8 @@ const LabelInput = ({
 	state,
 }) => {
 	const [focused, setFocused] = useState(false);
-
 	return (
-		<View>
+		<View className="my-1">
 			<Text className="uppercase font-bold text-xs text-gray-500 mt-3 mb-1">
 				{!state ? labelText : state && state.length > 0 && labelText}
 			</Text>
@@ -31,14 +30,16 @@ const LabelInput = ({
 				}
 				onChangeText={inputHandler}
 				keyboardType={keyboardType}
-				className={'px-3 py-1'}
+				className={'px-3 py-3'}
 				onFocus={() => setFocused(true)}
 				onBlur={() => setFocused(false)}
 				secureTextEntry={secureTextEntry ? true : false}
 				placeholder={placeholder && placeholder}
 			/>
 			{extraComponent && extraComponent}
-			{errLabel && <Text className="text-red-800 text-xs">{errLabel}</Text>}
+			{errLabel && (
+				<Text className="text-red-800 text-xs">{errLabel}</Text>
+			)}
 		</View>
 	);
 };

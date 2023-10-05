@@ -1,21 +1,22 @@
 // DrawerContent.js
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
-import { uri } from '../index.js';
-import { QueryContext } from '../index.js';
 import { useNavigation } from 'expo-router';
 
 const DrawerContent = ({ selectedCategory }) => {
 	const navigation = useNavigation();
-	const [queryset, setQueryset] = useState('');
-	const image_path = `${uri.substring(
+	const [queryset, setQueryset] = useState(null);
+	const image_path = `${process.env.EXPO_PUBLIC_SERVER_URL.substring(
 		'/',
 	)}${selectedCategory?.category_illustration.replace(/\//, '')}`;
 	useEffect(() => {
-		navigation.navigate('FiltratedOffers', {
-			queryset: `queryset=${queryset}`,
-		});
+		if (queryset !== null) {
+			navigation.navigate('FiltratedOffers', {
+				queryset: `queryset=${queryset}`,
+			});
+		}
 	}, [queryset]);
+
 	return (
 		<View className="flex-1 ">
 			<View className="pt-14">

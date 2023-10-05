@@ -1,49 +1,32 @@
-import { View, Text, Pressable } from 'react-native';
-import React, { useState, useEffect } from 'react';
+import React, { useContext } from 'react';
+import { View, Text } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { StatusBar } from 'expo-status-bar';
-import { AntDesign } from '@expo/vector-icons';
 import { MaterialIcons } from '@expo/vector-icons';
+import { UserContext } from '../index.js';
+import { useNavigation } from 'expo-router';
+
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Option from '../components/settingsOption.js';
+import { LoggedInContext } from '../index.js';
 
 const optionIconStyles = {
 	size: 30,
 	color: '#13d0ca',
 };
 
-const Option = ({ optionName, icon, navigation, navigateName }) => (
-	<Pressable onPress={navigation}>
-		<View className="flex flex-row py-3 pl-10">
-			<View className="basis-[15%] ">{icon}</View>
-			<View className="flex flex-row items-center">
-				<Text className="basis-[70%] pl-10 pb-1 tracking-[1] font-semibold">
-					{optionName}
-				</Text>
-				<AntDesign name="right" size={16} color="black" />
-			</View>
-			<View className="absolute bottom-0 right-0 h-[1] w-[80%] bg-gray-300 ml-5" />
-		</View>
-	</Pressable>
-);
-
-export default function Profile({ navigation }) {
-	const [dataUser, setDataUser] = useState(null);
-	console.log(dataUser);
-	useEffect(() => {
-		const fetchData = async () => {
-			try {
-				const User = await AsyncStorage.getItem('authData');
-				if (User) {
-					setDataUser(JSON.parse(User));
-				}
-			} catch (error) {
-				console.error('Error fetching basket data:', error);
-			}
-		};
-		fetchData();
-	}, [dataUser]);
-
-	const token = dataUser == null;
-	const Name = 'Guest';
+export default function Profile() {
+	const navigation = useNavigation();
+	const [userData, setUserData] = useContext(UserContext);
+	const [loggedIn] = useContext(LoggedInContext);
+	const logoutUser = async () => {
+		try {
+			await AsyncStorage.removeItem('user_data');
+			setUserData(null);
+		} catch (e) {
+			console.log(e);
+		}
+	};
 
 	const authenticatedUserOptions = [
 		{
@@ -123,7 +106,8 @@ export default function Profile({ navigation }) {
 			),
 		},
 		{
-			optionName: 'Sign Out',
+			optionName: loggedIn ? 'Sign Out ' : 'Back To Login',
+			navigation: () => logoutUser(),
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
@@ -145,13 +129,19 @@ export default function Profile({ navigation }) {
 						className="ml-[5%]"
 					/>
 				</View>
-				<Text className="text-white text-[20px] font-bold ml-[5%]">
-					{Name ? 'Hi ' + Name : 'Hi there !'}
-				</Text>
+				{loggedIn ? (
+					<Text className="text-white text-[20px] font-bold ml-[5%]">
+						Hello {userData?.username}
+					</Text>
+				) : (
+					<Text className="text-white text-[20px] font-bold ml-[5%]">
+						Hello COUPWAY
+					</Text>
+				)}
 			</View>
 			<View className="absolute top-[15%] bottom-0 right-0 left-0 w-[150%] h-[10%] bg-[#ebe6e6] -rotate-6 "></View>
 			<View className="bg-white mt-[5%]">
-				{token &&
+				{loggedIn &&
 					authenticatedUserOptions.map((option, index) => (
 						<Option key={index} {...option} />
 					))}
@@ -159,7 +149,7 @@ export default function Profile({ navigation }) {
 					<Option key={index} {...option} />
 				))}
 			</View>
-			<View className="bg-white mt-[5%]">
+			<View className="bg-white mt-3">
 				{LastOptions.map((option, index) => (
 					<Option key={index} {...option} />
 				))}

@@ -1,8 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, StyleSheet, Image, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from 'expo-router';
 
-function WelcomePage({ navigation }) {
+function WelcomePage({ setUser, setIsLoggedIn }) {
+	const [loading, setLoading] = useState(true);
+	const navigation = useNavigation();
+
+	const continueAsGuest = async () => {
+		const dummyUserData = {
+			token: 'dummy-token',
+			user_id: null,
+			username: 'guest',
+		};
+
+		try {
+			await AsyncStorage.setItem(
+				'user_data',
+				JSON.stringify(dummyUserData),
+			);
+			setUser(dummyUserData);
+			setLoading(false);
+			setIsLoggedIn(false);
+		} catch (error) {
+			console.log('error saving user ');
+		}
+	};
+
 	return (
 		<View className="flex-1 relative">
 			<View className="absolute inset-0 w-full h-full bg-[#00000070] z-10" />
@@ -27,16 +52,16 @@ function WelcomePage({ navigation }) {
 						<Pressable onPress={() => navigation.navigate('Login')}>
 							<Ionicons
 								name="mail-outline"
-								size="40"
+								size={40}
 								style={styles.iconStyles}
 							/>
 						</Pressable>
 					</View>
 					<View className="w-1/2 h-40  px-[15%] flex justify-center bg-accent-100 ">
-						<Pressable onPress={() => navigation.navigate('Nav')}>
+						<Pressable onPress={() => continueAsGuest()}>
 							<Ionicons
 								name="chevron-forward-outline"
-								size="40"
+								size={40}
 								style={styles.iconStyles}
 							/>
 						</Pressable>
