@@ -56,6 +56,7 @@ const ProductScreen = ({ route }) => {
         showToast("error", "Sorry! Something went wrong", "Try again later");
       });
   };
+
   const user_id = user.user_id;
   const offer_id = route.params.product;
   const server_uri = process.env.EXPO_PUBLIC_SERVER_URL;

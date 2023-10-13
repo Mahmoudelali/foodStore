@@ -67,7 +67,7 @@ const SearchInput = ({ setData, setLoading }) => {
     <View className="overflow-hidden">
       <View className="flex-row bg-white mb-2  mx-auto">
         {inputFields.map((field, index) => (
-          <View className="basis-3/5" key={index}>
+          <View className="basis-3/5" key={index} style={style.inputFiled}>
             <Ionicons
               name={field.icon}
               size={20}
@@ -78,7 +78,7 @@ const SearchInput = ({ setData, setLoading }) => {
               onChangeText={field.onChangeText}
               placeholder={field.placeholder}
               placeholderTextColor={"gray"}
-              className="text-gray-600 leading-4 p-2 relative pl-7"
+              className="text-gray-600 leading-4 p-2"
             />
           </View>
         ))}
@@ -90,9 +90,9 @@ const SearchInput = ({ setData, setLoading }) => {
 export default SearchInput;
 
 const style = StyleSheet.create({
-  searchIcons: {
-    position: "absolute",
-    top: 7,
-    left: 5,
+  inputFiled: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingHorizontal: 10,
   },
 });

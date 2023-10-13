@@ -42,9 +42,11 @@ export default function Nav() {
           },
           tabBarShowLabel: false,
           headerShown: true,
+          headerTitleStyle: {
+            color: "white",
+          }, 
           headerStyle: {
             backgroundColor: "#13d0ca",
-			// height: "auto"
           },
           tabBarActiveTintColor: "#fff",
           tabBarInactiveTintColor: "gray",

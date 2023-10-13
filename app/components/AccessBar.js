@@ -20,7 +20,7 @@ const textComponents = [
 const AccessBar = ({ setQueryset }) => {
   const navigation = useNavigation();
   return (
-    <View className=" pl-2 bg-white flex-row justify-center border-gray-300 ">
+    <View className=" pl-2 bg-white flex-row justify-center items-center border-gray-300 ">
       {textComponents.map(({ text }, index) => (
         <Pressable
           style={styles.AccessBarBorder}
@@ -46,7 +46,6 @@ const styles = StyleSheet.create({
     borderStyle: "dashed",
     borderRadius: 1,
     overflow: "hidden",
-    display: "flex",
     justifyContent: "center",
   },
   textStyles: {
