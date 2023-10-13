@@ -1,10 +1,10 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import { View, Text } from "react-native";
+import React from "react";
 
 export default function AboutCoupway() {
-	return (
-		<View>
-			<Text>lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem </Text>
-		</View>
-	);
+  return (
+    <View>
+      <Text>lorem lorem lorem lorem lorem lorem lorem lorem lorem lorem </Text>
+    </View>
+  );
 }
