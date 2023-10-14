@@ -75,7 +75,7 @@ const PricesHomeContent = () => {
         <View key={index} style={style.bottomBorder} className="w-[80%]">
           <Text className="ml-4 mb-1 text-gray-400 text-md">
             $<Text className=" text-gray-400">{prc.from}</Text> - $
-            <Text className=" text-gray-400">{prc.to}</Text> 
+            <Text className=" text-gray-400">{prc.to}</Text>
           </Text>
         </View>
       ))}

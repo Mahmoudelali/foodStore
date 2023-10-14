@@ -49,7 +49,7 @@ const ProductCard = ({ item, productScreen, image }) => {
                   targetDate={"2023-10-31T23:59:59"}
                 />
               )}
-              {item.isVip && (
+              {item?.isVip && (
                 <Text className="absolute top-4 right-0 bg-[#ababab] pl-1 py-0.5 font-bold text-white">
                   Premium
                 </Text>
@@ -68,22 +68,22 @@ const ProductCard = ({ item, productScreen, image }) => {
                 }
               >
                 <DealPrices
-                  old_price={item.old_price}
-                  new_price={item.new_price}
+                  old_price={item?.old_price}
+                  new_price={item?.new_price}
                   is_hero={true}
                 />
                 {productScreen && <NotificationToggle />}
                 <View className="self-start">
-                  <Text className={"text-sm"}>{item.highlights}</Text>
+                  <Text className={"text-sm"}>{item?.highlights}</Text>
                   <View className="flex flex-row justify-between w-full">
                     <View>
                       <Text className="text-sm font-semibold mr-2 text-accent-100 uppercase ">
-                        {item.company.name}{" "}
-                        <RatingStar rating={item.company.review} size={20} />
+                        {item?.company.name}{" "}
+                        <RatingStar rating={item?.company.review} size={20} />
                       </Text>
                       <View className="flex flex-row">
                         <Text className="text-gray-500 text-sm">
-                          {item.company.city}
+                          {item?.company.city}
                         </Text>
                       </View>
                     </View>

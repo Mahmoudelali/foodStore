@@ -1,5 +1,5 @@
 import { registerIndieID } from "native-notify";
-import React, { useState, createContext, useEffect, useRef } from "react";
+import React, { useState, createContext, useEffect } from "react";
 import WelcomePage from "./screens/Welcome";
 import ProductCard from "./components/productCard";
 import Login from "./screens/Login";
@@ -24,10 +24,7 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FiltratedOffers from "./screens/customFiltrationScreen.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const Stack = createNativeStackNavigator();
 const screenOptions = {
-  tabBarShowLabel: false,
-  headerShown: true,
   headerTintColor: "white",
   headerStyle: {
     backgroundColor: "#13d0ca",
@@ -42,12 +39,14 @@ const screenOptions = {
     backgroundColor: "#13d0ca",
   },
 };
+
 export const BasketContext = createContext();
 export const QueryContext = createContext();
 export const LoggedInContext = createContext();
 export const UserContext = createContext();
 
 export default function Page() {
+  const Stack = createNativeStackNavigator();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [basket, setBasket] = useState([]);
   const [queryset, setQueryset] = useState(null);
@@ -105,11 +104,9 @@ export default function Page() {
               ) : (
                 <>
                   <Stack.Screen name="ProductCard" component={ProductCard} />
-
                   <Stack.Screen name="Checkout" component={Checkout} />
                   <Stack.Screen
                     options={{
-                      headerShown: true,
                       title: "MY DETAILS",
                     }}
                     name="MyDetails"
@@ -130,7 +127,6 @@ export default function Page() {
                   />
                   <Stack.Screen
                     options={{
-                      headerShown: true,
                       title: "edit address",
                     }}
                     name="AddressBookEdit"
@@ -138,7 +134,6 @@ export default function Page() {
                   />
                   <Stack.Screen
                     options={{
-                      headerShown: true,
                       title: "MY COUPON",
                     }}
                     name="MyCoupon"
@@ -146,7 +141,6 @@ export default function Page() {
                   />
                   <Stack.Screen
                     options={{
-                      headerShown: true,
                       title: "ABOUT COUPWAY",
                     }}
                     name="AboutCoupway"
@@ -154,7 +148,6 @@ export default function Page() {
                   />
                   <Stack.Screen
                     options={{
-                      headerShown: true,
                       title: "TERMS & CONDITION",
                     }}
                     name="TermsCondition"
@@ -162,16 +155,13 @@ export default function Page() {
                   />
                   <Stack.Screen
                     options={{
-                      headerShown: true,
                       title: "PURCHASED DEALS",
                     }}
                     name="PurchasedDeals"
                     component={PurchasedDeals}
                   />
-
                   <Stack.Screen
                     options={{
-                      headerShown: true,
                       title: "APP SETTING",
                     }}
                     name="AppSetting"
@@ -179,7 +169,6 @@ export default function Page() {
                   />
                   <Stack.Screen
                     options={{
-                      headerShown: true,
                       title: "ABOUT US",
                     }}
                     name="AboutUs"
@@ -187,7 +176,6 @@ export default function Page() {
                   />
                   <Stack.Screen
                     options={{
-                      headerShown: true,
                       title: "USED DEALS",
                     }}
                     name="UsedDeals"
@@ -195,19 +183,17 @@ export default function Page() {
                   />
                   <Stack.Screen
                     options={{
-                      headerShown: true,
                       title: "RESERVED DEALS",
                     }}
                     name="ReservedDeals"
                     component={ReservedDeals}
                   />
                   <Stack.Screen
-                    options={{
-                      headerShown: true,
-                      title: "CONTACT US",
-                    }}
                     name="ContactUs"
                     component={Contact}
+                    options={{
+                      title: "CONTACT US",
+                    }}
                   />
                   <Stack.Screen
                     name="Nav"

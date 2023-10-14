@@ -50,7 +50,7 @@ export default function Nav({ user, setUser }) {
             backgroundColor: "#13d0ca",
           },
           tabBarActiveTintColor: "#fff",
-          tabBarInactiveTintColor: "gray",
+          tabBarInactiveTintColor: "#fff",
           tabBarStyle: {
             position: "absolute",
             bottom: Platform.OS === "ios" ? -25 : 0,
