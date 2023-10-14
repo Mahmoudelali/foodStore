@@ -119,7 +119,6 @@ export default function Profile() {
   ];
   return (
     <View className="h-full bg-[#ebe6e6] ">
-      <StatusBar backgroundColor="#13d0ca" />
       <View className="flex-row items-center bg-[#13d0ca] h-[20%] ">
         <View className="ml-[10%]">
           <Ionicons

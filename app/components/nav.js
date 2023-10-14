@@ -9,8 +9,10 @@ import { StatusBar } from "expo-status-bar";
 import Search from "../screens/search.js";
 import useFetch from "./useFetch.js";
 import Basket from "../screens/Basket.js";
+
 const Tab = createBottomTabNavigator();
-export default function Nav() {
+
+export default function Nav({ user, setUser }) {
   const uri = process.env.EXPO_PUBLIC_SERVER_URL + "api/getalloffers/";
   const [data, loading, setData, setLoading] = useFetch(uri);
   return (
@@ -41,10 +43,9 @@ export default function Nav() {
             );
           },
           tabBarShowLabel: false,
-          headerShown: true,
           headerTitleStyle: {
             color: "white",
-          }, 
+          },
           headerStyle: {
             backgroundColor: "#13d0ca",
           },
@@ -79,11 +80,9 @@ export default function Nav() {
 
         <Tab.Screen name="Notifications" component={Notifications} />
         <Tab.Screen name="Basket" component={Basket} />
-        <Tab.Screen
-          name="Profile"
-          component={Profile}
-          options={{ headerShown: false }}
-        />
+        <Tab.Screen name="Profile" options={{ headerShown: false }}>
+          {() => <Profile user={user} setUser={setUser} />}
+        </Tab.Screen>
       </Tab.Navigator>
     </>
   );

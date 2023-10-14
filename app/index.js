@@ -2,9 +2,6 @@ import { registerIndieID } from "native-notify";
 import React, { useState, createContext, useEffect, useRef } from "react";
 import WelcomePage from "./screens/Welcome";
 import ProductCard from "./components/productCard";
-import Home from "./screens/home";
-import Basket from "./screens/Basket";
-import Search from "./screens/search.js";
 import Login from "./screens/Login";
 import Nav from "./components/nav";
 import Register from "./components/Register";
@@ -26,7 +23,6 @@ import Checkout from "./screens/Checkout";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FiltratedOffers from "./screens/customFiltrationScreen.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import Profile from "./screens/profile.js";
 
 const Stack = createNativeStackNavigator();
 const screenOptions = {
@@ -109,13 +105,7 @@ export default function Page() {
               ) : (
                 <>
                   <Stack.Screen name="ProductCard" component={ProductCard} />
-                  <Stack.Screen name="Profile">
-                    {() => <Profile userData={user} setUser={setUser} />}
-                  </Stack.Screen>
 
-                  <Stack.Screen name="Basket" component={Basket} />
-                  <Stack.Screen name="Home" component={Home} />
-                  <Stack.Screen name="Search" component={Search} />
                   <Stack.Screen name="Checkout" component={Checkout} />
                   <Stack.Screen
                     options={{
@@ -221,9 +211,10 @@ export default function Page() {
                   />
                   <Stack.Screen
                     name="Nav"
-                    component={Nav}
-                    options={{ headerShown: false }}
-                  />
+                    options={{ headerShown: true, header: () => null }}
+                  >
+                    {() => <Nav user={user} setUser={setUser} />}
+                  </Stack.Screen>
                 </>
               )}
             </Stack.Navigator>

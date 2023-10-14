@@ -65,7 +65,7 @@ const SearchInput = ({ setData, setLoading }) => {
   ];
   return (
     <View className="overflow-hidden">
-      <View className="flex-row bg-white mb-2  mx-auto">
+      <View className="flex-row bg-white mx-auto">
         {inputFields.map((field, index) => (
           <View className="basis-3/5" key={index} style={style.inputFiled}>
             <Ionicons
