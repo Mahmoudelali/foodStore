@@ -7,7 +7,7 @@ import {
   StyleSheet,
   ActivityIndicator,
 } from "react-native";
-import { Entypo, Ionicons, MaterialIcons } from "@expo/vector-icons";
+import { Entypo, Ionicons, MaterialIcons, AntDesign } from "@expo/vector-icons";
 import { ScrollView } from "react-native-gesture-handler";
 import Toast from "react-native-toast-message";
 import ProductCard from "../components/productCard";
@@ -133,6 +133,12 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
       title: "The Fine Print",
       textualContent: data?.fine_print,
       icon: <Ionicons name="newspaper" size={14} color="#13d0ca" />,
+    },
+    {
+      title: "QR Code",
+      textualContent:
+        "Use this Qr code in the desired store in order to redeem your coupon.",
+      icon: <AntDesign name="qrcode" size={14} color="#13d0ca" />,
     },
     {
       title: "Feedbacks",

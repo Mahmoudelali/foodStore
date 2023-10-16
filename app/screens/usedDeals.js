@@ -16,3 +16,4 @@ export default function UsedDeals({ route }) {
     </ScrollView>
   );
 }
+  

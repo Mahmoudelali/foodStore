@@ -14,7 +14,7 @@ const Feedback = ({ feedbacks }) => {
         feedbacks &&
         feedbacks.map(({ user, feedback_content, id }) => (
           <View className="flex flex-row  mb-5" key={id}>
-            <View className="h-12 w-8 rounded-[50%] mt-1">
+            <View className="h-12 w-8 mt-1" style={{ borderRadius: 50 }}>
               <Image
                 source={user_icon}
                 resizeMode="contain"

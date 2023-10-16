@@ -53,7 +53,7 @@ const Register = ({ setUser, setIsLoggedIn }) => {
   const genderRadiosProps = {
     onPress: setUserGender,
     containerStyle: {
-      zIndex: "100",
+      zIndex: 100,
       marginRight: 15,
     },
     color: "#13d0ca",
@@ -169,7 +169,9 @@ const Register = ({ setUser, setIsLoggedIn }) => {
             );
           })}
           <PasswordInput
-            hint={"Must be 6 or more characters and contaian one number"}
+            hint={
+              "Must be 6 or more characters and contain at least one number"
+            }
             password={password}
             setPassword={setPassword}
           />
@@ -224,12 +226,11 @@ const Register = ({ setUser, setIsLoggedIn }) => {
             Contact preferences
           </Text>
           {checkBoxLabels.map(({ label }, index) => (
-            <View className="flex-row items-start  pr-2 mb-8">
+            <View className="flex-row items-start  pr-2 mb-8" key={index}>
               <Checkbox
                 className="mt-1.5"
                 value={terms.includes(label)}
                 color={terms.includes(label) && "#13d0ca"}
-                key={index}
                 onValueChange={() => {
                   !terms.includes(label)
                     ? setTerms([...terms, label])

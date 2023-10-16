@@ -8,12 +8,18 @@ const Switcher = ({ isEnabled }) => {
       onPress={() => {
         setEnabled(!enabled);
       }}
-      className="h-4 bg-gray-300 w-10 rounded-xl flex justify-center transition-all	"
-      style={enabled ? styles.switcherEnabled : styles.switcherDisabled}
+      className="h-4 bg-gray-300 w-10 flex justify-center transition-all"
+      style={[
+        enabled ? styles.switcherEnabled : styles.switcherDisabled,
+        { borderRadius: 12 },
+      ]}
     >
       <View
-        className="h-5 w-5  rounded-[50%]"
-        style={enabled ? styles.enabledBGColor : styles.disabledBGColor}
+        className="h-5 w-5"
+        style={[
+          enabled ? styles.enabledBGColor : styles.disabledBGColor,
+          { borderRadius: 50 },
+        ]}
       />
     </Pressable>
   );

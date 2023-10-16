@@ -18,7 +18,7 @@ const OrderBox = ({ offer, status }) => {
     >
       <View className="absolute top-4 right-4 z-20 ">
         <View
-          className="rounded-[50%] h-2 w-2"
+          className="h-2 w-2"
           style={{
             backgroundColor:
               status == "pending"
@@ -26,6 +26,7 @@ const OrderBox = ({ offer, status }) => {
                 : status == "active"
                 ? "lightgreen"
                 : "#13d0ca",
+            borderRadius: 50,
           }}
         />
       </View>

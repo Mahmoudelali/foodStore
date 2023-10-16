@@ -17,7 +17,7 @@ export default function Nav({ user, setUser }) {
   const [data, loading, setData, setLoading] = useFetch(uri);
   return (
     <>
-      <StatusBar backgroundColor="#13d0ca" />
+      <StatusBar backgroundColor="#13d0ca" style="dark" />
       <Tab.Navigator
         screenOptions={({ route }, index) => ({
           tabBarIcon: ({ size, color, focused }) => {

@@ -26,9 +26,12 @@ const ProductDetailSection = ({
         toggleView();
         setViewExpanded(!viewExpanded);
       }}
-      className="relative  min-h-[50] border-l-2 border-gray-200"
+      className="relative min-h-[50] border-l-2 border-gray-200"
     >
-      <View className="w-6 h-6 rounded-[50%] absolute -top-[2] -left-[12] border-2 border-gray-100 bg-white flex justify-center items-center">
+      <View
+        className="w-6 h-6 absolute -top-[2] -left-[12] border-2 border-gray-100 bg-white flex justify-center items-center"
+        style={{ borderRadius: 50 }}
+      >
         {icon}
       </View>
       <View className="pl-5">
