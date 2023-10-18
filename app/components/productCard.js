@@ -21,6 +21,7 @@ const ProductCard = ({ item, productScreen, image }) => {
                 navigation.push("ProductScreen", {
                   product: item.id,
                   productScreen: true,
+                  title: item.title,
                 });
               }
         }

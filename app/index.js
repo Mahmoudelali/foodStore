@@ -36,7 +36,7 @@ const screenOptions = {
     right: 0,
     left: 0,
     elevation: 0,
-    height: 40, 
+    height: 40,
     backgroundColor: "#13d0ca",
   },
 };
@@ -133,6 +133,12 @@ export default function Page() {
                   <Stack.Screen
                     name="ProductScreen"
                     component={ProductScreen}
+                    options={({ route }) => {
+                      const { title } = route.params;
+                      return {
+                        title: `${title}`,
+                      };
+                    }}
                   />
                   <Stack.Screen
                     name="ChangePassword"
