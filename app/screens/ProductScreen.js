@@ -37,6 +37,8 @@ const showToast = (type, label1, label2) => {
 };
 
 const ProductScreen = ({ route }) => {
+  const { qrcode } = route.params;
+  const { qrCodeImage } = route.params;
   const [user] = useContext(UserContext);
   const scrollRef = useRef();
   const toTop = () => {
@@ -119,6 +121,18 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
   };
 
   const productScreenData = [
+    qrcode && {
+      title: "QR Code",
+      textualContent:
+        "Use this QR code in the desired store in order to redeem your coupon.",
+      icon: <AntDesign name="qrcode" size={14} color="#13d0ca" />,
+      extraComponent: (
+        <Image
+          source={{ uri: `${server_uri}${qrCodeImage}` }}
+          style={styles.qrCodeImage}
+        />
+      ),
+    },
     {
       title: "What you get",
       textualContent: data?.compensations,
@@ -133,12 +147,6 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
       title: "The Fine Print",
       textualContent: data?.fine_print,
       icon: <Ionicons name="newspaper" size={14} color="#13d0ca" />,
-    },
-    {
-      title: "QR Code",
-      textualContent:
-        "Use this Qr code in the desired store in order to redeem your coupon.",
-      icon: <AntDesign name="qrcode" size={14} color="#13d0ca" />,
     },
     {
       title: "Feedbacks",
@@ -244,6 +252,10 @@ const styles = StyleSheet.create({
   btnContainer: {
     backgroundColor: "white",
     marginTop: 12,
+  },
+  qrCodeImage: {
+    width: "100%",
+    height: "100%",
   },
 });
 export default ProductScreen;

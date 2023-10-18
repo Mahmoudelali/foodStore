@@ -23,6 +23,7 @@ import Checkout from "./screens/Checkout";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FiltratedOffers from "./screens/customFiltrationScreen.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 
 const screenOptions = {
   headerTintColor: "white",
@@ -35,7 +36,7 @@ const screenOptions = {
     right: 0,
     left: 0,
     elevation: 0,
-    height: 40,
+    height: 40, 
     backgroundColor: "#13d0ca",
   },
 };
@@ -51,6 +52,7 @@ export default function Page() {
   const [basket, setBasket] = useState([]);
   const [queryset, setQueryset] = useState(null);
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true); // New loading state
   // registerNNPushToken(12331, 'L4XCS1Ezhz6YHOS7hIr6hR');
   registerIndieID(user?.user_id, 12331, "L4XCS1Ezhz6YHOS7hIr6hR");
 
@@ -63,11 +65,22 @@ export default function Page() {
         setUser(parsedData);
       } catch (e) {
         console.log(e);
+      } finally {
+        setLoading(false); // Set loading to false when user data is fetched
       }
     };
     bootstrapAsync();
   }, []);
 
+  // Check if data is still loading and render a loading screen if true
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#13d0ca" />
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
+  }
   return (
     <UserContext.Provider value={[user, setUser]}>
       <LoggedInContext.Provider value={[isLoggedIn, setIsLoggedIn]}>
@@ -210,3 +223,17 @@ export default function Page() {
     </UserContext.Provider>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 18,
+    color: "#13d0ca",
+  },
+});

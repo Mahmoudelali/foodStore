@@ -9,11 +9,16 @@ const iconStyles = {
   color: "#13d0ca",
 };
 
-const OrderBox = ({ offer, status }) => {
+const OrderBox = ({ navigation, offer, status, qrcode }) => {
   const image = process.env.EXPO_PUBLIC_SERVER_URL + offer.main_picture;
   return (
     <Pressable
-      onPress={() => Alert.alert("hi")}
+      onPress={() =>
+        navigation.navigate("ProductScreen", {
+          qrCode: qrcode?.is_active && qrcode?.is_active,
+          qrCodeImage: qrcode.qr_code,
+        })
+      }
       className="p-1 flex flex-row w-[95%] min-h-[90] mx-auto my-1  bg-white border-dashed border-2 border-gray-300"
     >
       <View className="absolute top-4 right-4 z-20 ">
