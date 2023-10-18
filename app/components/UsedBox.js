@@ -1,16 +1,19 @@
 import React from "react";
-import { Alert, Pressable } from "react-native";
+import { Pressable } from "react-native";
 import { View, StyleSheet, Text, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import CardDealPrices from "./cardDealPrices";
+import { useNavigation } from "@react-navigation/native";
 
 const iconStyles = {
   size: 26,
   color: "#13d0ca",
 };
 
-const OrderBox = ({ navigation, offer, status, qrcode }) => {
+const OrderBox = ({ offer, status, qrcode }) => {
   const image = process.env.EXPO_PUBLIC_SERVER_URL + offer.main_picture;
+  const navigation = useNavigation();
+
   return (
     <Pressable
       onPress={() =>
