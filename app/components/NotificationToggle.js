@@ -1,16 +1,16 @@
-import React from 'react';
-import { View, Text } from 'react-native';
-import Switcher from './Switcher';
+import React from "react";
+import { View, Text } from "react-native";
+import Switcher from "./Switcher";
 
 const NotificationToggle = () => {
-	return (
-		<View className="flex flex-row items-center py-1">
-			<Switcher />
-			<Text className="ml-2 text-xs text-gray-400">
-				Notify me for similar offers
-			</Text>
-		</View>
-	);
+  return (
+    <View className="flex flex-row items-center py-1">
+      <Switcher />
+      <Text className="ml-2 text-xs text-gray-400">
+        Notify me for similar offers
+      </Text>
+    </View>
+  );
 };
 
 export default NotificationToggle;
