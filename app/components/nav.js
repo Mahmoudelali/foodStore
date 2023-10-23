@@ -9,12 +9,17 @@ import { StatusBar } from "expo-status-bar";
 import Search from "../screens/search.js";
 import useFetch from "./useFetch.js";
 import Basket from "../screens/Basket.js";
+import { useContext } from "react";
+import { DataContext } from "../index.js";
 
 const Tab = createBottomTabNavigator();
 
 export default function Nav({ user, setUser }) {
-  const uri = process.env.EXPO_PUBLIC_SERVER_URL + "api/getalloffers/";
-  const [data, loading, setData, setLoading] = useFetch(uri);
+  // const uri = process.env.EXPO_PUBLIC_SERVER_URL + "api/getalloffers/";
+  // const [data, loading, setData, setLoading, reFetch] = useFetch(uri);
+  const [data, dataLoading, setData, setDataLoading, fetchData] =
+    useContext(DataContext);
+
   return (
     <>
       <StatusBar backgroundColor="#13d0ca" style="dark" />
@@ -64,11 +69,11 @@ export default function Nav({ user, setUser }) {
           name="Home"
           options={{
             headerTitle: () => (
-              <SearchInput setData={setData} setLoading={setLoading} />
+              <SearchInput setData={setData} setLoading={setDataLoading} />
             ),
           }}
         >
-          {() => <Home data={data} loading={loading} />}
+          {() => <Home data={data} loading={dataLoading} reFetch={fetchData} />}
         </Tab.Screen>
         <Tab.Screen
           options={{

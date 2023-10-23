@@ -16,7 +16,7 @@ import { QueryContext } from "../index.js";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 const Drawer = createDrawerNavigator();
 
-const HomeContent = ({ loading, data }) => {
+const HomeContent = ({ loading, data, reFetch }) => {
   const [queryset, setQueryset] = useContext(QueryContext);
   const [refreshing, setRefreshing] = useState(false);
   const filtration_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/searchoffers/?${queryset}`;
@@ -26,9 +26,7 @@ const HomeContent = ({ loading, data }) => {
     return <ProductCard productScreen={false} item={item} image={image} />;
   };
 
-  const [filtered_data, , , , reFetch] = useFetch(
-    queryset === null ? null : filtration_uri
-  );
+  const [filtered_data] = useFetch(queryset === null ? null : filtration_uri);
 
   // refresh funtion
   const handleRefresh = () => {
@@ -41,12 +39,12 @@ const HomeContent = ({ loading, data }) => {
     <View className="flex-1">
       {loading ? (
         <View style={style.activityIndicator}>
-          <ActivityIndicator />
+          <ActivityIndicator size="large" color={"#13d0ca"} />
         </View>
       ) : (
         <View style={style.container}>
           <Text className="text-gray-500 font-semibold ml-2 mb-1">
-            {filtered_data ? filtered_data.length : data.length} offers
+            {filtered_data ? filtered_data?.length : data?.length} offers
           </Text>
           <FlatList
             data={filtered_data ? filtered_data : data}
@@ -83,7 +81,7 @@ const PricesHomeContent = () => {
   );
 };
 
-export default function Home({ data, loading }) {
+export default function Home({ data, loading, reFetch }) {
   const [queryset, setQueryset] = useContext(QueryContext);
   return (
     <Drawer.Navigator
@@ -99,7 +97,7 @@ export default function Home({ data, loading }) {
       drawerContent={() => <PricesHomeContent />}
     >
       <Drawer.Screen name="HomeContent">
-        {() => <HomeContent loading={loading} data={data} />}
+        {() => <HomeContent loading={loading} data={data} reFetch={reFetch} />}
       </Drawer.Screen>
     </Drawer.Navigator>
   );

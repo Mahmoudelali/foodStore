@@ -31,7 +31,7 @@ function FiltratedOffers({ route }) {
 
   return (
     <View className="flex-1">
-      <AccessBar />
+      <AccessBar  />
       {loading ? (
         <ActivityIndicator />
       ) : (

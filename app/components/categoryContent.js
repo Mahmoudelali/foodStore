@@ -11,6 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 import useFetch from "../components/useFetch.js";
 
 const Content = ({ setSelectedCategory }) => {
+  
   const categories_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getcategories/`;
   const [data, loading] = useFetch(categories_uri);
   const navigation = useNavigation();

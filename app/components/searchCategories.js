@@ -10,12 +10,14 @@ const DrawerContent = ({ selectedCategory }) => {
     "/"
   )}${selectedCategory?.category_illustration.replace(/\//, "")}`;
   useEffect(() => {
-    if (queryset !== null) {
+      if(queryset === null) return
+      
       navigation.navigate("FiltratedOffers", {
         queryset: `queryset=${queryset}`,
-      });
-    }
-  }, [queryset]);
+      })
+    
+    
+   }, [queryset]);
 
   return (
     <View className="flex-1 ">
