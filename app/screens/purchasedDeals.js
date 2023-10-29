@@ -12,7 +12,6 @@ export default function PurchasedDeals({ route }) {
 				<NotFound label="No purchased deals found" />
 			) : (
 				data.map((offer) => {
-					console.log('offer', JSON.stringify(offer, null, 2));
 					return (
 						<OrderBox key={offer.id} {...offer} status="active" />
 					);

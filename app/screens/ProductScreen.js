@@ -6,6 +6,7 @@ import {
 	KeyboardAvoidingView,
 	StyleSheet,
 	ActivityIndicator,
+	Image,
 } from 'react-native';
 import { Entypo, Ionicons, MaterialIcons, AntDesign } from '@expo/vector-icons';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -37,8 +38,9 @@ const showToast = (type, label1, label2) => {
 };
 
 const ProductScreen = ({ route }) => {
-	console.log(qrcode);
-	const { qrCodeImage } = route.params;
+	const { product, qr_code } = route.params;
+
+	console.log(product);
 	const [user] = useContext(UserContext);
 	const scrollRef = useRef();
 	const toTop = () => {
@@ -65,11 +67,10 @@ const ProductScreen = ({ route }) => {
 
 	const user_id = user.user_id;
 	const offer_id = route.params.product;
-	const qrcode = route.params.qr_code;
-	console.log(qrcode);
 	const server_uri = process.env.EXPO_PUBLIC_SERVER_URL;
 	const uri = `${server_uri}api/getalloffers/${offer_id}`;
 	const [data, loading] = useFetch(uri);
+
 	const image = data?.main_picture;
 
 	const order_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/createorder/`;
@@ -127,16 +128,18 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
 	};
 
 	const productScreenData = [
-		qrcode && {
+		qr_code && {
 			title: 'QR Code',
 			textualContent:
 				'Use this QR code in the desired store in order to redeem your coupon.',
 			icon: <AntDesign name="qrcode" size={14} color="#13d0ca" />,
 			extraComponent: (
-				<Image
-					source={{ uri: `${server_uri}${qrCodeImage}` }}
-					style={styles.qrCodeImage}
-				/>
+				<View style={styles.qrCodeImageContainer}>
+					<Image
+						source={{ uri: `${server_uri}${qr_code}` }}
+						style={styles.qrCodeImage}
+					/>
+				</View>
 			),
 		},
 		{
@@ -265,9 +268,13 @@ const styles = StyleSheet.create({
 		backgroundColor: 'white',
 		marginTop: 12,
 	},
+	qrCodeImageContainer: {
+		maxHeight: 250,
+	},
 	qrCodeImage: {
-		width: '100%',
+		maxWidth: '100%',
 		height: '100%',
+		objectFit: 'contain',
 	},
 });
 export default ProductScreen;
