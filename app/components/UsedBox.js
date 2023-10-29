@@ -10,16 +10,15 @@ const iconStyles = {
 	color: '#13d0ca',
 };
 
-const OrderBox = ({ offer, status }) => {
+const OrderBox = ({ offer, status, qr_code }) => {
 	const image = process.env.EXPO_PUBLIC_SERVER_URL + offer.main_picture;
 	const navigation = useNavigation();
-  console.log(offer)
 	return (
 		<Pressable
 			onPress={() =>
 				navigation.navigate('ProductScreen', {
 					product: offer.id,
-					qr_code: offer.qr_code,
+					qr_code,
 				})
 			}
 			className="p-1 flex flex-row w-[95%] min-h-[90] mx-auto my-1  bg-white border-dashed border-2 border-gray-300"
