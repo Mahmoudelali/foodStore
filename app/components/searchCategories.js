@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, Pressable, StyleSheet } from "react-native";
 import { useNavigation } from "expo-router";
+import { fonts } from "./css";
 
 const DrawerContent = ({ selectedCategory }) => {
   const navigation = useNavigation();
@@ -10,14 +11,12 @@ const DrawerContent = ({ selectedCategory }) => {
     "/"
   )}${selectedCategory?.category_illustration.replace(/\//, "")}`;
   useEffect(() => {
-      if(queryset === null) return
-      
-      navigation.navigate("FiltratedOffers", {
-        queryset: `queryset=${queryset}`,
-      })
-    
-    
-   }, [queryset]);
+    if (queryset === null) return;
+
+    navigation.navigate("FiltratedOffers", {
+      queryset: `queryset=${queryset}`,
+    });
+  }, [queryset]);
 
   return (
     <View className="flex-1 ">
@@ -30,7 +29,10 @@ const DrawerContent = ({ selectedCategory }) => {
               className="mx-auto"
             />
           </View>
-          <Text className="uppercase font-bold text-center my-4 tracking-widest text-gray-600">
+          <Text
+            style={{ fontFamily: fonts.regular }}
+            className="uppercase text-center my-4 tracking-widest text-gray-600"
+          >
             {selectedCategory?.name}
           </Text>
         </View>
@@ -61,6 +63,7 @@ const styles = StyleSheet.create({
   subCategoriesStyles: {
     paddingVertical: 5,
     fontSize: 16,
+    fontFamily: fonts.light,
   },
   imageStyles: {
     marginHorizontal: "auto",

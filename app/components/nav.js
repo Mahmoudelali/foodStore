@@ -11,6 +11,7 @@ import useFetch from "./useFetch.js";
 import Basket from "../screens/Basket.js";
 import { useContext } from "react";
 import { DataContext } from "../index.js";
+import { fonts } from "./css.js";
 
 const Tab = createBottomTabNavigator();
 
@@ -50,6 +51,7 @@ export default function Nav({ user, setUser }) {
           tabBarShowLabel: false,
           headerTitleStyle: {
             color: "white",
+            fontFamily: fonts.regular,
           },
           headerStyle: {
             backgroundColor: "#13d0ca",

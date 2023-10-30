@@ -7,6 +7,7 @@ import ProductUserActions from "./ProductUserActions";
 import Switcher from "./Switcher";
 import { useNavigation } from "@react-navigation/native";
 import { uri } from "../index.js";
+import { fonts } from "./css";
 
 const HeroCard = ({ productScreen, item }) => {
   const image = `${uri + item?.main_picture}`;
@@ -70,28 +71,42 @@ const HeroCard = ({ productScreen, item }) => {
               {productScreen && (
                 <View className="flex flex-row items-center">
                   <Switcher />
-                  <Text className="ml-2 text-xs text-gray-400">
+                  <Text
+                    style={{ fontFamily: fonts.regular }}
+                    className="ml-2 text-xs text-gray-400"
+                  >
                     notify me when similar offers available
                   </Text>
                 </View>
               )}
 
               <View className="self-start">
-                <Text className="text-base text-gray-600 ">
+                <Text
+                  style={{ fontFamily: fonts.regular }}
+                  className="text-base text-gray-600 "
+                >
                   {item.highlights}
                 </Text>
                 <Text>
-                  <Text className="text-md  text-accent-100 uppercase ">
+                  <Text
+                    style={{ fontFamily: fonts.regular }}
+                    className="text-md  text-accent-100 uppercase "
+                  >
                     {item?.company.name}
                   </Text>
-                  <Text className="text-xs text-gray-500 ">
+                  <Text
+                    style={{ fontFamily: fonts.regular }}
+                    className="text-xs text-gray-500 "
+                  >
                     {" "}
                     {item?.location.name}
                   </Text>
                 </Text>
               </View>
             </View>
-            <Text className="text-white">{item?.description}</Text>
+            <Text style={{ fontFamily: fonts.regular }} className="text-white">
+              {item?.description}
+            </Text>
           </View>
         </View>
       </LinearGradient>

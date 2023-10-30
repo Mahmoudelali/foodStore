@@ -25,6 +25,8 @@ import FiltratedOffers from "./screens/customFiltrationScreen.js";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
 import axios from "axios";
+import { useFonts } from "expo-font";
+import { fonts } from "./components/css";
 
 const screenOptions = {
   headerTintColor: "white",
@@ -39,6 +41,9 @@ const screenOptions = {
     elevation: 0,
     height: 40,
     backgroundColor: "#13d0ca",
+  },
+  headerTitleStyle: {
+    fontFamily: fonts.regular,
   },
 };
 
@@ -98,6 +103,18 @@ export default function Page() {
     bootstrapAsync();
   }, []);
 
+  const [fontsLoaded] = useFonts({
+    "Lato-Regular": require("./assets/Fonts/Lato-Regular.ttf"),
+    "Lato-Light": require("./assets/Fonts/Lato-Light.ttf"),
+    "Lato-Italic": require("./assets/Fonts/Lato-Italic.ttf"),
+    "Lato-Bold": require("./assets/Fonts/Lato-Bold.ttf"),
+    "Lato-BoldItalic": require("./assets/Fonts/Lato-BoldItalic.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
   // Check if data is still loading and render a loading screen if true
   if (loading) {
     return (
@@ -108,7 +125,9 @@ export default function Page() {
     );
   }
   return (
-    <DataContext.Provider value={[data, dataLoading, setData, setDataLoading, fetchData]}>
+    <DataContext.Provider
+      value={[data, dataLoading, setData, setDataLoading, fetchData]}
+    >
       <UserContext.Provider value={[user, setUser]}>
         <LoggedInContext.Provider value={[isLoggedIn, setIsLoggedIn]}>
           <QueryContext.Provider value={[queryset, setQueryset]}>

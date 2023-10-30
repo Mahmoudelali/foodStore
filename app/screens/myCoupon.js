@@ -2,6 +2,7 @@ import { View, Text, Pressable } from "react-native";
 import React, { useContext } from "react";
 import useFetch from "../components/useFetch.js";
 import { UserContext } from "../index.js";
+import { fonts } from "../components/css.js";
 
 export default function MyCoupon({ navigation }) {
   const [user] = useContext(UserContext);
@@ -13,6 +14,7 @@ export default function MyCoupon({ navigation }) {
     orders.filter(
       (order) => order.is_active == true && order.redeemed == false
     );
+
   const reserved_deals =
     orders && orders.filter((order) => order.is_active == false);
   const used_deals = orders && orders.filter((order) => order.redeemed);
@@ -38,9 +40,11 @@ export default function MyCoupon({ navigation }) {
 
   return (
     <View className="bg-white mt-5 flex-col items-start">
-      {items.map((item, index) => (
-        <Pressable key={index} className="p-7 ml-[10%]" onPress={item.onPress}>
-          <Text className="text-gray-500">{item.text}</Text>
+      {items.map(({ text, onPress }, index) => (
+        <Pressable key={index} className="p-7 ml-[10%]" onPress={onPress}>
+          <Text style={{ fontFamily: fonts.regular }} className="text-gray-500">
+            {text}
+          </Text>
           {index !== items.length - 1 && (
             <View className="absolute bottom-0 h-[5%] w-[100%] bg-gray-300 ml-5" />
           )}

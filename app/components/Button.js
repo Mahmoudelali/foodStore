@@ -1,5 +1,6 @@
 import React from "react";
 import { Pressable, Text, StyleSheet, View } from "react-native";
+import { fonts } from "./css";
 
 export default Button = ({
   error,
@@ -16,10 +17,20 @@ export default Button = ({
         disabled={disabled}
         onPress={onPress}
       >
-        <Text style={textStyle ? textStyle : styles.text}>{label}</Text>
+        <Text
+          style={[
+            textStyle ? textStyle : styles.text,
+            { fontFamily: fonts.regular },
+          ]}
+        >
+          {label}
+        </Text>
       </Pressable>
       {error && (
-        <Text className="text-xs text-red-700 mt-1">
+        <Text
+          style={{ fontFamily: fonts.regular }}
+          className="text-xs text-red-700 mt-1"
+        >
           All field must be filled!
         </Text>
       )}
@@ -38,7 +49,6 @@ const styles = StyleSheet.create({
   text: {
     color: "#FFFFFF",
     fontSize: 18,
-    fontWeight: "bold",
     textTransform: "uppercase",
     letterSpacing: 1,
   },

@@ -1,5 +1,6 @@
 import { View, Text, Pressable } from "react-native";
 import React from "react";
+import { fonts } from "../components/css";
 
 const Option = ({ optionName, option, navigation }) => (
   <Pressable onPress={navigation}>
@@ -48,19 +49,34 @@ export default function AppSetting({ navigation }) {
   return (
     <View>
       <View className="mt-[5%] bg-white">
-        <Text className="py-3 pl-10 font-semibold">Store Setup</Text>
+        <Text
+          style={{ fontFamily: fonts.regular }}
+          className="py-3 pl-10 font-semibold"
+        >
+          Store Setup
+        </Text>
         {optionsStore.map((options, index) => (
           <Option index={index} {...options} key={index} />
         ))}
       </View>
       <View className="mt-[5%] bg-white">
-        <Text className="py-3 pl-10 font-semibold">Other</Text>
+        <Text
+          style={{ fontFamily: fonts.regular }}
+          className="py-3 pl-10 font-semibold"
+        >
+          Other
+        </Text>
         {optionsOther.map((options, index) => (
           <Option index={index} {...options} key={index} />
         ))}
       </View>
       <View className="mt-[5%] bg-white">
-        <Text className="py-3 pl-10 font-semibold">About</Text>
+        <Text
+          style={{ fontFamily: fonts.regular }}
+          className="py-3 pl-10 font-semibold"
+        >
+          About
+        </Text>
         {optionsAbout.map((options, index) => (
           <Option
             key={index}

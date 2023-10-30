@@ -14,6 +14,7 @@ import ProductCard from "../components/productCard.js";
 import useFetch from "../components/useFetch.js";
 import { QueryContext } from "../index.js";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { colors, fonts } from "../components/css.js";
 const Drawer = createDrawerNavigator();
 
 const HomeContent = ({ loading, data, reFetch }) => {
@@ -43,7 +44,7 @@ const HomeContent = ({ loading, data, reFetch }) => {
         </View>
       ) : (
         <View style={style.container}>
-          <Text className="text-gray-500 font-semibold ml-2 mb-1">
+          <Text style={style.font} className="ml-2 mb-1">
             {filtered_data ? filtered_data?.length : data?.length} offers
           </Text>
           <FlatList
@@ -68,10 +69,18 @@ const HomeContent = ({ loading, data, reFetch }) => {
 const PricesHomeContent = () => {
   return (
     <View className="pt-8 ">
-      <Text className="text-lg font-bold text-center mb-8">Price</Text>
+      <Text
+        style={{ fontFamily: fonts.regular }}
+        className="uppercase text-lg text-center mb-8"
+      >
+        Price
+      </Text>
       {priceRanges.map((prc, index) => (
         <View key={index} style={style.bottomBorder} className="w-[80%]">
-          <Text className="ml-4 mb-1 text-gray-400 text-md">
+          <Text
+            style={{ fontFamily: fonts.regular }}
+            className="ml-4 mb-1 text-gray-400 text-md"
+          >
             $<Text className=" text-gray-400">{prc.from}</Text> - $
             <Text className=" text-gray-400">{prc.to}</Text>
           </Text>
@@ -120,5 +129,9 @@ const style = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "lightgrey",
     marginBottom: 10,
+  },
+  font: {
+    fontFamily: fonts.regular,
+    color: colors.gray,
   },
 });

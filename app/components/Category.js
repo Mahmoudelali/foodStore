@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Pressable, Image, Text, Alert } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { fonts } from "./css";
 
 const Category = ({ categoryName, image, onPress }) => {
   return (
@@ -10,9 +11,12 @@ const Category = ({ categoryName, image, onPress }) => {
         className="p-2 flex flex-row w-full min-h-[90] mb-3 bg-white h-24 justify-center items-center"
       >
         <View className="ml-1 px-1 my-auto w-1/2">
-          <Text className="uppercase pl-2 tracking-widest font-bold text-gray-600 text-xs">
+          <Text
+            style={{ fontFamily: fonts.regular }}
+            className="uppercase pl-2 tracking-widest text-gray-600"
+          >
             {categoryName}
-          </Text>
+          </Text> 
         </View>
         <View className="ml-auto">
           <Image source={{ uri: image }} style={styles.imageStyles} />

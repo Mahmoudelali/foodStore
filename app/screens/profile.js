@@ -9,6 +9,7 @@ import { useNavigation } from "expo-router";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Option from "../components/settingsOption.js";
 import { LoggedInContext } from "../index.js";
+import { fonts } from "../components/css.js";
 
 const optionIconStyles = {
   size: 30,
@@ -129,11 +130,17 @@ export default function Profile() {
           />
         </View>
         {loggedIn ? (
-          <Text className="text-white text-[20px] font-bold ml-[5%]">
+          <Text
+            style={{ fontFamily: fonts.regular }}
+            className="text-white text-[20px] ml-[5%]"
+          >
             Hello {userData?.username}
           </Text>
         ) : (
-          <Text className="text-white text-[20px] font-bold ml-[5%]">
+          <Text
+            style={{ fontFamily: fonts.regular }}
+            className="text-white text-[20px] ml-[5%]"
+          >
             Hello COUPWAY
           </Text>
         )}

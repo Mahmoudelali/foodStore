@@ -1,11 +1,22 @@
 import React from "react";
 import { Text, View, StyleSheet } from "react-native";
 import Button from "./Button";
+import { fonts } from "./css";
 
 const InvoiceValue = ({ label, value, isBold }) => (
   <View className="flex flex-row justify-between mb-3 ">
-    <Text style={isBold && [styles.isBold, styles.letterSpaced]}>{label}</Text>
-    <Text style={isBold && styles.isBold}>
+    <Text
+      style={
+        isBold && [
+          styles.isBold,
+          styles.letterSpaced,
+          { fontFamily: fonts.regular },
+        ]
+      }
+    >
+      {label}
+    </Text>
+    <Text style={[isBold && styles.isBold, { fontFamily: fonts.regular }]}>
       {typeof value == "string" ? value.toUpperCase() : `$ ${value}`}
     </Text>
   </View>
@@ -20,14 +31,18 @@ const Invoice = ({ deliveryMethod, itemsArr }) => {
       <InvoiceValue label="Delivery" value={"Free"} />
       <InvoiceValue label="TOTAL TO PAY" value={160} isBold={true} />
       <Button label={"place order"} />
-      <Text className="text-gray-400 text-xs mt-2">{termsCondition}</Text>
+      <Text
+        style={{ fontFamily: fonts.regular }}
+        className="text-gray-400 text-xs mt-2"
+      >
+        {termsCondition}
+      </Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   isBold: {
-    fontWeight: "bold",
     textTransform: "uppercase",
   },
   letterSpaced: {
