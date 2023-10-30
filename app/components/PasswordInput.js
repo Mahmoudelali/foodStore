@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { View, TextInput, Pressable, Text } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { colors, fonts } from "./css";
 
 const PasswordInput = ({ validate, password, setPassword, hint, errLabel }) => {
   const [passVisible, setPassVisible] = useState(false);
 
   return (
     <View>
-      <Text className="uppercase font-bold text-xs text-gray-600 my-3">
+      <Text
+        style={{ fontFamily: fonts.regular, color: colors.gray }}
+        className="uppercase text-xs my-3"
+      >
         Password:
       </Text>
       <View>
@@ -35,7 +39,12 @@ const PasswordInput = ({ validate, password, setPassword, hint, errLabel }) => {
           </View>
         </Pressable>
       </View>
-      <Text className="font-bold text-xs text-gray-600 my-3">{hint}</Text>
+      <Text
+        style={{ fontFamily: fonts.regular, color: colors.gray }}
+        className="font-bold text-xs text-gray-600 my-3"
+      >
+        {hint}
+      </Text>
     </View>
   );
 };

@@ -1,13 +1,14 @@
 import React from "react";
 import { Image } from "react-native";
 import { View, StyleSheet, Text } from "react-native";
+import { fonts } from "./css";
 
 const Feedback = ({ feedbacks }) => {
   const user_icon = require("../assets/default_61f3429ad1ced-removebg-preview.png");
   return (
     <View className="py-2 px-5">
       {!feedbacks ? (
-        <Text className="text-gray-500">
+        <Text style={{ fontFamily: fonts.regular }} className="text-gray-500">
           No Available feedbacks for this Product
         </Text>
       ) : (
@@ -22,10 +23,16 @@ const Feedback = ({ feedbacks }) => {
               />
             </View>
             <View className="ml-2 overflow-hidden ">
-              <Text className="text-[13px] text-gray-600 text-ellipsis uppercase font-bold italic">
+              <Text
+                style={{ fontFamily: fonts.boldItalic }}
+                className="text-[13px] text-gray-600 text-ellipsis uppercase"
+              >
                 {user.username}
               </Text>
-              <Text className="text-gray-500 text-xs text-ellipsis">
+              <Text
+                style={{ fontFamily: fonts.regular }}
+                className="text-gray-500 text-xs text-ellipsis"
+              >
                 {feedback_content}
               </Text>
             </View>

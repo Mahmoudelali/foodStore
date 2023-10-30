@@ -7,6 +7,7 @@ import { useNavigation } from "expo-router";
 import Toast from "react-native-toast-message";
 import { signIn } from "../components/data.js";
 import { showToast } from "../components/data.js";
+import { colors, fonts } from "../components/css";
 
 const Login = ({ setUser, setIsLoggedIn }) => {
   const navigation = useNavigation();
@@ -24,7 +25,10 @@ const Login = ({ setUser, setIsLoggedIn }) => {
       state: password,
       handler: setPassword,
       extraComponent: (
-        <Text className="uppercase font-light text-xs mb-4">
+        <Text
+          className="uppercase font-light text-xs mb-4"
+          style={styles.font}
+        >
           forget Password ?
         </Text>
       ),
@@ -69,14 +73,17 @@ const Login = ({ setUser, setIsLoggedIn }) => {
                   );
             }}
           />
-          <Text className="uppercase font-light text-xs mt-1 text-center leading-6">
+          <Text
+            style={styles.font}
+            className="uppercase text-xs mt-1 text-center leading-6"
+          >
             don't have an account? Sign up{" "}
-            <Button
-              label="Here"
-              textStyle={styles.labelStyles}
-              buttonStyle={styles.buttonStyle}
+            <Text
+              style={[styles.labelStyles, styles.buttonStyle]}
               onPress={() => navigation.navigate("Register")}
-            />
+            >
+              HERE
+            </Text>
           </Text>
         </View>
       </View>
@@ -98,5 +105,10 @@ const styles = StyleSheet.create({
   buttonStyle: {
     backgroundColor: "transparent",
     padding: 0,
+    textDecorationLine: "underline",
+  },
+  font: {
+    fontFamily: fonts.light,
+    color: colors.gray,
   },
 });

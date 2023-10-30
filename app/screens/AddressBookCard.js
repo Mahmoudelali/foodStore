@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import { fonts } from "../components/css";
 
 const AddressBookCard = ({
   editable,
@@ -19,20 +20,34 @@ const AddressBookCard = ({
       }
     >
       <View className={editable ? "w-[85%] p-2" : "w-[85%]"}>
-        <Text className="mb-2">{user_name || "FirstName LastName"}</Text>
-        <Text className="mb-2">
+        <Text style={{ fontFamily: fonts.regular }} className="mb-2">
+          {user_name || "FirstName LastName"}
+        </Text>
+        <Text style={{ fontFamily: fonts.regular }} className="mb-2">
           {user_address ||
             "Tripoli, Near azmi street, Azmi square, Azmi Building"}
         </Text>
-        <Text className="mb-2">{city || "Tripoli"}</Text>
-        <Text className="mb-2">{region || "Lebanon"}</Text>
-        <Text className="mb-5">{number || "+961 76 000 000"}</Text>
+        <Text style={{ fontFamily: fonts.regular }} className="mb-2">
+          {city || "Tripoli"}
+        </Text>
+        <Text style={{ fontFamily: fonts.regular }} className="mb-2">
+          {region || "Lebanon"}
+        </Text>
+        <Text style={{ fontFamily: fonts.regular }} className="mb-5">
+          {number || "+961 76 000 000"}
+        </Text>
         {editable && (
           <>
-            <Text className="text-gray-400 text-xs mb-1">
+            <Text
+              style={{ fontFamily: fonts.regular }}
+              className="text-gray-400 text-xs mb-1"
+            >
               This is your delivery address
             </Text>
-            <Text className="text-gray-400 text-xs mb-1">
+            <Text
+              style={{ fontFamily: fonts.regular }}
+              className="text-gray-400 text-xs mb-1"
+            >
               This is your default billing address
             </Text>
           </>

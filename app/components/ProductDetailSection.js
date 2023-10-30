@@ -7,6 +7,7 @@ import {
   LayoutAnimation,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { fonts } from "./css";
 
 const ProductDetailSection = ({
   title,
@@ -37,7 +38,10 @@ const ProductDetailSection = ({
         </View>
         <View className="pl-5">
           <View className="flex flex-row justify-between pr-3 items-center">
-            <Text className="font-semibold tracking-wide text-accent-100 mb-4 text-md">
+            <Text
+              style={{ fontFamily: fonts.regular }}
+              className="tracking-wide text-accent-100 mb-4 text-md"
+            >
               {title && title}
             </Text>
             <FontAwesome5
@@ -49,7 +53,10 @@ const ProductDetailSection = ({
           {textualContent && (
             <Text
               className="pb-5 text-gray-500 text-xs tracking-wide"
-              style={viewExpanded ? styles.viewExpanded : styles.viewCollapsed}
+              style={[
+                viewExpanded ? styles.viewExpanded : styles.viewCollapsed,
+                { fontFamily: fonts.regular },
+              ]}
             >
               {textualContent}
             </Text>

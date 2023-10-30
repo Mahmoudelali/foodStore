@@ -1,6 +1,7 @@
 import React from "react";
 import { Text, View, StyleSheet, Pressable, Alert } from "react-native";
 import { RadioButton } from "react-native-radio-buttons-group";
+import { fonts } from "./css";
 
 const DeliveryOption = ({
   label,
@@ -17,10 +18,17 @@ const DeliveryOption = ({
     >
       <View>
         <View className="flex flex-row ">
-          <Text className="uppercase mr-3 font-bold mb-2">{label}</Text>
+          <Text
+            style={{ fontFamily: fonts.regular }}
+            className="uppercase mr-3 mb-2"
+          >
+            {label}
+          </Text>
           <Text>{type}</Text>
         </View>
-        <Text className="text-gray-500">{description}</Text>
+        <Text style={{ fontFamily: fonts.regular }} className="text-gray-500">
+          {description}
+        </Text>
       </View>
 
       <RadioButton
@@ -47,7 +55,10 @@ const DeliveryOptions = () => {
   ];
   return (
     <View className="bg-white  my-5 py-4 px-5 ">
-      <Text className="uppercase text-lg font-bold mb-5 ">
+      <Text
+        style={{ fontFamily: fonts.regular }}
+        className="uppercase text-lg mb-5 "
+      >
         Delivery Options
       </Text>
       {options.map((opt, index) => {

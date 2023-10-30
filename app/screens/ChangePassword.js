@@ -8,6 +8,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import axios from "axios";
 import { UserContext } from "../index.js";
 import Toast from "react-native-toast-message";
+import { fonts } from "../components/css";
 
 const ChangePassword = ({ navigation }) => {
   const [user] = useContext(UserContext);
@@ -114,12 +115,13 @@ const styles = StyleSheet.create({
     backgroundColor: "#13d0ca",
     padding: 10,
     marginTop: 20,
+    fontFamily: fonts.regular,
   },
   labelStyles: {
-    fontWeight: "bold",
     textTransform: "uppercase",
     textAlign: "center",
     color: "#fff",
+    fontFamily: fonts.regular,
     fontSize: 20,
   },
 });

@@ -2,6 +2,7 @@ import React from "react";
 import { Alert, Pressable } from "react-native";
 import { View, StyleSheet, Text, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
+import { fonts } from "./css";
 
 const iconStyles = {
   size: 26,
@@ -27,24 +28,55 @@ const WishBox = ({ restoName, offer, initialPrice, dealPrice, navigation }) => {
 
       <View className="ml-1 px-1 basis-[65%]">
         <View className="self-start">
-          <Text className="text-sm">20% discount on sea food dishes</Text>
+          <Text style={{ fontFamily: fonts.regular }} className="text-sm">
+            20% discount on sea food dishes
+          </Text>
           <Text>
-            <Text className="text-md  text-accent-100 uppercase font-semibold ">
+            <Text
+              style={{ fontFamily: fonts.regular }}
+              className="text-md  text-accent-100 uppercase"
+            >
               RestoName
             </Text>
-            <Text className="text-xs text-gray-500 "> lorem lorem</Text>
+            <Text
+              style={{ fontFamily: fonts.regular }}
+              className="text-xs text-gray-500 "
+            >
+              {" "}
+              lorem lorem
+            </Text>
           </Text>
         </View>
         <View className="flex flex-row items-center justify-between mt-2">
           <View>
-            <Text className="text-xs uppercase">Deal Price</Text>
+            <Text
+              style={{ fontFamily: fonts.regular }}
+              className="text-xs uppercase"
+            >
+              Deal Price
+            </Text>
             <Text>
-              <Text className="line-through">100$</Text> -
-              <Text className="text-accent-100"> 80$</Text>
+              <Text
+                style={{ fontFamily: fonts.regular }}
+                className="line-through"
+              >
+                100$
+              </Text>{" "}
+              -
+              <Text
+                style={{ fontFamily: fonts.regular }}
+                className="text-accent-100"
+              >
+                {" "}
+                80$
+              </Text>
             </Text>
           </View>
           <Pressable className="bg-accent-100 py-2 px-4">
-            <Text className="uppercase  text-white font-semibold tracking-wider">
+            <Text
+              style={{ fontFamily: fonts.regular }}
+              className="uppercase  text-white tracking-wider"
+            >
               buy
             </Text>
           </Pressable>
