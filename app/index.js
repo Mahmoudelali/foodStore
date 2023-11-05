@@ -1,10 +1,7 @@
-import registerNNPushToken, { registerIndieID } from 'native-notify';
-import React, { useState, createContext, useEffect, useRef } from 'react';
+import { registerIndieID } from 'native-notify';
+import React, { useState, createContext, useEffect } from 'react';
 import WelcomePage from './screens/Welcome';
 import ProductCard from './components/productCard';
-import Home from './screens/home';
-import Basket from './screens/Basket';
-import Search from './screens/search.js';
 import Login from './screens/Login';
 import Nav from './components/nav';
 import Register from './components/Register';
@@ -26,12 +23,9 @@ import Checkout from './screens/Checkout';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FiltratedOffers from './screens/customFiltrationScreen.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Profile from './screens/profile.js';
+import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 
-const Stack = createNativeStackNavigator();
 const screenOptions = {
-	tabBarShowLabel: false,
-	headerShown: true,
 	headerTintColor: 'white',
 	headerStyle: {
 		backgroundColor: '#13d0ca',
@@ -46,18 +40,20 @@ const screenOptions = {
 		backgroundColor: '#13d0ca',
 	},
 };
+
 export const BasketContext = createContext();
 export const QueryContext = createContext();
 export const LoggedInContext = createContext();
 export const UserContext = createContext();
 
 export default function Page() {
+	const Stack = createNativeStackNavigator();
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [basket, setBasket] = useState([]);
 	const [queryset, setQueryset] = useState(null);
 	const [user, setUser] = useState(null);
-	// registerNNPushToken(12331, 'L4XCS1Ezhz6YHOS7hIr6hR');
-	registerIndieID(user?.user_id, 12331, 'L4XCS1Ezhz6YHOS7hIr6hR');
+	const [loading, setLoading] = useState(true); // New loading state
+	
 
 	useEffect(() => {
 		const bootstrapAsync = async () => {
@@ -65,14 +61,26 @@ export default function Page() {
 			try {
 				data = await AsyncStorage.getItem('user_data');
 				const parsedData = JSON.parse(data);
-				setUser(parsedData);
+				if (parsedData) setUser(parsedData);
+				if (parsedData.token) setIsLoggedIn(true);
 			} catch (e) {
 				console.log(e);
+			} finally {
+				setLoading(false);
 			}
 		};
 		bootstrapAsync();
 	}, []);
 
+	// Check if data is still loading and render a loading screen if true
+	if (loading) {
+		return (
+			<View style={styles.container}>
+				<ActivityIndicator size="large" color="#13d0ca" />
+				<Text style={styles.loadingText}>Loading...</Text>
+			</View>
+		);
+	}
 	return (
 		<UserContext.Provider value={[user, setUser]}>
 			<LoggedInContext.Provider value={[isLoggedIn, setIsLoggedIn]}>
@@ -82,7 +90,7 @@ export default function Page() {
 							initialRouteName={'Nav'}
 							screenOptions={screenOptions}
 						>
-							{user === null ? (
+							{!user || !user.token ? (
 								<>
 									<Stack.Screen name="Welcome">
 										{() => (
@@ -115,34 +123,12 @@ export default function Page() {
 										name="ProductCard"
 										component={ProductCard}
 									/>
-									<Stack.Screen name="Profile">
-										{() => (
-											<Profile
-												userData={user}
-												setUser={setUser}
-											/>
-										)}
-									</Stack.Screen>
-
-									<Stack.Screen
-										name="Basket"
-										component={Basket}
-									/>
-									<Stack.Screen
-										name="Home"
-										component={Home}
-									/>
-									<Stack.Screen
-										name="Search"
-										component={Search}
-									/>
 									<Stack.Screen
 										name="Checkout"
 										component={Checkout}
 									/>
 									<Stack.Screen
 										options={{
-											headerShown: true,
 											title: 'MY DETAILS',
 										}}
 										name="MyDetails"
@@ -166,7 +152,6 @@ export default function Page() {
 									/>
 									<Stack.Screen
 										options={{
-											headerShown: true,
 											title: 'edit address',
 										}}
 										name="AddressBookEdit"
@@ -174,7 +159,6 @@ export default function Page() {
 									/>
 									<Stack.Screen
 										options={{
-											headerShown: true,
 											title: 'MY COUPON',
 										}}
 										name="MyCoupon"
@@ -182,7 +166,6 @@ export default function Page() {
 									/>
 									<Stack.Screen
 										options={{
-											headerShown: true,
 											title: 'ABOUT COUPWAY',
 										}}
 										name="AboutCoupway"
@@ -190,7 +173,6 @@ export default function Page() {
 									/>
 									<Stack.Screen
 										options={{
-											headerShown: true,
 											title: 'TERMS & CONDITION',
 										}}
 										name="TermsCondition"
@@ -198,16 +180,13 @@ export default function Page() {
 									/>
 									<Stack.Screen
 										options={{
-											headerShown: true,
 											title: 'PURCHASED DEALS',
 										}}
 										name="PurchasedDeals"
 										component={PurchasedDeals}
 									/>
-
 									<Stack.Screen
 										options={{
-											headerShown: true,
 											title: 'APP SETTING',
 										}}
 										name="AppSetting"
@@ -215,7 +194,6 @@ export default function Page() {
 									/>
 									<Stack.Screen
 										options={{
-											headerShown: true,
 											title: 'ABOUT US',
 										}}
 										name="AboutUs"
@@ -223,7 +201,6 @@ export default function Page() {
 									/>
 									<Stack.Screen
 										options={{
-											headerShown: true,
 											title: 'USED DEALS',
 										}}
 										name="UsedDeals"
@@ -231,25 +208,32 @@ export default function Page() {
 									/>
 									<Stack.Screen
 										options={{
-											headerShown: true,
 											title: 'RESERVED DEALS',
 										}}
 										name="ReservedDeals"
 										component={ReservedDeals}
 									/>
 									<Stack.Screen
-										options={{
-											headerShown: true,
-											title: 'CONTACT US',
-										}}
 										name="ContactUs"
 										component={Contact}
+										options={{
+											title: 'CONTACT US',
+										}}
 									/>
 									<Stack.Screen
 										name="Nav"
-										component={Nav}
-										options={{ headerShown: false }}
-									/>
+										options={{
+											headerShown: true,
+											header: () => null,
+										}}
+									>
+										{() => (
+											<Nav
+												user={user}
+												setUser={setUser}
+											/>
+										)}
+									</Stack.Screen>
 								</>
 							)}
 						</Stack.Navigator>
@@ -259,3 +243,17 @@ export default function Page() {
 		</UserContext.Provider>
 	);
 }
+
+const styles = StyleSheet.create({
+	container: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center',
+		backgroundColor: 'white',
+	},
+	loadingText: {
+		marginTop: 16,
+		fontSize: 18,
+		color: '#13d0ca',
+	},
+});

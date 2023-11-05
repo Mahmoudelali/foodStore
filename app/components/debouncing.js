@@ -1,15 +1,15 @@
 function customDebounce(func, wait) {
-	let timeout;
+  let timeout;
 
-	return function (...args) {
-		const context = this;
+  return function (...args) {
+    const context = this;
 
-		clearTimeout(timeout);
+    clearTimeout(timeout);
 
-		timeout = setTimeout(() => {
-			func.apply(context, args);
-		}, wait);
-	};
+    timeout = setTimeout(() => {
+      func.apply(context, args);
+    }, wait);
+  };
 }
 
 export default customDebounce;

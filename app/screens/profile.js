@@ -19,12 +19,13 @@ export default function Profile() {
 	const navigation = useNavigation();
 	const [userData, setUserData] = useContext(UserContext);
 	const [loggedIn] = useContext(LoggedInContext);
+
 	const logoutUser = async () => {
 		try {
 			await AsyncStorage.removeItem('user_data');
-			setUserData(null);
+			setUserData({ token: null });
 		} catch (e) {
-			console.log(e);
+			console.log('error', e);
 		}
 	};
 
@@ -119,7 +120,6 @@ export default function Profile() {
 	];
 	return (
 		<View className="h-full bg-[#ebe6e6] ">
-			<StatusBar backgroundColor="#13d0ca" />
 			<View className="flex-row items-center bg-[#13d0ca] h-[20%] ">
 				<View className="ml-[10%]">
 					<Ionicons
@@ -129,15 +129,13 @@ export default function Profile() {
 						className="ml-[5%]"
 					/>
 				</View>
-				{loggedIn ? (
-					<Text className="text-white text-[20px] font-bold ml-[5%]">
-						Hello {userData?.username}
-					</Text>
-				) : (
-					<Text className="text-white text-[20px] font-bold ml-[5%]">
-						Hello COUPWAY
-					</Text>
-				)}
+
+				<Text className="text-white text-[20px] font-bold ml-[5%]">
+					Hello{' '}
+					{loggedIn && userData.token
+						? userData.user.username
+						: 'Coupway'}
+				</Text>
 			</View>
 			<View className="absolute top-[15%] bottom-0 right-0 left-0 w-[150%] h-[10%] bg-[#ebe6e6] -rotate-6 "></View>
 			<View className="bg-white mt-[5%]">

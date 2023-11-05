@@ -32,7 +32,7 @@ const Login = ({ setUser, setIsLoggedIn }) => {
 	];
 
 	return (
-		<ScrollView>
+		<View>
 			<View className="relative z-10">
 				<Toast visibilityTime={2000} position="top" topOffset={10} />
 			</View>
@@ -85,7 +85,7 @@ const Login = ({ setUser, setIsLoggedIn }) => {
 					</Text>
 				</View>
 			</View>
-		</ScrollView>
+		</View>
 	);
 };
 

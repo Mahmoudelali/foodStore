@@ -1,6 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import registerNNPushToken, { registerIndieID } from 'native-notify';
 
 export const validateEmail = (email) => {
 	return email.match(
@@ -69,6 +70,7 @@ export const showToast = (type, label1, label2) => {
 		text2: label2 || '',
 	});
 };
+
 export const signIn = async (
 	data,
 	loading_handler,
@@ -86,17 +88,23 @@ export const signIn = async (
 
 	try {
 		const response = await axios.post(
-			`${process.env.EXPO_PUBLIC_SERVER_URL}api-token-auth/`,
+			`${process.env.EXPO_PUBLIC_SERVER_URL}login`,
 			data,
 		);
 		const user_data = response.data;
 		await save_user(user_data);
+
 		user_data_handler(user_data);
+		registerNNPushToken(12331, 'L4XCS1Ezhz6YHOS7hIr6hR');
+		registerIndieID(
+			response.data.user?.user_id,
+			12331,
+			'L4XCS1Ezhz6YHOS7hIr6hR',
+		);
 		loggedInHandler(true);
 		loading_handler(false);
 	} catch (error) {
 		loading_handler(false);
-		console.log('err logging in user', error.response.status);
 		error.response.status == 400 &&
 			showToast(
 				'error',

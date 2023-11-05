@@ -9,11 +9,7 @@ function WelcomePage({ setUser, setIsLoggedIn }) {
 	const navigation = useNavigation();
 
 	const continueAsGuest = async () => {
-		const dummyUserData = {
-			token: 'dummy-token',
-			user_id: null,
-			username: 'guest',
-		};
+		const dummyUserData = { token: 'dummy-token' };
 
 		try {
 			await AsyncStorage.setItem(
@@ -57,6 +53,7 @@ function WelcomePage({ setUser, setIsLoggedIn }) {
 							/>
 						</Pressable>
 					</View>
+
 					<View className="w-1/2 h-40  px-[15%] flex justify-center bg-accent-100 ">
 						<Pressable onPress={() => continueAsGuest()}>
 							<Ionicons
