@@ -38,18 +38,18 @@ const showToast = (type, label1, label2) => {
   });
 };
 
-const ProductScreen = ({ route }) => {
-  const { product, qr_code } = route.params;
 
-  console.log(product);
-  const [user] = useContext(UserContext);
-  const scrollRef = useRef();
-  const toTop = () => {
-    scrollRef.current?.scrollTo({
-      y: 0,
-      animated: true,
-    });
-  };
+const ProductScreen = ({ route, onOrder }) => {
+	const { product, qr_code } = route.params;
+	const [user] = useContext(UserContext);
+	const scrollRef = useRef();
+	const toTop = () => {
+		scrollRef.current?.scrollTo({
+			y: 0,
+			animated: true,
+		});
+	};
+development
 
   const sendWhatsAppMessage = (number, message) => {
     const whatsappUrl = `whatsapp://send?phone=${number}&text=${message}`;
@@ -62,35 +62,40 @@ const ProductScreen = ({ route }) => {
       });
   };
 
-  const user_id = user.user_id;
-  const offer_id = route.params.product;
-  const server_uri = process.env.EXPO_PUBLIC_SERVER_URL;
-  const uri = `${server_uri}api/getalloffers/${offer_id}`;
-  const [data, loading] = useFetch(uri);
+`
+	const user_id = user.user_id;
+	const offer_id = route.params.product;
+	const server_uri = process.env.EXPO_PUBLIC_SERVER_URL;
+	const uri = `${server_uri}api/getalloffers/${offer_id}`;
+	const [data, loading] = useFetch(uri);
+
 
   const image = data?.main_picture;
 
-  const order_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/createorder/`;
-  const feedbacks_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${offer_id}/provide-feedback`;
-  let [feedbacks, feedbackLoading, setFeedbacks] = useFetch(feedbacks_uri);
-  const order_data = [
-    {
-      user_id,
-      offer_id,
-      coupons_ordered: 1,
-    },
-  ];
 
-  const postOffer = () => {
-    const request_headers = {
-      headers: {
-        Authorization: "Token " + user.token,
-      },
-    };
+	const order_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/createorder/`;
+	const feedbacks_uri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getalloffers/${offer_id}/provide-feedback`;
+	let [feedbacks, feedbackLoading, setFeedbacks] = useFetch(feedbacks_uri);
+	const order_data = [
+		{
+			user_id: user.user.id,
+			offer_id,
+			coupons_ordered: 1,
+		},
+	];
 
-    if (user.token === "dummy-token") {
-      return showToast("error", "you must login first");
-    }
+	const postOffer = async () => {
+		toTop();
+		const request_headers = {
+			headers: {
+				Authorization: 'Token ' + user.token,
+			},
+		};
+
+		if (user.token === 'dummy-token') {
+			return showToast('error', 'You must login first!');
+		}
+
 
     axios
       .post(order_uri, order_data, request_headers)
@@ -109,20 +114,22 @@ Activate it for me ASAP, please.
 
 ${server_uri}admin/orders/order/${res.data[0].id}/change/
 				`;
-        console.log(res.data[0]);
-        setTimeout(() => {
-          sendWhatsAppMessage("96176325264", message);
-        }, 2000);
-      })
-      .catch((err) => {
-        console.log("error", err.message);
-        showToast(
-          "error",
-          "Sorry, Failed to place order",
-          "Please try again later"
-        );
-      });
-  };
+
+				setTimeout(() => {
+					sendWhatsAppMessage('96176325264', message);
+				}, 2000);
+			})
+			.catch((err) => {
+				console.log('error', err.message);
+				showToast(
+					'error',
+					'Sorry, Failed to place order',
+					'Please try again later',
+				);
+			});
+		await onOrder();
+	};
+
 
   const productScreenData = [
     qr_code && {
@@ -216,25 +223,23 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
 							isPoster={true}
 							targetDate={'2023-10-31T23:59:59'}
 						/> */}
-            <View className="bg-white flex-1 pl-12 pr-2 pt-6 ">
-              {productScreenData.map((section, index) => (
-                <ProductDetailSection key={index} {...section} />
-              ))}
-            </View>
-            <Toast {...toast_options} />
-            <Button
-              label={"Buy deal"}
-              onPress={() => {
-                postOffer();
-                toTop();
-              }}
-              style={{ fontFamily: fonts.regular }}
-            />
-          </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
-    </>
-  );
+
+						<View className="bg-white flex-1 pl-12 pr-2 pt-6 ">
+							{productScreenData.map((section, index) => (
+								<ProductDetailSection
+									key={index}
+									{...section}
+								/>
+							))}
+						</View>
+						<Toast {...toast_options} />
+						<Button label={'Buy deal'} onPress={postOffer} />
+					</View>
+				</ScrollView>
+			</KeyboardAvoidingView>
+		</>
+	);
+
 };
 
 const styles = StyleSheet.create({

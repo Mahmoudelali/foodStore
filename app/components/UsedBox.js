@@ -12,40 +12,42 @@ const iconStyles = {
 };
 
 const OrderBox = ({ offer, status, qr_code }) => {
-  const image = process.env.EXPO_PUBLIC_SERVER_URL + offer.main_picture;
-  const navigation = useNavigation();
-  return (
-    <Pressable
-      onPress={() =>
-        navigation.navigate("ProductScreen", {
-          product: offer.id,
-          qr_code,
-        })
-      }
-      className="p-1 flex flex-row w-[95%] min-h-[90] mx-auto my-1  bg-white border-dashed border-2 border-gray-300"
-    >
-      <View className="absolute top-4 right-4 z-20 ">
-        <View
-          className="h-2 w-2"
-          style={{
-            backgroundColor:
-              status == "pending"
-                ? "gold"
-                : status == "active"
-                ? "lightgreen"
-                : "#13d0ca",
-            borderRadius: 50,
-          }}
-        />
-      </View>
-      <View className="basis-[30%] max-h-[100]">
-        <Image
-          source={{ uri: image }} //to be edited
-          alt="food image"
-          resizeMode={"cover"}
-          style={styles.imageStyles}
-        />
-      </View>
+
+	const image = process.env.EXPO_PUBLIC_SERVER_URL + offer.main_picture;
+	const navigation = useNavigation();a
+	return (
+		<Pressable
+			onPress={() =>
+				navigation.navigate('ProductScreen', {
+					product: offer.id,
+					qr_code,
+				})
+			}
+			className="p-1 flex flex-row w-[95%] min-h-[90] mx-auto my-1  bg-white border-dashed border-2 border-gray-300"
+		>
+			<View className="absolute top-4 right-4 z-20 ">
+				<View
+					className="h-2 w-2"
+					style={{
+						backgroundColor:
+							status == 'pending'
+								? 'gold'
+								: status == 'active'
+								? 'lightgreen'
+								: '#13d0ca',
+						borderRadius: 50,
+					}}
+				/>
+			</View>
+			<View className="basis-[30%] max-h-[100]">
+				<Image
+					source={{ uri: image }} //to be edited
+					alt="food image"
+					resizeMode={'cover'}
+					style={styles.imageStyles}
+				/>
+			</View>
+
 
       <View className="ml-1 px-1 basis-[65%] mt-2">
         <CardDealPrices
