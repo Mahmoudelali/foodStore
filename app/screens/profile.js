@@ -132,7 +132,7 @@ export default function Profile() {
 
 				<Text className="text-white text-[20px] font-bold ml-[5%]">
 					Hello{' '}
-					{loggedIn && userData.token
+					{loggedIn && userData.token !== 'dummy-token'
 						? userData.user.username
 						: 'Coupway'}
 				</Text>

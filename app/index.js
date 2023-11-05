@@ -24,6 +24,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import FiltratedOffers from './screens/customFiltrationScreen.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import * as Notifications from 'expo-notifications';
 
 const screenOptions = {
 	headerTintColor: 'white',
@@ -53,8 +54,17 @@ export default function Page() {
 	const [queryset, setQueryset] = useState(null);
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true); // New loading state
-	
 
+	async function schedulePushNotification(title, body, data = {}) {
+		await Notifications.scheduleNotificationAsync({
+			content: {
+				title,
+				body,
+				data,
+			},
+			trigger: { seconds: 2 },
+		});
+	}
 	useEffect(() => {
 		const bootstrapAsync = async () => {
 			let data;
@@ -142,10 +152,16 @@ export default function Page() {
 										name="FiltratedOffers"
 										component={FiltratedOffers}
 									/>
-									<Stack.Screen
-										name="ProductScreen"
-										component={ProductScreen}
-									/>
+									<Stack.Screen name="ProductScreen">
+										{({ route }) => (
+											<ProductScreen
+												route={route}
+												onOrder={
+													schedulePushNotification
+												}
+											/>
+										)}
+									</Stack.Screen>
 									<Stack.Screen
 										name="ChangePassword"
 										component={ChangePassword}

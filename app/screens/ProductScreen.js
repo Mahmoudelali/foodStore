@@ -37,7 +37,7 @@ const showToast = (type, label1, label2) => {
 	});
 };
 
-const ProductScreen = ({ route }) => {
+const ProductScreen = ({ route, onOrder }) => {
 	const { product, qr_code } = route.params;
 	const [user] = useContext(UserContext);
 	const scrollRef = useRef();
@@ -64,6 +64,7 @@ const ProductScreen = ({ route }) => {
 	};
 
 	const user_id = user.user_id;
+
 	const offer_id = route.params.product;
 	const server_uri = process.env.EXPO_PUBLIC_SERVER_URL;
 	const uri = `${server_uri}api/getalloffers/${offer_id}`;
@@ -76,13 +77,14 @@ const ProductScreen = ({ route }) => {
 	let [feedbacks, feedbackLoading, setFeedbacks] = useFetch(feedbacks_uri);
 	const order_data = [
 		{
-			user_id,
+			user_id: user.user.id,
 			offer_id,
 			coupons_ordered: 1,
 		},
 	];
 
-	const postOffer = () => {
+	const postOffer = async () => {
+		toTop();
 		const request_headers = {
 			headers: {
 				Authorization: 'Token ' + user.token,
@@ -110,7 +112,6 @@ Activate it for me ASAP, please.
 
 ${server_uri}admin/orders/order/${res.data[0].id}/change/
 				`;
-				console.log(res.data[0]);
 				setTimeout(() => {
 					sendWhatsAppMessage('96176325264', message);
 				}, 2000);
@@ -123,6 +124,7 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
 					'Please try again later',
 				);
 			});
+		await onOrder();
 	};
 
 	const productScreenData = [
@@ -229,13 +231,7 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
 							))}
 						</View>
 						<Toast {...toast_options} />
-						<Button
-							label={'Buy deal'}
-							onPress={() => {
-								postOffer();
-								toTop();
-							}}
-						/>
+						<Button label={'Buy deal'} onPress={postOffer} />
 					</View>
 				</ScrollView>
 			</KeyboardAvoidingView>
