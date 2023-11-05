@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { ActivityIndicator, View, Text, StyleSheet } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -87,21 +88,29 @@ const Login = ({ setUser, setIsLoggedIn }) => {
 			</View>
 		</View>
 	);
+
 };
 
 export default Login;
 
 const styles = StyleSheet.create({
-	labelStyles: {
-		backgroundColor: 'transparent',
-		color: '#a0a0a0',
-		fontSize: 12,
-		fontWeight: 'bold',
-		textTransform: 'uppercase',
-	},
-	letterSpacing: 1,
-	buttonStyle: {
-		backgroundColor: 'transparent',
-		padding: 0,
-	},
+
+  labelStyles: {
+    backgroundColor: "transparent",
+    color: "#a0a0a0",
+    fontSize: 12,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+  },
+  letterSpacing: 1,
+  buttonStyle: {
+    backgroundColor: "transparent",
+    padding: 0,
+    textDecorationLine: "underline",
+  },
+  font: {
+    fontFamily: fonts.light,
+    color: colors.gray,
+  },
+
 });

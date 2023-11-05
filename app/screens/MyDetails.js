@@ -7,6 +7,7 @@ import { Alert } from "react-native";
 import { RadioButton } from "react-native-radio-buttons-group";
 import { GenderLabels } from "../components/data";
 import Button from "../components/Button";
+import { fonts } from "../components/css";
 
 const MyDetails = ({ navigation }) => {
   const [firstName, setFirstName] = useState("");
@@ -84,7 +85,10 @@ const MyDetails = ({ navigation }) => {
       </View>
       <View className="bg-white p-5 mt-5">
         <Pressable onPress={() => navigation.navigate("AddressBook")}>
-          <Text className="uppercase   text-gray-400 font-bold text-l">
+          <Text
+            style={{ fontFamily: fonts.regular }}
+            className="uppercase   text-gray-400 font-bold text-l"
+          >
             Address Book
           </Text>
         </Pressable>

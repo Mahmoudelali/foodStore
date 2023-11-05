@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { calculateRemainingTime } from "./data";
+import { fonts } from "./css";
 
 const CountdownClock = ({ targetDate, isPoster }) => {
   const [remainingTime, setRemainingTime] = useState(
@@ -22,17 +23,30 @@ const CountdownClock = ({ targetDate, isPoster }) => {
       {remainingTime?.map(({ value, label }, index) => (
         <View key={index}>
           <Text
-            className="text-center font-bold text-accent-100 mr-1"
-            style={isPoster ? style.posterClock : style.productClock}
+            className="text-center text-accent-100 mr-1"
+            style={[
+              isPoster ? style.posterClock : style.productClock,
+              { fontFamily: fonts.regular },
+            ]}
           >
             {value}
             {!isPoster && (
-              <Text className="text-[10px] text-gray-600 lowercase">
+              <Text
+                style={{ fontFamily: fonts.regular }}
+                className="text-[10px] text-gray-600 lowercase"
+              >
                 {label}
               </Text>
             )}
           </Text>
-          {isPoster && <Text className="text-center text-xs">{label}</Text>}
+          {isPoster && (
+            <Text
+              style={{ fontFamily: fonts.regular }}
+              className="text-center text-xs"
+            >
+              {label}
+            </Text>
+          )}
         </View>
       ))}
     </View>

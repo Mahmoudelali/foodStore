@@ -9,6 +9,7 @@ import Button from "../components/Button";
 import axios from "axios";
 import Toast from "react-native-toast-message";
 import { UserContext } from "../index.js";
+import { fonts } from "../components/css";
 
 const Basket = () => {
   const [user] = useContext(UserContext);
@@ -153,6 +154,7 @@ ${server_uri}admin/orders/order/${res.data.id}/change/
             buttonStyle={{
               marginTop: 10,
             }}
+            style={{ fontFamily: fonts.regular }}
             onPress={() => postOffer()}
           />
         </View>

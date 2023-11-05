@@ -8,6 +8,7 @@ import RatingStar from "./RatingStar";
 import DealPrices from "./DealPrices";
 import ProductGradient from "./productGradient";
 import CountdownClock from "./CounterClock";
+import { fonts } from "./css";
 
 const ProductCard = ({ item, productScreen, image }) => {
   const navigation = useNavigation();
@@ -21,6 +22,7 @@ const ProductCard = ({ item, productScreen, image }) => {
                 navigation.push("ProductScreen", {
                   product: item.id,
                   productScreen: true,
+                  title: item.title,
                 });
               }
         }
@@ -50,7 +52,10 @@ const ProductCard = ({ item, productScreen, image }) => {
                 />
               )} */}
               {item?.isVip && (
-                <Text className="absolute top-4 right-0 bg-[#ababab] pl-1 py-0.5 font-bold text-white">
+                <Text
+                  style={{ fontFamily: fonts.regular }}
+                  className="absolute top-4 right-0 bg-[#ababab] px-1 py-1 text-white"
+                >
                   Premium
                 </Text>
               )}
@@ -74,15 +79,26 @@ const ProductCard = ({ item, productScreen, image }) => {
                 />
                 {productScreen && <NotificationToggle />}
                 <View className="self-start">
-                  <Text className={"text-sm"}>{item?.highlights}</Text>
+                  <Text
+                    style={{ fontFamily: fonts.regular }}
+                    className={"text-sm"}
+                  >
+                    {item?.highlights}
+                  </Text>
                   <View className="flex flex-row justify-between w-full">
                     <View>
-                      <Text className="text-sm font-semibold mr-2 text-accent-100 uppercase ">
+                      <Text
+                        style={{ fontFamily: fonts.regular }}
+                        className="text-sm mr-2 text-accent-100 uppercase "
+                      >
                         {item?.company.name}{" "}
                         <RatingStar rating={item?.company.review} size={20} />
                       </Text>
                       <View className="flex flex-row">
-                        <Text className="text-gray-500 text-sm">
+                        <Text
+                          style={{ fontFamily: fonts.regular }}
+                          className="text-gray-500 text-sm"
+                        >
                           {item?.company.city}
                         </Text>
                       </View>

@@ -6,9 +6,12 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { UserContext } from '../index.js';
 import { useNavigation } from 'expo-router';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import Option from '../components/settingsOption.js';
-import { LoggedInContext } from '../index.js';
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Option from "../components/settingsOption.js";
+import { LoggedInContext } from "../index.js";
+import { fonts } from "../components/css.js";
+
 
 const optionIconStyles = {
 	size: 30,
@@ -84,6 +87,7 @@ export default function Profile() {
 			optionName: 'About Us',
 			navigation: () => navigation.navigate('AboutUs'),
 
+
 			icon: (
 				<MaterialIcons
 					{...optionIconStyles}
@@ -154,4 +158,5 @@ export default function Profile() {
 			</View>
 		</View>
 	);
+
 }

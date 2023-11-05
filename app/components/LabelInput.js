@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { View, Text, TextInput, StyleSheet } from "react-native";
+import { colors, fonts } from "./css";
 
 const LabelInput = ({
   placeholder,
@@ -15,7 +16,7 @@ const LabelInput = ({
   const [focused, setFocused] = useState(false);
   return (
     <View className="my-1">
-      <Text className="uppercase font-bold text-xs text-gray-500 mt-3 mb-1">
+      <Text style={styles.font} className="uppercase text-xs  mt-3 mb-1">
         {!state ? labelText : state && state.length > 0 && labelText}
       </Text>
       <TextInput
@@ -35,9 +36,17 @@ const LabelInput = ({
         onBlur={() => setFocused(false)}
         secureTextEntry={secureTextEntry ? true : false}
         placeholder={placeholder && placeholder}
+        placeholderTextColor={colors.gray}
       />
       {extraComponent && extraComponent}
-      {errLabel && <Text className="text-red-800 text-xs">{errLabel}</Text>}
+      {errLabel && (
+        <Text
+          className="text-red-800 text-xs"
+          style={{ fontFamily: fonts.regular }}
+        >
+          {errLabel}
+        </Text>
+      )}
     </View>
   );
 };
@@ -69,6 +78,10 @@ const styles = StyleSheet.create({
     borderStyle: "dashed",
     borderWidth: 2,
     borderColor: "#13d0ca",
+  },
+  font: {
+    fontFamily: fonts.regular,
+    color: colors.gray,
   },
 });
 export default LabelInput;

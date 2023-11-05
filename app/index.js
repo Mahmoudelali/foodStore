@@ -1,53 +1,61 @@
-import { registerIndieID } from 'native-notify';
-import React, { useState, createContext, useEffect } from 'react';
-import WelcomePage from './screens/Welcome';
-import ProductCard from './components/productCard';
-import Login from './screens/Login';
-import Nav from './components/nav';
-import Register from './components/Register';
-import ProductScreen from './screens/ProductScreen';
-import AddressBook from './components/AddressBook';
-import AddressBookEdit from './components/AddressBook_edit';
-import ChangePassword from './screens/ChangePassword';
-import MyCoupon from './screens/myCoupon';
-import PurchasedDeals from './screens/purchasedDeals';
-import UsedDeals from './screens/usedDeals';
-import ReservedDeals from './screens/reservedDeals';
-import Contact from './screens/contactus';
-import MyDetails from './screens/MyDetails';
-import About from './screens/aboutUs';
-import AboutCoupway from './screens/aboutCoupWay';
-import TermsCondition from './screens/termsCondition';
-import AppSetting from './screens/appSetting';
-import Checkout from './screens/Checkout';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import FiltratedOffers from './screens/customFiltrationScreen.js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
-import * as Notifications from 'expo-notifications';
+
+import { registerIndieID } from "native-notify";
+import React, { useState, createContext, useEffect } from "react";
+import WelcomePage from "./screens/Welcome";
+import ProductCard from "./components/productCard";
+import Login from "./screens/Login";
+import Nav from "./components/nav";
+import Register from "./components/Register";
+import ProductScreen from "./screens/ProductScreen";
+import AddressBook from "./components/AddressBook";
+import AddressBookEdit from "./components/AddressBook_edit";
+import ChangePassword from "./screens/ChangePassword";
+import MyCoupon from "./screens/myCoupon";
+import PurchasedDeals from "./screens/purchasedDeals";
+import UsedDeals from "./screens/usedDeals";
+import ReservedDeals from "./screens/reservedDeals";
+import Contact from "./screens/contactus";
+import MyDetails from "./screens/MyDetails";
+import About from "./screens/aboutUs";
+import AboutCoupway from "./screens/aboutCoupWay";
+import TermsCondition from "./screens/termsCondition";
+import AppSetting from "./screens/appSetting";
+import Checkout from "./screens/Checkout";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import FiltratedOffers from "./screens/customFiltrationScreen.js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import axios from "axios";
+import { useFonts } from "expo-font";
+import { fonts } from "./components/css";
 
 const screenOptions = {
-	headerTintColor: 'white',
-	headerStyle: {
-		backgroundColor: '#13d0ca',
-	},
-	tabBarStyle: {
-		position: 'absolute',
-		bottom: 0,
-		right: 0,
-		left: 0,
-		elevation: 0,
-		height: 40,
-		backgroundColor: '#13d0ca',
-	},
+  headerTintColor: "white",
+  headerStyle: {
+    backgroundColor: "#13d0ca",
+  },
+  tabBarStyle: {
+    position: "absolute",
+    bottom: 0,
+    right: 0,
+    left: 0,
+    elevation: 0,
+    height: 40,
+    backgroundColor: "#13d0ca",
+  },
+  headerTitleStyle: {
+    fontFamily: fonts.regular,
+  },
 };
 
 export const BasketContext = createContext();
 export const QueryContext = createContext();
 export const LoggedInContext = createContext();
 export const UserContext = createContext();
+export const DataContext = createContext();
 
 export default function Page() {
+
 	const Stack = createNativeStackNavigator();
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const [basket, setBasket] = useState([]);
@@ -258,6 +266,7 @@ export default function Page() {
 			</LoggedInContext.Provider>
 		</UserContext.Provider>
 	);
+
 }
 
 const styles = StyleSheet.create({
