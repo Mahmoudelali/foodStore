@@ -9,22 +9,16 @@
     },
     "name": "my-app",
     "slug": "my-app",
-    "plugins": ["expo-router"],
+    "plugins": [
+      "expo-router"
+    ],
     "extra": {
       "router": {
         "origin": false
       },
       "eas": {
-        "projectId": "f2175bdd-2be9-46aa-ab1b-4a5e979e73e6"
+        "projectId": "fb683cdd-c276-497f-992c-ff1ccee3113b"
       }
-    },
-    "runtimeVersion": {
-      "policy": "appVersion"
-    },
-    "updates": {
-      "url": "https://u.expo.dev/f2175bdd-2be9-46aa-ab1b-4a5e979e73e6"
-    },
-    "android": {},
-    "ios": {}
+    }
   }
 }
