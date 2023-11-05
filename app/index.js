@@ -1,4 +1,3 @@
-
 import { registerIndieID } from "native-notify";
 import React, { useState, createContext, useEffect } from "react";
 import WelcomePage from "./screens/Welcome";
@@ -55,230 +54,242 @@ export const UserContext = createContext();
 export const DataContext = createContext();
 
 export default function Page() {
+  const Stack = createNativeStackNavigator();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [basket, setBasket] = useState([]);
+  const [queryset, setQueryset] = useState(null);
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]);
+  const [dataLoading, setDataLoading] = useState(false);
 
-	const Stack = createNativeStackNavigator();
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
-	const [basket, setBasket] = useState([]);
-	const [queryset, setQueryset] = useState(null);
-	const [user, setUser] = useState(null);
-	const [loading, setLoading] = useState(true); // New loading state
+  // registerNNPushToken(12331, 'L4XCS1Ezhz6YHOS7hIr6hR');
+  registerIndieID(user?.user_id, 12331, "L4XCS1Ezhz6YHOS7hIr6hR");
 
-	async function schedulePushNotification(title, body, data = {}) {
-		await Notifications.scheduleNotificationAsync({
-			content: {
-				title,
-				body,
-				data,
-			},
-			trigger: { seconds: 2 },
-		});
-	}
-	useEffect(() => {
-		const bootstrapAsync = async () => {
-			let data;
-			try {
-				data = await AsyncStorage.getItem('user_data');
-				const parsedData = JSON.parse(data);
-				if (parsedData) setUser(parsedData);
-				if (parsedData.token) setIsLoggedIn(true);
-			} catch (e) {
-				console.log(e);
-			} finally {
-				setLoading(false);
-			}
-		};
-		bootstrapAsync();
-	}, []);
+  const uri = process.env.EXPO_PUBLIC_SERVER_URL + "api/getalloffers/";
 
-	// Check if data is still loading and render a loading screen if true
-	if (loading) {
-		return (
-			<View style={styles.container}>
-				<ActivityIndicator size="large" color="#13d0ca" />
-				<Text style={styles.loadingText}>Loading...</Text>
-			</View>
-		);
-	}
-	return (
-		<UserContext.Provider value={[user, setUser]}>
-			<LoggedInContext.Provider value={[isLoggedIn, setIsLoggedIn]}>
-				<QueryContext.Provider value={[queryset, setQueryset]}>
-					<BasketContext.Provider value={[basket, setBasket]}>
-						<Stack.Navigator
-							initialRouteName={'Nav'}
-							screenOptions={screenOptions}
-						>
-							{!user || !user.token ? (
-								<>
-									<Stack.Screen name="Welcome">
-										{() => (
-											<WelcomePage
-												setUser={setUser}
-												setIsLoggedIn={setIsLoggedIn}
-											/>
-										)}
-									</Stack.Screen>
-									<Stack.Screen name="Register">
-										{() => (
-											<Register
-												setUser={setUser}
-												setIsLoggedIn={setIsLoggedIn}
-											/>
-										)}
-									</Stack.Screen>
-									<Stack.Screen name="Login">
-										{() => (
-											<Login
-												setUser={setUser}
-												setIsLoggedIn={setIsLoggedIn}
-											/>
-										)}
-									</Stack.Screen>
-								</>
-							) : (
-								<>
-									<Stack.Screen
-										name="ProductCard"
-										component={ProductCard}
-									/>
-									<Stack.Screen
-										name="Checkout"
-										component={Checkout}
-									/>
-									<Stack.Screen
-										options={{
-											title: 'MY DETAILS',
-										}}
-										name="MyDetails"
-										component={MyDetails}
-									/>
-									<Stack.Screen
-										name="AddressBook"
-										component={AddressBook}
-									/>
-									<Stack.Screen
-										name="FiltratedOffers"
-										component={FiltratedOffers}
-									/>
-									<Stack.Screen name="ProductScreen">
-										{({ route }) => (
-											<ProductScreen
-												route={route}
-												onOrder={
-													schedulePushNotification
-												}
-											/>
-										)}
-									</Stack.Screen>
-									<Stack.Screen
-										name="ChangePassword"
-										component={ChangePassword}
-									/>
-									<Stack.Screen
-										options={{
-											title: 'edit address',
-										}}
-										name="AddressBookEdit"
-										component={AddressBookEdit}
-									/>
-									<Stack.Screen
-										options={{
-											title: 'MY COUPON',
-										}}
-										name="MyCoupon"
-										component={MyCoupon}
-									/>
-									<Stack.Screen
-										options={{
-											title: 'ABOUT COUPWAY',
-										}}
-										name="AboutCoupway"
-										component={AboutCoupway}
-									/>
-									<Stack.Screen
-										options={{
-											title: 'TERMS & CONDITION',
-										}}
-										name="TermsCondition"
-										component={TermsCondition}
-									/>
-									<Stack.Screen
-										options={{
-											title: 'PURCHASED DEALS',
-										}}
-										name="PurchasedDeals"
-										component={PurchasedDeals}
-									/>
-									<Stack.Screen
-										options={{
-											title: 'APP SETTING',
-										}}
-										name="AppSetting"
-										component={AppSetting}
-									/>
-									<Stack.Screen
-										options={{
-											title: 'ABOUT US',
-										}}
-										name="AboutUs"
-										component={About}
-									/>
-									<Stack.Screen
-										options={{
-											title: 'USED DEALS',
-										}}
-										name="UsedDeals"
-										component={UsedDeals}
-									/>
-									<Stack.Screen
-										options={{
-											title: 'RESERVED DEALS',
-										}}
-										name="ReservedDeals"
-										component={ReservedDeals}
-									/>
-									<Stack.Screen
-										name="ContactUs"
-										component={Contact}
-										options={{
-											title: 'CONTACT US',
-										}}
-									/>
-									<Stack.Screen
-										name="Nav"
-										options={{
-											headerShown: true,
-											header: () => null,
-										}}
-									>
-										{() => (
-											<Nav
-												user={user}
-												setUser={setUser}
-											/>
-										)}
-									</Stack.Screen>
-								</>
-							)}
-						</Stack.Navigator>
-					</BasketContext.Provider>
-				</QueryContext.Provider>
-			</LoggedInContext.Provider>
-		</UserContext.Provider>
-	);
+  const fetchData = async () => {
+    if (uri == null) return;
+    setDataLoading(true);
+    axios
+      .get(uri)
+      .then((response) => {
+        setData(response.data);
+        setDataLoading(false);
+      })
+      .catch((err) => {
+        console.error(err, uri);
+        setDataLoading(false);
+      });
+  };
 
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    const bootstrapAsync = async () => {
+      let data;
+      try {
+        data = await AsyncStorage.getItem("user_data");
+        const parsedData = JSON.parse(data);
+        setUser(parsedData);
+      } catch (e) {
+        console.log(e);
+      } finally {
+        setLoading(false); // Set loading to false when user data is fetched
+      }
+    };
+    bootstrapAsync();
+  }, []);
+
+  const [fontsLoaded] = useFonts({
+    "Lato-Regular": require("./assets/Fonts/Lato-Regular.ttf"),
+    "Lato-Light": require("./assets/Fonts/Lato-Light.ttf"),
+    "Lato-Italic": require("./assets/Fonts/Lato-Italic.ttf"),
+    "Lato-Bold": require("./assets/Fonts/Lato-Bold.ttf"),
+    "Lato-BoldItalic": require("./assets/Fonts/Lato-BoldItalic.ttf"),
+  });
+
+  if (!fontsLoaded) {
+    return null;
+  }
+
+  // Check if data is still loading and render a loading screen if true
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <ActivityIndicator size="large" color="#13d0ca" />
+        <Text style={styles.loadingText}>Loading...</Text>
+      </View>
+    );
+  }
+  return (
+    <DataContext.Provider
+      value={[data, dataLoading, setData, setDataLoading, fetchData]}
+    >
+      <UserContext.Provider value={[user, setUser]}>
+        <LoggedInContext.Provider value={[isLoggedIn, setIsLoggedIn]}>
+          <QueryContext.Provider value={[queryset, setQueryset]}>
+            <BasketContext.Provider value={[basket, setBasket]}>
+              <Stack.Navigator
+                initialRouteName={"Nav"}
+                screenOptions={screenOptions}
+              >
+                {user === null ? (
+                  <>
+                    <Stack.Screen name="Welcome">
+                      {() => (
+                        <WelcomePage
+                          setUser={setUser}
+                          setIsLoggedIn={setIsLoggedIn}
+                        />
+                      )}
+                    </Stack.Screen>
+                    <Stack.Screen name="Register">
+                      {() => (
+                        <Register
+                          setUser={setUser}
+                          setIsLoggedIn={setIsLoggedIn}
+                        />
+                      )}
+                    </Stack.Screen>
+                    <Stack.Screen name="Login">
+                      {() => (
+                        <Login
+                          setUser={setUser}
+                          setIsLoggedIn={setIsLoggedIn}
+                        />
+                      )}
+                    </Stack.Screen>
+                  </>
+                ) : (
+                  <>
+                    <Stack.Screen name="ProductCard" component={ProductCard} />
+                    <Stack.Screen name="Checkout" component={Checkout} />
+                    <Stack.Screen
+                      options={{
+                        title: "MY DETAILS",
+                      }}
+                      name="MyDetails"
+                      component={MyDetails}
+                    />
+                    <Stack.Screen name="AddressBook" component={AddressBook} />
+                    <Stack.Screen
+                      name="FiltratedOffers"
+                      component={FiltratedOffers}
+                    />
+                    <Stack.Screen
+                      name="ProductScreen"
+                      component={ProductScreen}
+                      options={({ route }) => {
+                        const { title } = route.params;
+                        return {
+                          title: `${title}`,
+                        };
+                      }}
+                    />
+                    <Stack.Screen
+                      name="ChangePassword"
+                      component={ChangePassword}
+                    />
+                    <Stack.Screen
+                      options={{
+                        title: "edit address",
+                      }}
+                      name="AddressBookEdit"
+                      component={AddressBookEdit}
+                    />
+                    <Stack.Screen
+                      options={{
+                        title: "MY COUPON",
+                      }}
+                      name="MyCoupon"
+                      component={MyCoupon}
+                    />
+                    <Stack.Screen
+                      options={{
+                        title: "ABOUT COUPWAY",
+                      }}
+                      name="AboutCoupway"
+                      component={AboutCoupway}
+                    />
+                    <Stack.Screen
+                      options={{
+                        title: "TERMS & CONDITION",
+                      }}
+                      name="TermsCondition"
+                      component={TermsCondition}
+                    />
+                    <Stack.Screen
+                      options={{
+                        title: "PURCHASED DEALS",
+                      }}
+                      name="PurchasedDeals"
+                      component={PurchasedDeals}
+                    />
+                    <Stack.Screen
+                      options={{
+                        title: "APP SETTING",
+                      }}
+                      name="AppSetting"
+                      component={AppSetting}
+                    />
+                    <Stack.Screen
+                      options={{
+                        title: "ABOUT US",
+                      }}
+                      name="AboutUs"
+                      component={About}
+                    />
+                    <Stack.Screen
+                      options={{
+                        title: "USED DEALS",
+                      }}
+                      name="UsedDeals"
+                      component={UsedDeals}
+                    />
+                    <Stack.Screen
+                      options={{
+                        title: "RESERVED DEALS",
+                      }}
+                      name="ReservedDeals"
+                      component={ReservedDeals}
+                    />
+                    <Stack.Screen
+                      name="ContactUs"
+                      component={Contact}
+                      options={{
+                        title: "CONTACT US",
+                      }}
+                    />
+                    <Stack.Screen
+                      name="Nav"
+                      options={{ headerShown: true, header: () => null }}
+                    >
+                      {() => <Nav user={user} setUser={setUser} />}
+                    </Stack.Screen>
+                  </>
+                )}
+              </Stack.Navigator>
+            </BasketContext.Provider>
+          </QueryContext.Provider>
+        </LoggedInContext.Provider>
+      </UserContext.Provider>
+    </DataContext.Provider>
+  );
 }
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		justifyContent: 'center',
-		alignItems: 'center',
-		backgroundColor: 'white',
-	},
-	loadingText: {
-		marginTop: 16,
-		fontSize: 18,
-		color: '#13d0ca',
-	},
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+  },
+  loadingText: {
+    marginTop: 16,
+    fontSize: 18,
+    color: "#13d0ca",
+  },
 });

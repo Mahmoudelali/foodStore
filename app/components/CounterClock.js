@@ -20,7 +20,7 @@ const CountdownClock = ({ targetDate, isPoster }) => {
 
   return (
     <View className="flex flex-row gap-x-0.5 mx-auto absolute top-3 px-2">
-      {remainingTime?.map(({ value, label }, index) => (
+      {remainingTime.map(({ value, label }, index) => (
         <View key={index}>
           <Text
             className="text-center text-accent-100 mr-1"
