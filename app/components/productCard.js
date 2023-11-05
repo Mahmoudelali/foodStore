@@ -43,12 +43,12 @@ const ProductCard = ({ item, productScreen, image }) => {
                 alt="food image"
                 style={styles.imageStyles}
               />
-              {!productScreen && (
+              {/* {!productScreen && (
                 <CountdownClock
                   isPoster={false}
                   targetDate={"2023-10-31T23:59:59"}
                 />
-              )}
+              )} */}
               {item?.isVip && (
                 <Text className="absolute top-4 right-0 bg-[#ababab] pl-1 py-0.5 font-bold text-white">
                   Premium

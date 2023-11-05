@@ -12,7 +12,7 @@ const iconStyles = {
 
 const OrderBox = ({ offer, status, qr_code }) => {
 	const image = process.env.EXPO_PUBLIC_SERVER_URL + offer.main_picture;
-	const navigation = useNavigation();
+	const navigation = useNavigation();a
 	return (
 		<Pressable
 			onPress={() =>

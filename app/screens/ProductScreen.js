@@ -39,8 +39,6 @@ const showToast = (type, label1, label2) => {
 
 const ProductScreen = ({ route }) => {
 	const { product, qr_code } = route.params;
-
-	console.log(product);
 	const [user] = useContext(UserContext);
 	const scrollRef = useRef();
 	const toTop = () => {
@@ -92,7 +90,7 @@ const ProductScreen = ({ route }) => {
 		};
 
 		if (user.token === 'dummy-token') {
-			return showToast('error', 'you must login first');
+			return showToast('error', 'You must login first!');
 		}
 
 		axios
