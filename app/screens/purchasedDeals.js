@@ -4,8 +4,8 @@ import OrderBox from '../components/UsedBox';
 import NotFound from '../components/NotFound';
 
 export default function PurchasedDeals({ route }) {
-  const { data } = route.params;
-  
+	const { data } = route.params;
+
 	console.log('data', JSON.stringify(data, null, 2));
 	return (
 		<ScrollView className="pt-3">
