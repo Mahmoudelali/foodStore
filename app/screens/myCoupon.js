@@ -6,9 +6,8 @@ import { fonts } from '../components/css.js';
 
 export default function MyCoupon({ navigation }) {
 	const [user] = useContext(UserContext);
-	const user_id = user.user_id;
+	const user_id = user.user.id;
 	const userOrderURI = `${process.env.EXPO_PUBLIC_SERVER_URL}api/getuserorders/${user_id}`;
-	console.log(userOrderURI);
 	const [orders] = useFetch(userOrderURI);
 
 	const purchased_deals =

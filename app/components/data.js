@@ -69,6 +69,7 @@ export const showToast = (type, label1, label2) => {
 		text2: label2 || '',
 	});
 };
+
 export const signIn = async (
 	data,
 	loading_handler,
@@ -80,7 +81,7 @@ export const signIn = async (
 		try {
 			await AsyncStorage.setItem('user_data', JSON.stringify(userdata));
 		} catch (error) {
-			console.log('error saving user ');
+			console.log('error saving user ', error);
 		}
 	};
 
@@ -89,14 +90,16 @@ export const signIn = async (
 			`${process.env.EXPO_PUBLIC_SERVER_URL}login`,
 			data,
 		);
+		
 		const user_data = response.data;
 		await save_user(user_data);
 		user_data_handler(user_data);
 		loggedInHandler(true);
 		loading_handler(false);
+		registerIndieID(user?.user_id, 12331, 'L4XCS1Ezhz6YHOS7hIr6hR');
 	} catch (error) {
 		loading_handler(false);
-		console.log('err logging in user', error.response.status);
+		console.log('err logging in user', error.response);
 		error.response.status == 400 &&
 			showToast(
 				'error',
