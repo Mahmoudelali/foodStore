@@ -136,7 +136,7 @@ export default function Profile() {
 						style={{ fontFamily: fonts.regular }}
 						className="text-white text-[20px] ml-[5%]"
 					>
-						Hello {userData?.user.username}
+						Hello {userData?.user?.username}
 					</Text>
 				) : (
 					<Text
