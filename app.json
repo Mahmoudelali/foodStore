@@ -24,7 +24,11 @@
     "updates": {
       "url": "https://u.expo.dev/f2175bdd-2be9-46aa-ab1b-4a5e979e73e6"
     },
-    "android": {},
+    "android": {
+      "useNextNotificationsApi": true,
+      "package": "com.foodstore.coupway",
+      "googleServicesFile": "./google-services.json"
+    },  
     "ios": {}
   }
 }

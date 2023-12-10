@@ -7,9 +7,9 @@ export async function schedulePushNotification(title, body) {
     content: {
       title: title,
       body: body,
-      data: { data: "goes here" },
+      data: { screen: "MyDetails" },
     },
-    trigger: { seconds: 2 },
+    trigger: null,
   });
 }
 
@@ -42,7 +42,7 @@ export async function registerForPushNotificationsAsync() {
         projectId: "f2175bdd-2be9-46aa-ab1b-4a5e979e73e6",
       })
     ).data;
-    console.log(token);
+    console.log("expo token", token);
   } else {
     alert("Must use physical device for Push Notifications");
   }

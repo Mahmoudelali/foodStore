@@ -47,12 +47,12 @@ const ProductCard = ({ item, productScreen, image }) => {
 								alt="food image"
 								style={styles.imageStyles}
 							/>
-							{!productScreen && (
+							{/* {!productScreen && (
 								<CountdownClock
 									isPoster={false}
 									targetDate={'2023-11-31T23:59:59'}
 								/>
-							)}
+							)} */}
 							{item?.isVip && (
 								<Text
 									style={{ fontFamily: fonts.regular }}

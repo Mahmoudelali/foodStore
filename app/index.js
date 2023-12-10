@@ -83,10 +83,23 @@ export default function Page() {
 
   const uri = process.env.EXPO_PUBLIC_SERVER_URL + "api/getalloffers/";
 
+  const update_token_uri =
+    user &&
+    process.env.EXPO_PUBLIC_SERVER_URL +
+      `api/updateuserprofile/${user?.user?.id}`;
+
   useEffect(() => {
-    registerForPushNotificationsAsync().then((token) =>
-      setExpoPushToken(token)
-    );
+    registerForPushNotificationsAsync().then(async (token) => {
+      setExpoPushToken(token);
+
+      const device_token = (await Notifications.getDevicePushTokenAsync()).data;
+
+      user.user &&
+        (await axios.put(update_token_uri, {
+          user: user.user.id,
+          notification_token: device_token,
+        }));
+    });
 
     notificationListener.current =
       Notifications.addNotificationReceivedListener((notification) => {
@@ -94,9 +107,7 @@ export default function Page() {
       });
 
     responseListener.current =
-      Notifications.addNotificationResponseReceivedListener((response) => {
-        console.log(response);
-      });
+      Notifications.addNotificationResponseReceivedListener((response) => {});
 
     return () => {
       Notifications.removeNotificationSubscription(
@@ -120,13 +131,9 @@ export default function Page() {
         setDataLoading(false);
       });
   };
-  useEffect(() => {
-    const fetchDataAndNotify = async () => {
-      await fetchData();
-      await schedulePushNotification("holaaa", "holaaa") ;
-    };
 
-    fetchDataAndNotify();
+  useEffect(() => {
+    fetchData();
   }, []);
 
   useEffect(() => {
@@ -135,7 +142,6 @@ export default function Page() {
       try {
         data = await AsyncStorage.getItem("user_data");
         const parsedData = JSON.parse(data);
-        console.log(typeof parsedData);
         setUser(parsedData);
         setIsLoggedIn(true);
       } catch (e) {
@@ -315,7 +321,13 @@ export default function Page() {
                         header: () => null,
                       }}
                     >
-                      {() => <Nav user={user} setUser={setUser} />}
+                      {({ navigation }) => (
+                        <Nav
+                          user={user}
+                          setUser={setUser}
+                          navigation={navigation}
+                        />
+                      )}
                     </Stack.Screen>
                   </>
                 )}
