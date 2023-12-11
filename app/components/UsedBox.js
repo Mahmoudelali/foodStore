@@ -20,6 +20,7 @@ const OrderBox = ({ offer, status, qr_code }) => {
         navigation.navigate("ProductScreen", {
           product: offer.id,
           qr_code,
+          title: offer.title,
         })
       }
       className="p-1 flex flex-row w-[95%] min-h-[90] mx-auto my-1  bg-white border-dashed border-2 border-gray-300"
