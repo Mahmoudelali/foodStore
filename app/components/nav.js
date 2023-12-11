@@ -21,7 +21,7 @@ const Tab = createBottomTabNavigator();
 export default function Nav({ user, setUser, navigation }) {
   const [data, dataLoading, setData, setDataLoading, fetchData] =
     useContext(DataContext);
-  
+
   useEffect(() => {
     const handleNotification = async (notification) => {
       const notificationContent = notification.data;
@@ -30,16 +30,6 @@ export default function Nav({ user, setUser, navigation }) {
       if (notificationContent && notificationContent.screen) {
         // Navigate to the specified screen
         navigation.navigate(notificationContent.screen);
-
-        const update_token_uri =
-          user &&
-          process.env.EXPO_PUBLIC_SERVER_URL +
-            `api/updateuserprofile/${user?.user?.id}`;
-
-        await axios.put(update_token_uri, {
-          user: user.user.id,
-          notification_token: notification,
-        });
       }
     };
 
@@ -55,6 +45,15 @@ export default function Nav({ user, setUser, navigation }) {
     const sendNotificationAsync = async () => {
       try {
         const token = (await Notifications.getDevicePushTokenAsync()).data;
+        const update_token_uri =
+          user &&
+          process.env.EXPO_PUBLIC_SERVER_URL +
+            `api/updateuserprofile/${user?.user?.id}`;
+
+        await axios.put(update_token_uri, {
+          user: user.user.id,
+          notification_token: token,
+        });
         sendNotification(token, "yhr222", "Fteh y zalame birbk ", "MyDetails");
       } catch (error) {
         console.error("Error sending notification:", error);
@@ -128,7 +127,9 @@ export default function Nav({ user, setUser, navigation }) {
           component={Search}
         />
 
-        <Tab.Screen name="Notifications" component={Notificationss} />
+        <Tab.Screen name="Notifications">
+          {() => <Notificationss user={user} />}
+        </Tab.Screen>
         <Tab.Screen name="Basket" component={Basket} />
         <Tab.Screen name="Profile" options={{ headerShown: false }}>
           {() => <Profile user={user} setUser={setUser} />}
