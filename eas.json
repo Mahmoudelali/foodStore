@@ -5,12 +5,26 @@
   "build": {
     "development": {
       "developmentClient": true,
-      "distribution": "internal"
+      "distribution": "internal",
+      "channel": "development"
     },
     "preview": {
-      "distribution": "internal"
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_SERVER_URL": "https://coupway-fc04ca23159f.herokuapp.com/",
+        "EXPO_PUBLIC_PROJECT_ID": "coupwayapp-ef3c6",
+        "EXPO_PUBLIC_PROJECT_NUMBER": "614865201174",
+        "EXPO_PUBLIC_FIREBASE_ACCESS_TOKEN": "996ed31ffa01c421593cb5e42c3e2c14ec13500d",
+        "EXPO_PUBLIC_FCM_KEY": "AAAAl7Ofzfc:APA91bHXHa-EWnKww4fj2dsJxvgNmmZulfcLMSzVByvOuYeJB1YLMKrvaJ3BdTCQqmz01DA1wvxeQyYG2Dk2fXsK_0I56-iuuaYQcrqImtzPa4dGC2nTWXSjNIUvAFcmwcJxu-iUTA1K"
+      },
+      "channel": "preview"
     },
-    "production": {}
+    "production": {
+      "channel": "production"
+    }
   },
   "submit": {
     "production": {}
