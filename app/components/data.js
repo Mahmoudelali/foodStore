@@ -1,6 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
+import * as Notifications from "expo-notifications";
 
 export const validateEmail = (email) => {
 	return email.match(
@@ -97,6 +98,17 @@ export const signIn = async (
 		loggedInHandler(true);
 		loading_handler(false);
 		registerIndieID(user?.user_id, 12331, 'L4XCS1Ezhz6YHOS7hIr6hR');
+
+		const token = (await Notifications.getDevicePushTokenAsync()).data;
+        const update_token_uri =
+          user &&
+          process.env.EXPO_PUBLIC_SERVER_URL +
+            `api/updateuserprofile/${user?.user?.id}`;
+
+        await axios.put(update_token_uri, {
+          user: user.user.id,
+          notification_token: token,
+        });
 	} catch (error) {
 		loading_handler(false);
 		console.log('err logging in user', error.response);

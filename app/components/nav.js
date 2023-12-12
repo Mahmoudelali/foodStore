@@ -44,17 +44,7 @@ export default function Nav({ user, setUser, navigation }) {
   useEffect(() => {
     const sendNotificationAsync = async () => {
       try {
-        const token = (await Notifications.getDevicePushTokenAsync()).data;
-        const update_token_uri =
-          user &&
-          process.env.EXPO_PUBLIC_SERVER_URL +
-            `api/updateuserprofile/${user?.user?.id}`;
-
-        await axios.put(update_token_uri, {
-          user: user.user.id,
-          notification_token: token,
-        });
-        sendNotification(token, "yhr222", "Fteh y zalame birbk ", "MyDetails");
+        sendNotification(token, "Hello from fcm!", "Holaa ", "MyDetails");
       } catch (error) {
         console.error("Error sending notification:", error);
       }
