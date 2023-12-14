@@ -10,16 +10,17 @@ import useFetch from "../components/useFetch";
 import axios from "axios";
 import { showToast } from "../components/data";
 
-const MyDetails = ({ user, setUser }) => {
+const MyDetails = ({ user }) => {
   const navigation = useNavigation();
 
   const [firstName, setFirstName] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [number, setNumber] = useState("");
 
-  const [data, loading, , , reFetch] = useFetch(
-    `${process.env.EXPO_PUBLIC_SERVER_URL}api/getuserprofile/${user.id}`
+  const [data, loading, setData, , reFetch] = useFetch(
+    `${process.env.EXPO_PUBLIC_SERVER_URL}api/getuserprofile/${user?.id}`
   );
 
   const labelInputProps = [
@@ -57,6 +58,7 @@ const MyDetails = ({ user, setUser }) => {
 
   const handleEdit = async () => {
     try {
+      setIsLoading(true);
       const resp = await axios.put(
         `${process.env.EXPO_PUBLIC_SERVER_URL}api/updateuserprofile/${user?.id}`,
         {
@@ -65,13 +67,19 @@ const MyDetails = ({ user, setUser }) => {
         }
       );
 
-      if (resp.status === 200) {
+      if (resp.status === 400) {
         showToast("success", "User profile updated successfully");
+        return;
       }
 
-      reFetch();
+      setData(resp.data);
+
+      setIsLoading(false);
+
+      showToast("success", "User profile updated successfully");
     } catch (error) {
       console.log(error);
+      showToast("error", error.message);
     }
   };
 
@@ -85,7 +93,7 @@ const MyDetails = ({ user, setUser }) => {
 
   return (
     <ScrollView keyboardDismissMode="on-drag">
-      <View className="bg-white px-6   mt-3 pb-5">
+      <View className="bg-white px-6 mt-3 pb-5">
         <View>
           {labelInputProps.map((props, index) => (
             <LabelInput key={index} {...props} />
@@ -104,7 +112,18 @@ const MyDetails = ({ user, setUser }) => {
       </View>
 
       <View className="bg-gray-100 py-4 px-10 ">
-        <Button label="Save Changes" onPress={handleEdit} />
+        <Button
+          label={
+            isLoading ? (
+              <View>
+                <ActivityIndicator color="#fff" />
+              </View>
+            ) : (
+              "Save Changes"
+            )
+          }
+          onPress={handleEdit}
+        />
       </View>
     </ScrollView>
   );
