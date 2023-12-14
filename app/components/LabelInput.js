@@ -12,6 +12,7 @@ const LabelInput = ({
   secureTextEntry,
   borderStyle,
   state,
+  editable,
 }) => {
   const [focused, setFocused] = useState(false);
   return (
@@ -37,6 +38,7 @@ const LabelInput = ({
         secureTextEntry={secureTextEntry ? true : false}
         placeholder={placeholder && placeholder}
         placeholderTextColor={colors.gray}
+        editable={editable}
       />
       {extraComponent && extraComponent}
       {errLabel && (

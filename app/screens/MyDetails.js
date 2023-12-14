@@ -1,52 +1,49 @@
 import React, { useState } from "react";
-import { View, StyleSheet, Pressable, Text } from "react-native";
+import { View, Pressable, Text, ActivityIndicator } from "react-native";
 import LabelInput from "../components/LabelInput";
 import { ScrollView } from "react-native-gesture-handler";
 
-import { Alert } from "react-native";
-import { RadioButton } from "react-native-radio-buttons-group";
-import { GenderLabels } from "../components/data";
+import { useNavigation } from "@react-navigation/native";
 import Button from "../components/Button";
 import { fonts } from "../components/css";
+import useFetch from "../components/useFetch";
+import axios from "axios";
+import { showToast } from "../components/data";
 
-const MyDetails = ({ navigation }) => {
+const MyDetails = ({ user, setUser }) => {
+  const navigation = useNavigation();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
   const [number, setNumber] = useState("");
-  const [userGender, setUserGender] = useState(null);
 
-  const genderRadiosProps = {
-    onPress: setUserGender,
-    containerStyle: {
-      marginRight: 15,
-    },
-    color: "#13d0ca",
-    size: 20,
-    labelStyle: { color: "gray" },
-  };
+  const [data, loading, , , reFetch] = useFetch(
+    `${process.env.EXPO_PUBLIC_SERVER_URL}api/getuserprofile/${user.id}`
+  );
 
   const labelInputProps = [
     {
       borderStyle: "underline",
       state: firstName,
       inputHandler: setFirstName,
-      placeholder: "First Name",
+      placeholder: data?.first_name ? data?.first_name : "First Name",
       labelText: "First Name",
+      editable: false,
     },
     {
       borderStyle: "underline",
       state: lastName,
       inputHandler: setLastName,
-      placeholder: "Last Name",
+      placeholder: data?.last_name ? data?.last_name : "Last Name",
       labelText: "Last Name",
+      editable: false,
     },
     {
       borderStyle: "underline",
       state: email,
       inputHandler: setEmail,
-      placeholder: "abcd@jklmnop.xyz",
+      placeholder: data?.email ? data?.email : "abcd@jklmnop.xyz",
       labelText: "Email address",
     },
     {
@@ -57,27 +54,39 @@ const MyDetails = ({ navigation }) => {
       labelText: "phone Number",
     },
   ];
-  const handleOKButtonPress = () => {
-    navigation.goBack();
-  };
-  const showAlert = () => {
-    Alert.alert(
-      "Alert",
-      "Changes Saved!",
-      [
+
+  const handleEdit = async () => {
+    try {
+      const resp = await axios.put(
+        `${process.env.EXPO_PUBLIC_SERVER_URL}api/updateuserprofile/${user?.id}`,
         {
-          text: "OK",
-          onPress: handleOKButtonPress,
-        },
-      ],
-      { cancelable: false }
-    );
+          user: user?.id,
+          email: email,
+        }
+      );
+
+      if (resp.status === 200) {
+        showToast("success", "User profile updated successfully");
+      }
+
+      reFetch();
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  if (loading) {
+    return (
+      <View className="flex-1 justify-center">
+        <ActivityIndicator size="large" color={"#13d0ca"} />
+      </View>
+    );
+  }
 
   return (
     <ScrollView keyboardDismissMode="on-drag">
       <View className="bg-white px-6   mt-3 pb-5">
-        <View className="">
+        <View>
           {labelInputProps.map((props, index) => (
             <LabelInput key={index} {...props} />
           ))}
@@ -93,34 +102,12 @@ const MyDetails = ({ navigation }) => {
           </Text>
         </Pressable>
       </View>
-      <View className="bg-white p-5   mt-5 ">
-        <LabelInput
-          borderStyle="underline"
-          state={dateOfBirth}
-          inputHandler={setDateOfBirth}
-          placeholder="00 961 78 948 228"
-          labelText="phone Number"
-        />
 
-        <View className="flex flex-row  py-3">
-          {GenderLabels.map((gen) => (
-            <RadioButton
-              {...genderRadiosProps}
-              {...gen}
-              key={gen.id}
-              selected={userGender == gen.id && true}
-              borderColor={userGender === gen.id ? "#13d0ca" : "gray"}
-            />
-          ))}
-        </View>
-      </View>
       <View className="bg-gray-100 py-4 px-10 ">
-        <Button label="Save Changes" onPress={showAlert} />
+        <Button label="Save Changes" onPress={handleEdit} />
       </View>
     </ScrollView>
   );
 };
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-});
+
 export default MyDetails;
