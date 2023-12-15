@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Toast from 'react-native-toast-message';
-import * as Notifications from "expo-notifications";
+import * as Notifications from 'expo-notifications';
 
 export const validateEmail = (email) => {
 	return email.match(
@@ -64,6 +64,7 @@ export const priceRanges = [
 	},
 ];
 export const showToast = (type, label1, label2) => {
+	console.log('toasting');
 	return Toast.show({
 		type: type,
 		text1: label1,
@@ -91,7 +92,7 @@ export const signIn = async (
 			`${process.env.EXPO_PUBLIC_SERVER_URL}login`,
 			data,
 		);
-		
+
 		const user_data = response.data;
 		await save_user(user_data);
 		user_data_handler(user_data);
@@ -100,15 +101,15 @@ export const signIn = async (
 		registerIndieID(user?.user_id, 12331, 'L4XCS1Ezhz6YHOS7hIr6hR');
 
 		const token = (await Notifications.getDevicePushTokenAsync()).data;
-        const update_token_uri =
-          user &&
-          process.env.EXPO_PUBLIC_SERVER_URL +
-            `api/updateuserprofile/${user?.user?.id}`;
+		const update_token_uri =
+			user &&
+			process.env.EXPO_PUBLIC_SERVER_URL +
+				`api/updateuserprofile/${user?.user?.id}`;
 
-        await axios.put(update_token_uri, {
-          user: user.user.id,
-          notification_token: token,
-        });
+		await axios.put(update_token_uri, {
+			user: user.user.id,
+			notification_token: token,
+		});
 	} catch (error) {
 		loading_handler(false);
 		console.log('err logging in user', error.response);
