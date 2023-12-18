@@ -121,7 +121,7 @@ export default function Profile() {
 		},
 	];
 	return (
-		<View className="h-full bg-[#ebe6e6] ">
+		<View className="h-full  ">
 			<View className="flex-row items-center bg-[#13d0ca] h-[20%] ">
 				<View className="ml-[10%]">
 					<Ionicons

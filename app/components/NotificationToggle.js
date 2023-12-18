@@ -11,7 +11,7 @@ const NotificationToggle = () => {
         style={{ fontFamily: fonts.regular }}
         className="ml-2 text-xs text-gray-400"
       >
-        Notify me for similar offers
+        Notify me on similar offers
       </Text>
     </View>
   );

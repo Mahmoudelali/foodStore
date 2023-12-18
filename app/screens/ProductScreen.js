@@ -136,7 +136,9 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
 			extraComponent: (
 				<View style={styles.qrCodeImageContainer}>
 					<Image
-						source={{ uri: `${server_uri}${qr_code}` }}
+						source={{
+							uri: `${server_uri.substring(-1)}${qr_code}`,
+						}}
 						style={styles.qrCodeImage}
 					/>
 				</View>
@@ -158,7 +160,7 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
 			icon: <Ionicons name="newspaper" size={14} color="#13d0ca" />,
 		},
 		{
-			title: 'Feedbacks',
+			title: 'Customer reviews',
 			extraComponent: (
 				<>
 					{feedbackLoading ? (
@@ -182,7 +184,7 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
 			icon: <MaterialIcons name="feedback" size={14} color="#13d0ca" />,
 		},
 		{
-			title: 'Location',
+			title: 'Address',
 			icon: <Ionicons name="ios-location" size={14} color="#13d0ca" />,
 			extraComponent: <Location />,
 		},
@@ -232,7 +234,7 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
 						</View>
 						<Toast {...toast_options} />
 						<Button
-							label={'Buy deal'}
+							label={'Reserve deal'}
 							onPress={() => {
 								postOffer();
 								toTop();

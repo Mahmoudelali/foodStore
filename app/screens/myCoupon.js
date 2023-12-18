@@ -22,23 +22,24 @@ export default function MyCoupon({ navigation }) {
 
 	const items = [
 		{
-			text: 'PURCHASED DEALS',
-			onPress: () =>
-				navigation.navigate('PurchasedDeals', {
-					data: purchased_deals,
-				}),
-		},
-		{
 			text: 'RESERVED DEALS',
 			onPress: () =>
 				navigation.navigate('ReservedDeals', { data: reserved_deals }),
 		},
 		{
-			text: 'USED DEALS',
+			text: 'ACTIVATED DEALS',
+			onPress: () =>
+				navigation.navigate('PurchasedDeals', {
+					data: purchased_deals,
+				}),
+		},
+		
+		{
+			text: 'REDEEMED DEALS',
 			onPress: () =>
 				navigation.navigate('UsedDeals', { data: used_deals }),
 		},
-	];
+	]
 
 	return (
 		<View className="bg-white mt-5 flex-col items-start">
