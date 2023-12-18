@@ -5,6 +5,7 @@ import {
   StyleSheet,
   ActivityIndicator,
   Text,
+  Pressable,
   RefreshControl,
 } from "react-native";
 import { priceRanges } from "../components/data.js";
@@ -12,9 +13,11 @@ import NotFound from "../components/NotFound.js";
 import AccessBar from "../components/AccessBar.js";
 import ProductCard from "../components/productCard.js";
 import useFetch from "../components/useFetch.js";
-import { QueryContext } from "../index.js";
+import { DataContext, QueryContext } from "../index.js";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { colors, fonts } from "../components/css.js";
+import { DrawerActions, useNavigation } from "@react-navigation/native";
+import axios from "axios";
 const Drawer = createDrawerNavigator();
 
 const HomeContent = ({ loading, data, reFetch }) => {
@@ -72,6 +75,30 @@ const HomeContent = ({ loading, data, reFetch }) => {
 };
 
 const PricesHomeContent = () => {
+  const [, , setData, setDataLoading] = useContext(DataContext);
+
+  const navigation = useNavigation();
+
+  const handleSelectPriced = async (fromPrice, toPrice) => {
+    try {
+      navigation.dispatch(DrawerActions.closeDrawer());
+
+      const filteringPriceuri = `${process.env.EXPO_PUBLIC_SERVER_URL}api/searchoffers/?from=${fromPrice}&to=${toPrice}`;
+
+      setDataLoading(true);
+
+      const resp = await axios.get(filteringPriceuri);
+
+      console.log("resp", resp);
+
+      setData(resp.data);
+
+      setDataLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View className="pt-8 ">
       <Text
@@ -82,13 +109,18 @@ const PricesHomeContent = () => {
       </Text>
       {priceRanges.map((prc, index) => (
         <View key={index} style={style.bottomBorder} className="w-[80%]">
-          <Text
-            style={{ fontFamily: fonts.regular }}
-            className="ml-4 mb-1 text-gray-400 text-md"
+          <Pressable
+            android_ripple={{ color: "#ccc" }}
+            onPress={() => handleSelectPriced(prc.from, prc.to)}
           >
-            $<Text className=" text-gray-400">{prc.from}</Text> - $
-            <Text className=" text-gray-400">{prc.to}</Text>
-          </Text>
+            <Text
+              style={{ fontFamily: fonts.regular }}
+              className="ml-4 mb-1 text-gray-400 text-md"
+            >
+              $<Text className=" text-gray-400">{prc.from}</Text> - $
+              <Text className=" text-gray-400">{prc.to}</Text>
+            </Text>
+          </Pressable>
         </View>
       ))}
     </View>

@@ -4,17 +4,14 @@ import Notificationss from "../screens/Notifications.js";
 import SearchInput from "./searchInput.js";
 import Profile from "../screens/profile.js";
 import Home from "../screens/home";
-import { Platform, I18nManager } from "react-native";
+import { Platform } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Search from "../screens/search.js";
-import useFetch from "./useFetch.js";
 import Basket from "../screens/Basket.js";
 import { useContext, useEffect } from "react";
 import { DataContext } from "../index.js";
 import { fonts } from "./css.js";
 import * as Notifications from "expo-notifications";
-import { sendNotification } from "./FCMSendNotification.js";
-import axios from "axios";
 
 const Tab = createBottomTabNavigator();
 
@@ -40,18 +37,6 @@ export default function Nav({ user, setUser, navigation }) {
       subscription.remove();
     };
   }, [navigation]);
-
-  useEffect(() => {
-    const sendNotificationAsync = async () => {
-      try {
-        sendNotification(token, "Hello from fcm!", "Holaa ", "MyDetails");
-      } catch (error) {
-        console.error("Error sending notification:", error);
-      }
-    };
-
-    sendNotificationAsync();
-  }, []);
 
   return (
     <>
@@ -107,7 +92,14 @@ export default function Nav({ user, setUser, navigation }) {
             ),
           }}
         >
-          {() => <Home data={data} loading={dataLoading} reFetch={fetchData} />}
+          {() => (
+            <Home
+              data={data}
+              loading={dataLoading}
+              reFetch={fetchData}
+              setDataLoading={setDataLoading}
+            />
+          )}
         </Tab.Screen>
         <Tab.Screen
           options={{
@@ -116,7 +108,6 @@ export default function Nav({ user, setUser, navigation }) {
           name="Search"
           component={Search}
         />
-
         <Tab.Screen name="Notifications">
           {() => <Notificationss user={user} />}
         </Tab.Screen>
