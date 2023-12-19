@@ -3,6 +3,7 @@ import { View, StyleSheet, Image, Pressable } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from 'expo-router';
+import welocmeBG from '../assets/welcomeBG.jpeg';
 
 function WelcomePage({ setUser, setIsLoggedIn }) {
 	const [loading, setLoading] = useState(true);
@@ -34,9 +35,10 @@ function WelcomePage({ setUser, setIsLoggedIn }) {
 			<View>
 				<Image
 					style={styles.imageStyle}
-					source={{
-						uri: 'https://images.pexels.com/photos/4068314/pexels-photo-4068314.jpeg?auto=compress&cs=tinysrgb&w=1600',
-					}}
+					// source={{
+					// 	uri: 'https://images.pexels.com/photos/4068314/pexels-photo-4068314.jpeg?auto=compress&cs=tinysrgb&w=1600',
+					// }}
+					source={require('../assets/welcomeBG.jpeg')}
 					alt="hero shopping image"
 				/>
 			</View>

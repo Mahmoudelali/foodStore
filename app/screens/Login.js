@@ -8,6 +8,7 @@ import Toast from "react-native-toast-message";
 import { signIn } from "../components/data.js";
 import { showToast } from "../components/data.js";
 import { colors, fonts } from "../components/css";
+import * as Notifications from "expo-notifications";
 
 const Login = ({ setUser, setIsLoggedIn }) => {
   const navigation = useNavigation();
@@ -25,10 +26,7 @@ const Login = ({ setUser, setIsLoggedIn }) => {
       state: password,
       handler: setPassword,
       extraComponent: (
-        <Text
-          className="uppercase font-light text-xs mb-4"
-          style={styles.font}
-        >
+        <Text className="uppercase font-light text-xs mb-4" style={styles.font}>
           forget Password ?
         </Text>
       ),
@@ -77,7 +75,7 @@ const Login = ({ setUser, setIsLoggedIn }) => {
             style={styles.font}
             className="uppercase text-xs mt-1 text-center leading-6"
           >
-            don't have an account? Sign up{" "}
+            don't have an account? Sign up
             <Text
               style={[styles.labelStyles, styles.buttonStyle]}
               onPress={() => navigation.navigate("Register")}

@@ -223,8 +223,9 @@ export default function Page() {
                         title: "MY DETAILS",
                       }}
                       name="MyDetails"
-                      component={MyDetails}
-                    />
+                    >
+                      {() => <MyDetails user={user.user} setUser={setUser} />}
+                    </Stack.Screen>
                     <Stack.Screen name="AddressBook" component={AddressBook} />
                     <Stack.Screen
                       name="FiltratedOffers"

@@ -54,7 +54,7 @@ const Comment = ({ offer_id, setFeedbacks, feedbacks, toTop }) => {
         <TextInput
           className="bg-white w-[85%] pl-2"
           keyboardType="default"
-          placeholder="Write comment.."
+          placeholder="Write a comment..."
           placeholderTextColor={"gray"}
           multiline={true}
           onChangeText={setFeedback}

@@ -1,51 +1,53 @@
-import React from "react";
-import { View, StyleSheet, Text, Image, Pressable } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
-import { useNavigation } from "@react-navigation/native";
-import ProductUserActions from "./ProductUserActions";
-import NotificationToggle from "./NotificationToggle";
-import RatingStar from "./RatingStar";
-import DealPrices from "./DealPrices";
-import ProductGradient from "./productGradient";
-import CountdownClock from "./CounterClock";
-import { fonts } from "./css";
+import React from 'react';
+import { View, StyleSheet, Text, Image, Pressable } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+import { useNavigation } from '@react-navigation/native';
+import ProductUserActions from './ProductUserActions';
+import NotificationToggle from './NotificationToggle';
+import RatingStar from './RatingStar';
+import DealPrices from './DealPrices';
+import ProductGradient from './productGradient';
+import CountdownClock from './CounterClock';
+import { fonts } from './css';
 
 const ProductCard = ({ item, productScreen, image }) => {
-  const navigation = useNavigation();
-  return (
-    <>
-      <Pressable
-        onPress={
-          productScreen
-            ? () => null
-            : () => {
-                navigation.push("ProductScreen", {
-                  product: item.id,
-                  productScreen: true,
-                  title: item.title,
-                });
-              }
-        }
-        className={!productScreen ? "max-h-[270] mt-1 mb-2 " : "max-h-[320]"}
-      >
-        <LinearGradient
-          colors={["#ccc", "#fff"]}
-          start={{ x: 0, y: 0.2 }}
-          end={{ x: 0.9, y: 0.2 }}
-        >
-          <View
-            className="w-full min-h-64 flex flex-row items-center justify-center"
-            style={!productScreen && styles.productListScreen}
-          >
-            <View className="relative w-full h-full overflow-hidden mx-auto">
-              <Image
-                source={{
-                  uri: image,
-                }}
-                alt="food image"
-                style={styles.imageStyles}
-              />
-              {/* {!productScreen && (
+	const navigation = useNavigation();
+	return (
+		<>
+			<Pressable
+				onPress={
+					productScreen
+						? () => null
+						: () => {
+								navigation.push('ProductScreen', {
+									product: item.id,
+									productScreen: true,
+									title: item.title,
+								});
+						  }
+				}
+				className={
+					!productScreen ? 'max-h-[270] mt-1 mb-2 ' : 'max-h-[320]'
+				}
+			>
+				<LinearGradient
+					colors={['#ccc', '#fff']}
+					start={{ x: 0, y: 0.2 }}
+					end={{ x: 0.9, y: 0.2 }}
+				>
+					<View
+						className="w-full min-h-64 flex flex-row items-center justify-center"
+						style={!productScreen && styles.productListScreen}
+					>
+						<View className="relative w-full h-full overflow-hidden mx-auto">
+							<Image
+								source={{
+									uri: image,
+								}}
+								alt="food image"
+								style={styles.imageStyles}
+							/>
+							{/* {!productScreen && (
 								<CountdownClock
 									isPoster={false}
 									targetDate={'2024-11-31T23:59:59'}
@@ -119,44 +121,44 @@ const ProductCard = ({ item, productScreen, image }) => {
 };
 
 const styles = StyleSheet.create({
-  isModuloFive: {
-    width: "100%",
-  },
-  productScreen: {
-    padding: 0,
-  },
-  productListScreen: {
-    padding: 6,
-  },
-  imageStyles: {
-    maxWidth: "100%",
-    height: "100%",
-    objectFit: "cover",
-  },
-  crownStyles: {
-    maxWidth: "100%",
+	isModuloFive: {
+		width: '100%',
+	},
+	productScreen: {
+		padding: 0,
+	},
+	productListScreen: {
+		padding: 6,
+	},
+	imageStyles: {
+		maxWidth: '100%',
+		height: '100%',
+		objectFit: 'cover',
+	},
+	crownStyles: {
+		maxWidth: '100%',
 
-    height: "100%",
-  },
-  shadowProp: {
-    shadowColor: "#000",
-    shadowOffset: { width: -2, height: 4 },
-    shadowOpacity: 1,
-    shadowRadius: 10,
-  },
+		height: '100%',
+	},
+	shadowProp: {
+		shadowColor: '#000',
+		shadowOffset: { width: -2, height: 4 },
+		shadowOpacity: 1,
+		shadowRadius: 10,
+	},
 
-  container: {
-    paddingTop: 50,
-  },
-  crownOutside: {
-    top: 10,
-  },
-  crownInside: {
-    top: 50,
-    width: 50,
-    height: 35,
-    paddingLeft: 10,
-  },
+	container: {
+		paddingTop: 50,
+	},
+	crownOutside: {
+		top: 10,
+	},
+	crownInside: {
+		top: 50,
+		width: 50,
+		height: 35,
+		paddingLeft: 10,
+	},
 });
 
 export default ProductCard;

@@ -84,7 +84,6 @@ const Register = ({ setUser, setIsLoggedIn }) => {
     const user_data = {
       username,
       password,
-      password_confirm: password,
       first_name: fname,
       last_name: lname,
       email_address: email,
@@ -102,7 +101,7 @@ const Register = ({ setUser, setIsLoggedIn }) => {
     }
     setLoading(true);
     axios
-      .post(`${new_user_uri}api/registration/accounts/register/`, user_data)
+      .post(`${new_user_uri}signup/`, user_data)
       .then((res) => {
         setLoading(false);
         toTop();

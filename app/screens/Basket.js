@@ -137,6 +137,7 @@ ${server_uri}admin/orders/order/${res.data.id}/change/
                     navigation.push("ProductScreen", {
                       product: off.id,
                       productScreen: true,
+                      title: off.title,
                     })
                   }
                   key={index}
