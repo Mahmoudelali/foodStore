@@ -48,18 +48,22 @@ const ProductCard = ({ item, productScreen, image }) => {
               {/* {!productScreen && (
 								<CountdownClock
 									isPoster={false}
-									targetDate={'2023-11-31T23:59:59'}
+									targetDate={'2024-11-31T23:59:59'}
 								/>
 							)} */}
-              {item?.isVip && (
+              <LinearGradient
+                 colors={["#c9c9c9", "#eee"]} 
+                 start={{ x: 1, y: 0 }}
+                 end={{ x: 0, y: 0 }}
+                className="absolute top-4 right-0"
+              >
                 <Text
                   style={{ fontFamily: fonts.regular }}
-                  className="absolute top-4 right-0 bg-[#ababab] px-1 py-1 text-white"
+                  className="px-1 py-1 text-white"
                 >
-                  Premium
+                  PREMIUM
                 </Text>
-              )}
-
+              </LinearGradient>
               <ProductGradient
                 height={productScreen ? 145 : 120}
                 bottom={-2}
@@ -72,43 +76,36 @@ const ProductCard = ({ item, productScreen, image }) => {
                     : "absolute -bottom-0 left-0 right-0 w-full h-[150] flex justify-end pb-2 pl-3 pr-2"
                 }
               >
-                <DealPrices
-                  old_price={item?.old_price}
-                  new_price={item?.new_price}
-                  is_hero={true}
-                />
                 {productScreen && <NotificationToggle />}
-                <View className="self-start">
-                  <Text
-                    style={{ fontFamily: fonts.regular }}
-                    className={"text-sm"}
-                  >
-                    {item?.highlights}
-                  </Text>
+                <View>
+                  <View className="flex-row gap-7">
+                    <Text
+                      style={{ fontFamily: fonts.regular }}
+                      className={"text-lg max-w-[260]"}
+                    >
+                      {item?.highlights}
+                    </Text>
+                    <View>
+                      <DealPrices
+                        old_price={item?.old_price}
+                        new_price={item?.new_price}
+                        is_hero={true}
+                      />
+                    </View>
+                  </View>
                   <View className="flex flex-row justify-between w-full">
                     <View>
                       <Text
                         style={{
                           fontFamily: fonts.regular,
                         }}
-                        className="text-sm mr-2 text-accent-100 uppercase "
+                        className="text-xs mr-2 text-accent-100 uppercase "
                       >
-                        {item?.company.name}{" "}
-                        <RatingStar rating={item?.company.review} size={20} />
-                      </Text>
-                      <View className="flex flex-row">
-                        <Text
-                          style={{
-                            fontFamily: fonts.regular,
-                          }}
-                          className="text-gray-500 text-sm"
-                        >
+                        {item?.company.name} -{" "}
+                        <Text className="text-gray-700">
                           {item?.company.city}
                         </Text>
-                      </View>
-                    </View>
-                    <View>
-                      {productScreen && <ProductUserActions offer={item} />}
+                      </Text>
                     </View>
                   </View>
                 </View>
