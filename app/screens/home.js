@@ -18,6 +18,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { colors, fonts } from "../components/css.js";
 import { DrawerActions, useNavigation } from "@react-navigation/native";
 import axios from "axios";
+import ProductScreenCard from "../components/productScreenCard.js";
 const Drawer = createDrawerNavigator();
 
 const HomeContent = ({ loading, data, reFetch }) => {
@@ -27,11 +28,18 @@ const HomeContent = ({ loading, data, reFetch }) => {
 
   const renderItems = ({ item }) => {
     return (
-      <ProductCard
-        productScreen={false}
-        item={item}
-        image={item.main_picture}
-      />
+      <>
+        <ProductCard
+          productScreen={false}
+          item={item}
+          image={item.main_picture}
+        />
+        <ProductScreenCard
+          productScreen={false}
+          item={item}
+          image={item.main_picture}
+        />
+      </>
     );
   };
 
