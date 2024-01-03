@@ -25,6 +25,7 @@ import {
 } from "react-native";
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import { colors, fonts } from "./css";
 
 const showToast = (type, label1, label2) => {
   return Toast.show({
@@ -83,7 +84,6 @@ const Register = ({ setUser, setIsLoggedIn }) => {
     const user_data = {
       username,
       password,
-      password_confirm: password,
       first_name: fname,
       last_name: lname,
       email_address: email,
@@ -101,7 +101,7 @@ const Register = ({ setUser, setIsLoggedIn }) => {
     }
     setLoading(true);
     axios
-      .post(`${new_user_uri}api/registration/accounts/register/`, user_data)
+      .post(`${new_user_uri}signup/`, user_data)
       .then((res) => {
         setLoading(false);
         toTop();
@@ -177,7 +177,7 @@ const Register = ({ setUser, setIsLoggedIn }) => {
           />
         </View>
         <View className="px-4 py-7 relative -z-50 ">
-          <Text className="uppercase font-bold text-xs text-gray-500 mb-2">
+          <Text style={styles.font} className="uppercase text-xs mb-2">
             Date of birth (optional)
           </Text>
           <View className="pt-2 pb-1 relative flex flex-row  z-50">
@@ -198,12 +198,15 @@ const Register = ({ setUser, setIsLoggedIn }) => {
               />
             ))}
           </View>
-          <Text className="border-2 border-dashed border-gray-400 text-xs">
+          <Text
+            style={styles.font}
+            className="border-2 border-dashed border-gray-400 text-xs pt-1 pl-2 pb-1 mt-2"
+          >
             tell us, you'll get a birthday treat if you do!
           </Text>
 
           <View className="pt-4 relative z-[-500]">
-            <Text className="uppercase font-bold text-xs text-gray-500 mb-3">
+            <Text style={styles.font} className="uppercase text-xs mb-3">
               Gender (optional)
             </Text>
             <View className="flex flex-row">
@@ -222,7 +225,7 @@ const Register = ({ setUser, setIsLoggedIn }) => {
           </View>
         </View>
         <View className="px-2 py-6 bg-white ">
-          <Text className="uppercase font-bold text-xs text-gray-600 mb-4">
+          <Text style={styles.font} className="uppercase text-xs mb-4">
             Contact preferences
           </Text>
           {checkBoxLabels.map(({ label }, index) => (
@@ -241,7 +244,7 @@ const Register = ({ setUser, setIsLoggedIn }) => {
                       );
                 }}
               />
-              <Text className="pl-2 leading-5 tracking-wider"> {label}</Text>
+              <Text className="pl-2 leading-5 tracking-wider">{label}</Text>
             </View>
           ))}
           <View className="py-4 px-2">
@@ -249,16 +252,14 @@ const Register = ({ setUser, setIsLoggedIn }) => {
               label={!loading ? "JOIN COUPWAY" : "Loading.."}
               onPress={() => register_user()}
             />
-            <View className="flex-row items-center justify-center">
-              <Text className="text-gray-500 flex-row ">
-                You have an account? Sign In{" "}
-              </Text>
-              <Button
-                label={"Here"}
-                textStyle={styles.labelStyles}
-                buttonStyle={styles.buttonStyle}
+            <View className="flex-row items-center justify-center mt-2">
+              <Text style={styles.font}>You have an account? Sign In </Text>
+              <Text
+                style={[styles.labelStyles, styles.buttonStyle]}
                 onPress={() => navigation.navigate("Login")}
-              />
+              >
+                HERE
+              </Text>
             </View>
           </View>
         </View>
@@ -311,5 +312,21 @@ const styles = StyleSheet.create({
     borderStyle: "dashed",
     borderWidth: 2,
     maxHeight: 50,
+  },
+  font: {
+    fontFamily: fonts.regular,
+    color: colors.gray,
+  },
+  labelStyles: {
+    backgroundColor: "transparent",
+    color: "#a0a0a0",
+    fontSize: 12,
+    fontWeight: "bold",
+    textTransform: "uppercase",
+  },
+  buttonStyle: {
+    backgroundColor: "transparent",
+    padding: 0,
+    textDecorationLine: "underline",
   },
 });

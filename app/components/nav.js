@@ -1,20 +1,43 @@
 import { Ionicons } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import Notifications from "../screens/Notifications.js";
+import Notificationss from "../screens/Notifications.js";
 import SearchInput from "./searchInput.js";
 import Profile from "../screens/profile.js";
 import Home from "../screens/home";
 import { Platform } from "react-native";
 import { StatusBar } from "expo-status-bar";
 import Search from "../screens/search.js";
-import useFetch from "./useFetch.js";
 import Basket from "../screens/Basket.js";
+import { useContext, useEffect } from "react";
+import { DataContext } from "../index.js";
+import { fonts } from "./css.js";
+import * as Notifications from "expo-notifications";
 
 const Tab = createBottomTabNavigator();
 
-export default function Nav({ user, setUser }) {
-  const uri = process.env.EXPO_PUBLIC_SERVER_URL + "api/getalloffers/";
-  const [data, loading, setData, setLoading] = useFetch(uri);
+export default function Nav({ user, setUser, navigation }) {
+  const [data, dataLoading, setData, setDataLoading, fetchData] =
+    useContext(DataContext);
+
+  useEffect(() => {
+    const handleNotification = async (notification) => {
+      const notificationContent = notification.data;
+      console.log("Clicked Notification Content:", notificationContent);
+
+      if (notificationContent && notificationContent.screen) {
+        // Navigate to the specified screen
+        navigation.navigate(notificationContent.screen);
+      }
+    };
+
+    const subscription =
+      Notifications.addNotificationResponseReceivedListener(handleNotification);
+
+    return () => {
+      subscription.remove();
+    };
+  }, [navigation]);
+
   return (
     <>
       <StatusBar backgroundColor="#13d0ca" style="dark" />
@@ -45,6 +68,7 @@ export default function Nav({ user, setUser }) {
           tabBarShowLabel: false,
           headerTitleStyle: {
             color: "white",
+            fontFamily: fonts.regular,
           },
           headerStyle: {
             backgroundColor: "#13d0ca",
@@ -64,11 +88,18 @@ export default function Nav({ user, setUser }) {
           name="Home"
           options={{
             headerTitle: () => (
-              <SearchInput setData={setData} setLoading={setLoading} />
+              <SearchInput setData={setData} setLoading={setDataLoading} />
             ),
           }}
         >
-          {() => <Home data={data} loading={loading} />}
+          {() => (
+            <Home
+              data={data}
+              loading={dataLoading}
+              reFetch={fetchData}
+              setDataLoading={setDataLoading}
+            />
+          )}
         </Tab.Screen>
         <Tab.Screen
           options={{
@@ -77,8 +108,9 @@ export default function Nav({ user, setUser }) {
           name="Search"
           component={Search}
         />
-
-        <Tab.Screen name="Notifications" component={Notifications} />
+        <Tab.Screen name="Notifications">
+          {() => <Notificationss user={user} />}
+        </Tab.Screen>
         <Tab.Screen name="Basket" component={Basket} />
         <Tab.Screen name="Profile" options={{ headerShown: false }}>
           {() => <Profile user={user} setUser={setUser} />}

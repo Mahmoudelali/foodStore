@@ -10,6 +10,7 @@ import {
 import { MaterialIcons } from "@expo/vector-icons";
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import { fonts } from "./css";
 const toast_options = {
   visibilityTime: 2000,
   position: "top",
@@ -53,11 +54,12 @@ const Comment = ({ offer_id, setFeedbacks, feedbacks, toTop }) => {
         <TextInput
           className="bg-white w-[85%] pl-2"
           keyboardType="default"
-          placeholder="Write comment.."
+          placeholder="Write a comment..."
           placeholderTextColor={"gray"}
           multiline={true}
           onChangeText={setFeedback}
           value={feedback}
+          style={{ fontFamily: fonts.regular }}
         />
         <Pressable
           onPress={() => {
@@ -69,7 +71,10 @@ const Comment = ({ offer_id, setFeedbacks, feedbacks, toTop }) => {
         </Pressable>
       </View>
       {error && (
-        <Text className="text-red-500 ml-1 font-semibold text-xs">
+        <Text
+          style={{ fontFamily: fonts.regular }}
+          className="text-red-500 ml-1 text-xs"
+        >
           Please Provide a valid feedback..
         </Text>
       )}

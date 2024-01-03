@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text, Pressable, Alert } from "react-native";
 import { useNavigation } from "expo-router";
+import { fonts } from "./css";
 
 const textComponents = [
   {
@@ -30,7 +31,9 @@ const AccessBar = ({ setQueryset }) => {
             navigation.openDrawer();
           }}
         >
-          <Text style={styles.textStyles}>{text}</Text>
+          <Text style={[styles.textStyles, { fontFamily: fonts.light }]}>
+            {text}
+          </Text>
         </Pressable>
       ))}
     </View>

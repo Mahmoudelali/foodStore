@@ -1,122 +1,172 @@
-import React, { useState } from "react";
-import { View, StyleSheet, Pressable, Text } from "react-native";
-import LabelInput from "../components/LabelInput";
-import { ScrollView } from "react-native-gesture-handler";
+import React, { useState } from 'react';
+import { View, Pressable, Text, ActivityIndicator } from 'react-native';
+import LabelInput from '../components/LabelInput';
+import { ScrollView } from 'react-native-gesture-handler';
+import Toast from 'react-native-toast-message';
+import { useNavigation } from '@react-navigation/native';
+import Button from '../components/Button';
+import { fonts } from '../components/css';
+import useFetch from '../components/useFetch';
+import axios from 'axios';
+import { showToast } from '../components/data';
 
-import { Alert } from "react-native";
-import { RadioButton } from "react-native-radio-buttons-group";
-import { GenderLabels } from "../components/data";
-import Button from "../components/Button";
+const MyDetails = ({ user }) => {
+	const navigation = useNavigation();
+	const [isLoading, setIsLoading] = useState(false);
+	const [firstName, setFirstName] = useState('');
+	const [lastName, setLastName] = useState('');
+	const [email, setEmail] = useState('');
+	const [number, setNumber] = useState('');
 
-const MyDetails = ({ navigation }) => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [dateOfBirth, setDateOfBirth] = useState("");
-  const [number, setNumber] = useState("");
-  const [userGender, setUserGender] = useState(null);
+	const [data, loading, setData, , reFetch] = useFetch(
+		`${process.env.EXPO_PUBLIC_SERVER_URL}api/getuserprofile/${user?.id}`,
+	);
+	// console.log('data', data);
 
-  const genderRadiosProps = {
-    onPress: setUserGender,
-    containerStyle: {
-      marginRight: 15,
-    },
-    color: "#13d0ca",
-    size: 20,
-    labelStyle: { color: "gray" },
-  };
+	const labelInputProps = [
+		{
+			borderStyle: 'underline',
+			state: email,
+			inputHandler: setEmail,
+			placeholder: data?.email || 'Add your E-mail',
+			labelText: 'Email address',
+		},
+		{
+			borderStyle: 'underline',
+			state: number,
+			inputHandler: setNumber,
+			placeholder: data?.phone_number || 'Add your mobile number',
+			labelText: 'phone Number',
+		},
+	];
 
-  const labelInputProps = [
-    {
-      borderStyle: "underline",
-      state: firstName,
-      inputHandler: setFirstName,
-      placeholder: "First Name",
-      labelText: "First Name",
-    },
-    {
-      borderStyle: "underline",
-      state: lastName,
-      inputHandler: setLastName,
-      placeholder: "Last Name",
-      labelText: "Last Name",
-    },
-    {
-      borderStyle: "underline",
-      state: email,
-      inputHandler: setEmail,
-      placeholder: "abcd@jklmnop.xyz",
-      labelText: "Email address",
-    },
-    {
-      borderStyle: "underline",
-      state: number,
-      inputHandler: setNumber,
-      placeholder: "00 961 78 948 228",
-      labelText: "phone Number",
-    },
-  ];
-  const handleOKButtonPress = () => {
-    navigation.goBack();
-  };
-  const showAlert = () => {
-    Alert.alert(
-      "Alert",
-      "Changes Saved!",
-      [
-        {
-          text: "OK",
-          onPress: handleOKButtonPress,
-        },
-      ],
-      { cancelable: false }
-    );
-  };
+	const toast_options = {
+		visibilityTime: 2000,
+		position: 'top',
+		topOffset: 10,
+	};
 
-  return (
-    <ScrollView keyboardDismissMode="on-drag">
-      <View className="bg-white px-6   mt-3 pb-5">
-        <View className="">
-          {labelInputProps.map((props, index) => (
-            <LabelInput key={index} {...props} />
-          ))}
-        </View>
-      </View>
-      <View className="bg-white p-5 mt-5">
-        <Pressable onPress={() => navigation.navigate("AddressBook")}>
-          <Text className="uppercase   text-gray-400 font-bold text-l">
-            Address Book
-          </Text>
-        </Pressable>
-      </View>
-      <View className="bg-white p-5   mt-5 ">
-        <LabelInput
-          borderStyle="underline"
-          state={dateOfBirth}
-          inputHandler={setDateOfBirth}
-          placeholder="00 961 78 948 228"
-          labelText="phone Number"
-        />
+	const handleEdit = async () => {
+		try {
+			const stateData = {
+				user: user?.id,
+				email: email,
+				first_name: firstName,
+				last_name: lastName,
+				phone_number: number,
+			};
 
-        <View className="flex flex-row  py-3">
-          {GenderLabels.map((gen) => (
-            <RadioButton
-              {...genderRadiosProps}
-              {...gen}
-              key={gen.id}
-              selected={userGender == gen.id && true}
-              borderColor={userGender === gen.id ? "#13d0ca" : "gray"}
-            />
-          ))}
-        </View>
-      </View>
-      <View className="bg-gray-100 py-4 px-10 ">
-        <Button label="Save Changes" onPress={showAlert} />
-      </View>
-    </ScrollView>
-  );
+			let payload = {};
+			for (let [key, val] of Object.entries(stateData)) {
+				if (val == '') continue;
+				else {
+					payload[key] = val;
+				}
+			}
+			console.log('payload', payload);
+			setIsLoading(true);
+			const resp = await axios.put(
+				`${process.env.EXPO_PUBLIC_SERVER_URL}api/updateuserprofile/${user?.id}`,
+				payload,
+			);
+			console.log(resp.status);
+
+			if (resp.status === 400) {
+				return showToast(
+					'success',
+					'User profile updated successfully',
+				);
+			}
+
+			setData(resp.data);
+			setIsLoading(false);
+			showToast('success', 'User profile updated successfully');
+			setTimeout(() => {
+				navigation.goBack();
+			}, 1000);
+		} catch (error) {
+			console.log(error);
+			setIsLoading(false);
+			showToast('error', error.message);
+		}
+	};
+
+	if (loading) {
+		return (
+			<View className="flex-1 justify-center">
+				<ActivityIndicator size="large" color={'#13d0ca'} />
+			</View>
+		);
+	}
+
+	return (
+		<ScrollView keyboardDismissMode="on-drag">
+			<View className="bg-white px-6 mt-3 pb-5 pt-2">
+				{data.first_name ? (
+					<View className="mb-3">
+						<Text className="text-gray-400 mb-1">First name</Text>
+						<Text>{data.first_name}</Text>
+					</View>
+				) : (
+					<LabelInput
+						borderStyle="underline"
+						state={firstName}
+						inputHandler={setFirstName}
+						placeholder={'First Name'}
+						labelText="First Name"
+						editable={true}
+					/>
+				)}
+				{data.last_name ? (
+					<View>
+						<Text className="text-gray-400 mb-1">Last name</Text>
+						<Text>{data.last_name}</Text>
+					</View>
+				) : (
+					<LabelInput
+						borderStyle="underline"
+						state={lastName}
+						inputHandler={setLastName}
+						placeholder={'Last Name'}
+						labelText="Last Name"
+						editable={true}
+					/>
+				)}
+
+				<View>
+					{labelInputProps.map((props, index) => (
+						<LabelInput key={index} {...props} />
+					))}
+				</View>
+			</View>
+			<View className="bg-white p-5 mt-5">
+				<Pressable onPress={() => navigation.navigate('AddressBook')}>
+					<Text
+						style={{ fontFamily: fonts.regular }}
+						className="uppercase   text-gray-400 font-bold text-l"
+					>
+						Address Book
+					</Text>
+				</Pressable>
+			</View>
+
+			<View className="bg-gray-100 py-4 px-10 ">
+				<Button
+					label={
+						isLoading ? (
+							<View>
+								<ActivityIndicator color="#fff" />
+							</View>
+						) : (
+							'Save Changes'
+						)
+					}
+					onPress={handleEdit}
+				/>
+			</View>
+			<Toast {...toast_options} />
+		</ScrollView>
+	);
 };
-const styles = StyleSheet.create({
-  container: { flex: 1 },
-});
+
 export default MyDetails;

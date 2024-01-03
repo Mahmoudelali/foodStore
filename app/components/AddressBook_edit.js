@@ -4,6 +4,7 @@ import LabelInput from "./LabelInput";
 import { ScrollView } from "react-native-gesture-handler";
 import Checkbox from "expo-checkbox";
 import { Alert } from "react-native";
+import { fonts } from "./css";
 const CheckBoxProps = {
   checkedCheckBoxColor: "#13d0ca",
   rightTextStyle: { letterSpacing: 1, fontSize: 14, color: "gray" },
@@ -99,10 +100,9 @@ const AddressBookEdit = ({ navigation }) => {
             <LabelInput key={index} {...props} />
           ))}
         </View>
-
         <View className="py-7">
           {checkBoxLabels.map((label, index) => (
-            <CheckBox
+            <Checkbox
               {...CheckBoxProps}
               key={index}
               isChecked={checklist.includes(label)}
@@ -121,7 +121,10 @@ const AddressBookEdit = ({ navigation }) => {
         </View>
         <View className="bg-gray-100 py-4 px-10 ">
           <Pressable className="bg-accent-100" onPress={showAlert}>
-            <Text className="uppercase text-center p-2 text-white font-bold text-xl tracking-wider">
+            <Text
+              style={{ fontFamily: fonts.regular }}
+              className="uppercase text-center p-2 text-white text-xl tracking-wider"
+            >
               Save address
             </Text>
           </Pressable>

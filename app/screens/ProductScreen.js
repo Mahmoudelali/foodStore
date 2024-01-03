@@ -22,6 +22,7 @@ import Button from '../components/Button';
 import useFetch from '../components/useFetch';
 import axios from 'axios';
 import { UserContext } from '../index.js';
+import { fonts } from '../components/css';
 
 const toast_options = {
 	visibilityTime: 2000,
@@ -39,7 +40,9 @@ const showToast = (type, label1, label2) => {
 
 const ProductScreen = ({ route }) => {
 	const { product, qr_code } = route.params;
+
 	const [user] = useContext(UserContext);
+
 	const scrollRef = useRef();
 	const toTop = () => {
 		scrollRef.current?.scrollTo({
@@ -63,7 +66,7 @@ const ProductScreen = ({ route }) => {
 			});
 	};
 
-	const user_id = user.user_id;
+	const user_id = user?.user?.id;
 	const offer_id = route.params.product;
 	const server_uri = process.env.EXPO_PUBLIC_SERVER_URL;
 	const uri = `${server_uri}api/getalloffers/${offer_id}`;
@@ -83,15 +86,14 @@ const ProductScreen = ({ route }) => {
 	];
 
 	const postOffer = () => {
+		if (user.token === 'dummy-token') {
+			return showToast('error', 'you must login first');
+		}
 		const request_headers = {
 			headers: {
 				Authorization: 'Token ' + user.token,
 			},
 		};
-
-		if (user.token === 'dummy-token') {
-			return showToast('error', 'You must login first!');
-		}
 
 		axios
 			.post(order_uri, order_data, request_headers)
@@ -134,7 +136,9 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
 			extraComponent: (
 				<View style={styles.qrCodeImageContainer}>
 					<Image
-						source={{ uri: `${server_uri}${qr_code}` }}
+						source={{
+							uri: `${server_uri.substring(-1)}${qr_code}`,
+						}}
 						style={styles.qrCodeImage}
 					/>
 				</View>
@@ -156,7 +160,7 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
 			icon: <Ionicons name="newspaper" size={14} color="#13d0ca" />,
 		},
 		{
-			title: 'Feedbacks',
+			title: 'Customer reviews',
 			extraComponent: (
 				<>
 					{feedbackLoading ? (
@@ -180,7 +184,7 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
 			icon: <MaterialIcons name="feedback" size={14} color="#13d0ca" />,
 		},
 		{
-			title: 'Location',
+			title: 'Address',
 			icon: <Ionicons name="ios-location" size={14} color="#13d0ca" />,
 			extraComponent: <Location />,
 		},
@@ -230,11 +234,12 @@ ${server_uri}admin/orders/order/${res.data[0].id}/change/
 						</View>
 						<Toast {...toast_options} />
 						<Button
-							label={'Buy deal'}
+							label={'Reserve deal'}
 							onPress={() => {
 								postOffer();
 								toTop();
 							}}
+							style={{ fontFamily: fonts.regular }}
 						/>
 					</View>
 				</ScrollView>

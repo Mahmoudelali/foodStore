@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "651553656311",
+    "project_id": "coupway-76a4c",
+    "storage_bucket": "coupway-76a4c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:651553656311:android:a0edd5bcf94b7ef71e32f2",
+        "android_client_info": {
+          "package_name": "com.foodstore.coupway"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxJec-MGHiqcK0XRmPPot9ibmTroA3Dbo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

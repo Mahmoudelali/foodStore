@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Pressable, Image, Text } from "react-native";
+import { fonts } from "./css";
 
 const BasketItem = ({
   image,
@@ -26,14 +27,27 @@ const BasketItem = ({
         </View>
 
         <View className="ml-1 px-1 basis-[65%] flex justify-evenly">
-          <Text className="font-bold">$ {price}</Text>
+          <Text style={{ fontFamily: fonts.regular }}>$ {price}</Text>
           <View className="self-start">
-            <Text className="text-xs text-gray-500">{highlights}</Text>
+            <Text
+              style={{ fontFamily: fonts.regular }}
+              className="text-xs text-gray-500"
+            >
+              {highlights}
+            </Text>
             <Text>
-              <Text className="text-md  text-accent-100 uppercase font-semibold ">
-                {placeName}
+              <Text
+                style={{ fontFamily: fonts.regular }}
+                className="text-md text-accent-100 uppercase pr-2"
+              >
+                {placeName} -{" "}
               </Text>
-              <Text className="text-sm text-gray-500 ">{location}</Text>
+              <Text
+                style={{ fontFamily: fonts.regular }}
+                className="text-sm text-gray-500"
+              >
+                {location}
+              </Text>
             </Text>
           </View>
         </View>

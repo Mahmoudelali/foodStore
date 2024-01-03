@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { TextInput, View, StyleSheet } from "react-native";
 import axios from "axios";
 import { Ionicons } from "@expo/vector-icons";
+import { colors, fonts } from "./css";
 
 const SearchInput = ({ setData, setLoading }) => {
   const [queryset, setQueryset] = useState(null);
@@ -77,7 +78,8 @@ const SearchInput = ({ setData, setLoading }) => {
             <TextInput
               onChangeText={field.onChangeText}
               placeholder={field.placeholder}
-              placeholderTextColor={"gray"}
+              placeholderTextColor={colors.gray}
+              style={{ fontFamily: fonts.light }}
               className="text-gray-600 leading-4 p-2"
             />
           </View>

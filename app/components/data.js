@@ -1,7 +1,7 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Toast from 'react-native-toast-message';
-import registerNNPushToken, { registerIndieID } from 'native-notify';
+import Toast from 'react-native-toast-message'
+import * as Notifications from 'expo-notifications';
 
 export const validateEmail = (email) => {
 	return email.match(
@@ -64,6 +64,7 @@ export const priceRanges = [
 	},
 ];
 export const showToast = (type, label1, label2) => {
+	console.log('toasting');
 	return Toast.show({
 		type: type,
 		text1: label1,
@@ -82,7 +83,7 @@ export const signIn = async (
 		try {
 			await AsyncStorage.setItem('user_data', JSON.stringify(userdata));
 		} catch (error) {
-			console.log('error saving user ');
+			console.log('error saving user ', error);
 		}
 	};
 
@@ -91,20 +92,27 @@ export const signIn = async (
 			`${process.env.EXPO_PUBLIC_SERVER_URL}login`,
 			data,
 		);
+
 		const user_data = response.data;
 		await save_user(user_data);
-
 		user_data_handler(user_data);
-		registerNNPushToken(12331, 'L4XCS1Ezhz6YHOS7hIr6hR');
-		registerIndieID(
-			response.data.user?.user_id,
-			12331,
-			'L4XCS1Ezhz6YHOS7hIr6hR',
-		);
 		loggedInHandler(true);
 		loading_handler(false);
+		registerIndieID(user?.user_id, 12331, 'L4XCS1Ezhz6YHOS7hIr6hR');
+
+		const token = (await Notifications.getDevicePushTokenAsync()).data;
+		const update_token_uri =
+			user &&
+			process.env.EXPO_PUBLIC_SERVER_URL +
+				`api/updateuserprofile/${user?.user?.id}`;
+
+		await axios.put(update_token_uri, {
+			user: user.user.id,
+			notification_token: token,
+		});
 	} catch (error) {
 		loading_handler(false);
+		console.log('err logging in user', error.response);
 		error.response.status == 400 &&
 			showToast(
 				'error',

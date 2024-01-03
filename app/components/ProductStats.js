@@ -1,5 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
+import { fonts } from "./css";
 
 const ProductStats = ({ coupons, TimeRemaining, fullValue, price }) => {
   const data = [
@@ -24,10 +25,18 @@ const ProductStats = ({ coupons, TimeRemaining, fullValue, price }) => {
     <View className="flex flex-row pt-2.5 pb-3.5" style={styles.statsBorder}>
       {data.map((item, index) => (
         <View key={index} className={`basis-1/4  `} style={styles.separator}>
-          <Text className="text-center text-gray-400 text-xs">
+          <Text
+            style={{ fontFamily: fonts.regular }}
+            className="text-center text-gray-400 text-xs"
+          >
             {item.title}
           </Text>
-          <Text className="text-center text-black text-sm">{item.value}</Text>
+          <Text
+            style={{ fontFamily: fonts.regular }}
+            className="text-center text-black text-sm"
+          >
+            {item.value}
+          </Text>
         </View>
       ))}
     </View>

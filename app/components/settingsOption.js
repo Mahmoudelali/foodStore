@@ -1,12 +1,16 @@
 import React from "react";
 import { View, StyleSheet, Pressable, Text } from "react-native";
+import { fonts } from "./css";
 
 const Option = ({ optionName, icon, navigation }) => (
   <Pressable onPress={navigation}>
     <View className="flex flex-row py-3 pl-10">
       <View className="basis-[15%] ">{icon}</View>
       <View className="flex flex-row items-center">
-        <Text className="basis-[70%] pl-10 pb-1 tracking-[1] font-semibold">
+        <Text
+          style={{ fontFamily: fonts.regular }}
+          className="basis-[70%] pl-10 pb-1 tracking-[1]"
+        >
           {optionName}
         </Text>
       </View>

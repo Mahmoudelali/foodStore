@@ -4,6 +4,7 @@ import { View, StyleSheet, Text, Image } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import CardDealPrices from './cardDealPrices';
 import { useNavigation } from '@react-navigation/native';
+import { fonts } from './css';
 
 const iconStyles = {
 	size: 26,
@@ -12,13 +13,15 @@ const iconStyles = {
 
 const OrderBox = ({ offer, status, qr_code }) => {
 	const image = process.env.EXPO_PUBLIC_SERVER_URL + offer.main_picture;
-	const navigation = useNavigation();a
+	console.log(image);
+	const navigation = useNavigation();
 	return (
 		<Pressable
 			onPress={() =>
 				navigation.navigate('ProductScreen', {
 					product: offer.id,
 					qr_code,
+					title: offer.title,
 				})
 			}
 			className="p-1 flex flex-row w-[95%] min-h-[90] mx-auto my-1  bg-white border-dashed border-2 border-gray-300"
@@ -52,15 +55,17 @@ const OrderBox = ({ offer, status, qr_code }) => {
 					new_price={offer.new_price}
 				/>
 				<View className="self-start ">
-					<Text className="text-xs font-normal">
+					<Text
+						style={{ fontFamily: fonts.regular }}
+						className="text-xs"
+					>
 						{offer.highlights}
 					</Text>
 					<Text>
-						<Text className="text-[12px]  text-accent-100  font-semibold">
-							{offer.company.name}
-						</Text>
-						<Text className="text-[10px] text-gray-400 ">
-							{' '}
+						<Text
+							style={{ fontFamily: fonts.regular }}
+							className="text-[12px] text-accent-100"
+						>
 							{offer.company.name}
 						</Text>
 					</Text>

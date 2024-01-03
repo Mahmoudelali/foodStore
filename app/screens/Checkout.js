@@ -8,16 +8,23 @@ import Basket from "./Basket";
 import AddressBookCard from "./AddressBookCard";
 import Button from "../components/Button";
 import DeliveryOptions from "../components/DeliveryOptions";
+import { fonts } from "../components/css";
 
 const DeliveryCountry = ({ countryName }) => (
   <View className="flex flex-row gap-2 py-4 px-5 bg-white">
-    <Text className="uppercase font-bold text-lg">Deliver To :</Text>
-    <Text className="font-thin text-lg">{countryName}</Text>
+    <Text style={{ fontFamily: fonts.regular }} className="uppercase text-lg">
+      Deliver To :
+    </Text>
+    <Text style={{ fontFamily: fonts.light }} className="text-lg">
+      {countryName}
+    </Text>
   </View>
 );
 const MyBag = () => (
   <View className="py-4 px-5 my-5 bg-white">
-    <Text className="uppercase text-lg font-bold">my bag</Text>
+    <Text style={{ fontFamily: fonts.regular }} className="uppercase text-lg">
+      my bag
+    </Text>
     <Basket />
   </View>
 );
@@ -25,7 +32,9 @@ const DeliveryAddress = () => {
   const navigation = useNavigation();
   return (
     <View className="bg-white  my-5 py-4 px-5">
-      <Text className="uppercase text-lg font-bold ">delivery address</Text>
+      <Text style={{ fontFamily: fonts.regular }} className="uppercase text-lg">
+        delivery address
+      </Text>
       <AddressBookCard editable={false} />
       <Button
         label="Change"
@@ -65,12 +74,14 @@ const styles = StyleSheet.create({
     width: "35%",
     paddingVertical: 8,
     paddingHorizontal: 10,
+    fontFamily: fonts.regular,
   },
   changeAddressLabelStyle: {
     textTransform: "uppercase",
     fontSize: 16,
     textAlign: "center",
     fontWeight: "bold",
+    fontFamily: fonts.regular,
   },
 });
 
