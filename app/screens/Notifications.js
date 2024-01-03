@@ -30,6 +30,16 @@ export default function Notifications({ user }) {
     fetchData();
   }, []);
 
+  if (!user.user_id) {
+    return (
+      <View className="flex-1 items-center justify-center">
+        <Text className="text-base font-regular">
+          Login first to see notifications
+        </Text>
+      </View>
+    );
+  }
+
   // refresh funtion
   const handleRefresh = () => {
     setRefreshing(true);
@@ -40,15 +50,15 @@ export default function Notifications({ user }) {
   if (loading) {
     return (
       <View className="flex-1 items-center justify-center">
-        <Text className="text-base">Loading Notifications...</Text>
+        <Text className="text-base font-regular">Loading Notifications...</Text>
       </View>
     );
   }
 
-  if (data.length === 0) {
+  if (data.length === 0 || !data) {
     return (
       <View className="flex-1 items-center justify-center">
-        <Text className="text-base"> No notifications yet</Text>
+        <Text className="text-base font-regular">No notifications yet</Text>
       </View>
     );
   }
