@@ -7,8 +7,6 @@ import { Text, View } from "react-native";
 export default function PurchasedDeals({ route }) {
   const { data } = route.params;
 
-  console.log("dataaaaaaaa", JSON.stringify(data, null, 2));
-
   if (!data) {
     return (
       <View className="flex-1 justify-center items-center">

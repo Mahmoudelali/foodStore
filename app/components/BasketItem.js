@@ -40,7 +40,7 @@ const BasketItem = ({
                 style={{ fontFamily: fonts.regular }}
                 className="text-md text-accent-100 uppercase pr-2"
               >
-                {placeName} - {" "}
+                {placeName} -{" "}
               </Text>
               <Text
                 style={{ fontFamily: fonts.regular }}
