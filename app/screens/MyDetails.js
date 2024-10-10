@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { View, Pressable, Text, ActivityIndicator } from 'react-native';
-import LabelInput from '../components/LabelInput';
+import LabelInput from '../components/labelInput/LabelInput';
 import { ScrollView } from 'react-native-gesture-handler';
 import Toast from 'react-native-toast-message';
 import { useNavigation } from '@react-navigation/native';
