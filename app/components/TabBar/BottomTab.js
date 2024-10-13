@@ -13,7 +13,6 @@ function BottomTab() {
 
 	const renderTabScreenOptions = ({ route }) => ({
 		tabBarIcon: ({ focused, color, size }) => {
-			console.log(route.name);
 			let iconName;
 			switch (route.name) {
 				case bottomTabScreens.HOME:
@@ -34,7 +33,6 @@ function BottomTab() {
 					iconName = focused ? 'person' : 'person-outline';
 					break;
 			}
-
 			return <Ionicons name={iconName} size={size} color={color} />;
 		},
 		tabBarActiveTintColor: 'tomato',
