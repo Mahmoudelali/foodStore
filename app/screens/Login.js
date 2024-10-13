@@ -6,14 +6,18 @@ import Button from '../components/Button';
 import { useNavigation } from 'expo-router';
 import Toast from 'react-native-toast-message';
 import { signIn } from '../components/data.js';
-import { showToast } from '../components/data.js';
 import { colors, fonts } from '../components/css';
+import { showToaster } from '../common/commonSlice.js';
+import { useDispatch } from 'react-redux';
 
-const Login = ({ setUser, setIsLoggedIn }) => {
+const Login = () => {
 	const navigation = useNavigation();
 	const [username, setUsername] = React.useState('');
 	const [password, setPassword] = React.useState('');
 	const [loading, setLoading] = useState(false);
+
+	const dispatch = useDispatch();
+
 	const loginFields = [
 		{
 			label: 'Email Address:',
@@ -35,11 +39,13 @@ const Login = ({ setUser, setIsLoggedIn }) => {
 		},
 	];
 
+	const handleSubmitLogin = () => {
+		if (!username || !password) {
+			dispatch(showToaster());
+		}
+	};
 	return (
 		<ScrollView>
-			<View className="relative z-10">
-				<Toast visibilityTime={2000} position="top" topOffset={10} />
-			</View>
 			<View className="bg-white p-5 m-3">
 				{loginFields.map(
 					({ label, handler, extraComponent }, index) => (
@@ -64,19 +70,7 @@ const Login = ({ setUser, setIsLoggedIn }) => {
 								'Sign In'
 							)
 						}
-						onPress={() => {
-							!username || !password
-								? showToast(
-										'error',
-										'all fields must not be empty',
-								  )
-								: signIn(
-										{ username, password },
-										setLoading,
-										setUser,
-										setIsLoggedIn,
-								  );
-						}}
+						onPress={handleSubmitLogin}
 					/>
 					<Text
 						style={styles.font}

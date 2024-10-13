@@ -1,6 +1,6 @@
 import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Toast from 'react-native-toast-message'
+import Toast from 'react-native-toast-message';
 import * as Notifications from 'expo-notifications';
 
 export const validateEmail = (email) => {

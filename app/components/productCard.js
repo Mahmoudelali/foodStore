@@ -7,11 +7,15 @@ import { fonts } from './css';
 import NotificationToggle from './NotificationToggle';
 import DealPrices from './DealPrices';
 import ProductGradient from './productGradient';
+import { useSelector } from 'react-redux';
 
 const ProductCard = ({ item, productScreen, image }) => {
 	const navigation = useNavigation();
+	const state = useSelector((state) => state.common);
 	return (
 		<>
+			<Text>{state.test}</Text>
+
 			<Pressable
 				onPress={
 					productScreen
